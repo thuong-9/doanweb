@@ -217,3 +217,44 @@
 .auth-box.active .overlay-right {
     transform: translateX(20%);
 }
+
+@media (max-width: 768px) {
+    .auth-wrapper {
+        padding: 24px 16px;
+        min-height: auto;
+    }
+
+    .auth-box {
+        width: 100%;
+        min-height: 620px;
+        border-radius: 12px;
+    }
+
+    .overlay-wrapper {
+        display: none;
+    }
+
+    .form-side {
+        position: relative;
+        width: 100%;
+        height: auto;
+        transform: none !important;
+        opacity: 1;
+    }
+
+    .form-side form {
+        padding: 24px 18px;
+    }
+
+    .form-signup {
+        display: none;
+    }
+
+    .auth-box.active .form-signup {
+        display: flex;
+    }
+
+    .auth-box.active .form-signin {
+        display: none;
+    }
+}
