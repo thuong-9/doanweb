@@ -1,0 +1,91 @@
+
+@import url('common.css');
+
+.img-container {
+  position: relative;
+  width: 100vw;              /* dùng viewport width để full màn hình */
+  height: 100vh;    
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0a0e1a;         /* nếu muốn overlay text căn giữa */
+}
+
+.img-container img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* ảnh đầy khung không méo */
+  object-position: center;    /* canh giữa ảnh */
+  filter: brightness(0.9) contrast(1.1) saturate(1.2);
+  transition: transform 1.5s ease, filter 0.5s ease;
+}
+
+/* ===== Hamburger ===== */
+.hamburger {        
+  width: 32px;
+  height: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 100;          
+}
+.img-container {
+  position: relative;     /* gốc tham chiếu cho hamburger */
+}
+
+.hamburger {
+  position: absolute;     /* so với .img-container */
+  top: 30px;              /* khoảng cách từ container */
+  left: 40px;            /* khoảng cách từ container */
+}
+
+.hamburger span {
+  display: block;
+  height: 4px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.menu {
+  position: absolute;     /* so với .hamburger */
+  top: 40px;              /* cách dưới 3 gạch */
+  left: 0;
+  width: 200px;           /* chiều rộng menu nhỏ gọn */
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+  transform: scaleY(0);   /* ẩn theo chiều dọc */
+  transform-origin: top;  /* mở từ trên xuống */
+  transition: transform 0.3s ease;
+  pointer-events: none;   /* ẩn click */
+}
+
+/* Khi active, menu mở ra */
+.hamburger.active .menu {
+  transform: scaleY(1);
+  pointer-events: auto;
+}
+
+/* Menu list */
+.menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu ul li {
+  margin: 12px 0;
+}
+
+.menu ul li a {
+  color: #506deb;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+}

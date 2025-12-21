@@ -1,0 +1,33 @@
+<main>
+    <div class="img-container">
+        <img src="~/img/exer.png" alt="Luyện tập ngay">
+
+        <!-- Hamburger icon -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Menu -->
+        <nav class="menu" id="menu">
+            <ul>
+                <li>
+                    <a asp-controller="Exercises" asp-action="Html">
+                        Bài tập HTML
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Exercises" asp-action="Css">
+                        Bài tập CSS
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Exercises" asp-action="Advanced">
+                        Nâng cao
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</main>

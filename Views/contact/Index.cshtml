@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="contact-container">
+  <section class="anh-section">
+    <img src="~/img/anh_lien_he.png" alt="Ảnh nền liên hệ">
+    <div class="overlay"></div>
+
+  <div class="contact-section">
+    <h1><i class="fa-solid fa-envelope"></i> Liên hệ với EasyCode</h1>
+    <p>Nếu bạn có thắc mắc hoặc góp ý, hãy gửi tin nhắn cho chúng tôi.<br> Đội ngũ EasyCode sẽ phản hồi trong vòng 24 giờ.</p>
+
+    
+      <form class="contact-form"
+      asp-controller="Contact"
+      asp-action="Index"
+      method="post">
+        <div class="field"> 
+          <label for="name">Họ và tên</label>
+          <div class="input-icon">
+            <i class="fa-solid fa-user"></i>
+            <input id="name" name="name" type="text" placeholder="Nhập họ tên của bạn" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <div class="input-icon">
+            <i class="fa-solid fa-envelope"></i>
+            <input id="email" name="email" type="email" placeholder="example@gmail.com" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message">Nội dung</label>
+          <div class="input-icon">
+            <div class="input-icon textarea-icon">
+              <i class="fa-solid fa-comment-dots" style="top: 25%;"></i>
+              <textarea id="message" name="message" rows="5" placeholder="Nhập nội dung bạn muốn gửi..." required></textarea>
+            </div>
+          </div>
+        </div>
+        <button class="btn-send" type="submit">
+          <i class="fa-solid fa-paper-plane"></i> Gửi tin nhắn
+        </button>
+      </form>
+  </div>
+  </section>
+  </main>
+

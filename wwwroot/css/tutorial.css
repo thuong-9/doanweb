@@ -1,0 +1,534 @@
+@import url('common.css');
+
+/* Reset mặc định */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ===== SECTION ẢNH TUTORIAL ===== */
+.img {
+  position: relative;
+  width: 100vw;              /* dùng viewport width để full màn hình */
+  height: 100vh;    
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== ẢNH ===== */
+.img img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* ảnh đầy khung không méo */
+  object-position: center;    /* canh giữa ảnh */
+  filter: brightness(0.9) contrast(1.1) saturate(1.2);
+  transition: transform 1.5s ease, filter 0.5s ease;
+}
+
+/* ===== HIỆU ỨNG HOVER ===== */
+.img:hover img {
+  transform: scale(1.05);
+  filter: brightness(1) contrast(1.15) saturate(1.3);
+}
+
+/* ===== HIỆU ỨNG VÒNG SÁNG ===== */
+.img::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 200, 255, 0.3), transparent 70%);
+  border-radius: 50%;
+  filter: blur(120px);
+  transform: translate(-50%, -50%);
+  animation: rotateGlow 25s linear infinite;
+  z-index: 0;
+}
+/* ======== TUTORIAL SECTION ======== */
+.tutorial-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.tutorial-section h2 {
+  color: #0571ff;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.tutorial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  justify-content: center;
+}
+
+/* ======== CARD ======== */
+.tutorial-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 30px 24px;
+  text-align: left;
+  transition: all 0.3s ease;
+  border-top: 4px solid #0078ff;
+
+  /* Thêm phần fix cứng */
+  width: 320px;                /* cùng độ rộng cho mọi card */
+  height: 350px;               /* cùng độ cao */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.tutorial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ======== CARD HEADINGS ======== */
+.tutorial-card h3 {
+  color: #0078ff;
+  font-size: 1.25rem;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tutorial-card i {
+  color: #0078ff;
+}
+
+/* ======== CARD LIST ======== */
+.tutorial-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tutorial-card li {
+  margin-bottom: 10px;
+}
+
+.tutorial-card a {
+  color: #003a73;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+.tutorial-card a:hover {
+  color: #0078ff;
+  text-decoration: underline;
+}
+.center {
+  margin-top: 30px;
+}
+
+.slick-slide {
+  padding: 0 15px;
+  transition: transform 0.3s ease;
+}
+
+/* .slick-slide:not(.slick-center) {
+  opacity: 0.7;
+  transform: scale(0.95);
+} */
+
+.slick-center {
+    transform: scale(1.1);
+    opacity: 1;     
+    z-index: 10;
+}
+
+.slick-prev:before, .slick-next:before {
+  color: #0078ff;
+  font-size: 28px;
+}
+
+/* Đảm bảo thẻ không bị lỗi hiển thị */
+.tutorial-card {
+  margin: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Ẩn dấu chấm điều hướng mặc định */
+.slick-dots {
+  display: none !important;
+}
+.slick-center .tutorial-card {
+  box-shadow: 0 0 15px rgba(0, 120, 255, 0.3);
+  transform: scale(1.05);
+  transition: all 0.4s ease;
+}
+/* ===== THỰC HÀNH TƯƠNG TÁC - DANH MỤC ===== */
+.practice {
+  padding: 0px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, #f9fbff 0%, #ffffff 100%);
+}
+
+.practice h2 {
+  color: #0571ff;
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.practice .intro-text {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 40px;
+}
+
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  justify-content: center;
+}
+
+.practice-item {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 35px 25px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+  transition: all 0.35s ease;
+  border-top: 4px solid #0078ff;
+}
+
+.practice-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 24px rgba(0, 120, 255, 0.18);
+}
+
+.practice-item i {
+  font-size: 2rem;
+  color: #0078ff;
+  margin-bottom: 16px;
+  transition: transform 0.3s ease;
+}
+
+.practice-item:hover i {
+  transform: rotate(8deg);
+}
+
+.practice-item h3 {
+  color: #003a73;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.practice-item p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  min-height: 60px;
+}
+
+.btn-learn {
+  display: inline-block;
+  margin-top: 15px;
+  background: linear-gradient(90deg, #0078ff, #00b4ff);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+}
+
+.btn-learn:hover {
+  background: linear-gradient(90deg, #0058cc, #00aaff);
+  transform: scale(1.06);
+}
+
+
+/* ===== LIVE EDITOR ===== */
+#live-editor {
+  margin-top: 70px;
+  padding: 60px 20px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+#live-editor h2 {
+  color: #0058cc;
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+#live-editor .intro-text {
+  color: #555;
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+
+.editor-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.editor-input,
+.editor-preview {
+  flex: 1 1 420px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  padding: 25px;
+  min-height: 420px;
+  transition: all 0.3s ease;
+}
+
+.editor-input:hover,
+.editor-preview:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,120,255,0.15);
+}
+
+/* LABELS */
+.editor-input label {
+  display: block;
+  font-weight: 600;
+  color: #0058cc;
+  margin-bottom: 6px;
+  text-align: left;
+}
+
+/* TEXTAREAS */
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+  margin-bottom: 18px;
+  background: #f9fbff;
+  outline: none;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+textarea:focus {
+  border-color: #0078ff;
+  box-shadow: 0 0 8px rgba(0, 120, 255, 0.2);
+}
+
+/* BUTTON CHẠY */
+#run-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #0078ff, #00b4ff);
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+#run-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #0058cc, #00aaff);
+}
+
+/* IFRAME PREVIEW */
+.editor-preview iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+  background: white;
+}
+    /* ===== NÚT QUAY LẠI ===== */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #555, #333);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.btn-back:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #333, #111);
+}
+
+
+/* ===== TOOLKIT ===== */
+.toolkit {
+  padding: 60px 20px;
+  text-align: center;
+}
+.toolkit h2 {
+  color: #0571ff;
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.single-item {
+  width: 750px;
+  aspect-ratio: 16/9;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 10px auto;
+}
+
+.single-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+}
+
+
+
+
+/* ===== HỌC VIÊN NỔI BẬT ===== */
+/* ======== HỌC VIÊN NỔI BẬT ======== */
+.top-learners {
+  padding: 0px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+}
+
+.top-learners h2 {
+  color: #0058cc;
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.learner-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 110px;
+}
+
+.learner-card {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  overflow: visible;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  text-align: center;
+  padding-bottom: 20px;
+  width: 260px;
+}
+
+.learner-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,120,255,0.15);
+}
+
+.learner-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: -60px;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.learner-card h3 {
+  color: #0058cc;
+  margin: 10px 0 5px;
+  font-size: 1.1rem;
+}
+
+.learner-card p {
+  color: #444;
+  margin-bottom: 10px;
+}
+
+/* Nút xem dự án */
+.view-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 18px;
+  background: #0078ff;
+  color: #fff;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+  background: #0058cc;
+  transform: scale(1.05);
+}
+
+/* ======= Xếp hạng ======= */
+.first {
+  transform: translateY(-30px);
+  width: 300px;
+}
+
+.second, .third {
+  width: 300px;
+  opacity: 0.9;
+}
+
+.medal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+}
+
+.gold i {
+  color: #ffcc00;
+  text-shadow: 0 0 6px rgba(255,204,0,0.7);
+}
+
+.silver i {
+  color: #c0c0c0;
+  text-shadow: 0 0 6px rgba(192,192,192,0.7);
+}
+
+.bronze i {
+  color: #cd7f32;
+  text-shadow: 0 0 6px rgba(205,127,50,0.7);
+}
+
