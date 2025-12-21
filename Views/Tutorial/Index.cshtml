@@ -1,7 +1,23 @@
 
-  <main>
+@{
+    ViewData["Title"] = "Tutorial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["NoContainer"] = true;
+}
+
+@section Styles {
+  <link rel="stylesheet" href="~/css/tutorial.css" asp-append-version="true" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+}
+
+@section Scripts {
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script src="~/js/slick-slider.js" asp-append-version="true"></script>
+}
+
     <section class="img">
-      <img src="../img/anh_tutorial.png" alt="anh_tutorial">
+      <img src="~/img/anh_tutorial.png" alt="anh_tutorial" />
     </section>
     <section class="tutorial-section container">
       <h2><i class="fa-solid fa-book-open"></i> Danh mục hướng dẫn</h2>

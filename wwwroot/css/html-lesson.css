@@ -70,7 +70,7 @@ ul.list {
     padding: 10px 50px;
     border-left: 1px solid #efefef;
     /* margin-left: 300px; */
-    margin-top: 71px;
+  margin-top: 0;
 }
 .main-title {
     color: white;

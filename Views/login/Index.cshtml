@@ -1,9 +1,24 @@
 @{
     ViewData["Title"] = "Account";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["NoContainer"] = true;
 }
-    <main class="auth-wrapper">
-        <div class="auth-box" id="auth-box">
+
+@section Styles {
+  <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+}
+
+@section Scripts {
+  <script src="~/js/style.js" asp-append-version="true"></script>
+}
+
+@{
+    var mode = (Context?.Request?.Query["mode"].ToString() ?? string.Empty).ToLowerInvariant();
+    var isSignup = mode == "signup";
+}
+
+    <div class="auth-wrapper">
+        <div class="auth-box @(isSignup ? "active" : "")" id="auth-box">
         <!-- Sign Up Form -->
         <div class="form-side form-signup">
             <form action="#">
@@ -56,6 +71,6 @@
             </div>
         </div>
         </div>
-    </main>
+    </div>
 
 

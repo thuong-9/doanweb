@@ -1,33 +1,38 @@
-<main>
-    <div class="img-container">
-        <img src="~/img/exer.png" alt="Luyện tập ngay">
+@{
+    ViewData["Title"] = "Exercises";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["NoContainer"] = true;
+}
 
-        <!-- Hamburger icon -->
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+@section Styles {
+  <link rel="stylesheet" href="~/css/exercises.css" asp-append-version="true" />
+}
 
-        <!-- Menu -->
+@section Scripts {
+  <script src="~/js/menuicon.js" asp-append-version="true"></script>
+}
+
+<div class="img-container">
+    <img src="~/img/exer.png" alt="Luyện tập ngay" />
+
+    <!-- Hamburger icon + Menu (menu must be inside hamburger for CSS selector) -->
+    <div class="hamburger" id="hamburger" aria-label="Exercises menu" role="button" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+
         <nav class="menu" id="menu">
             <ul>
                 <li>
-                    <a asp-controller="Exercises" asp-action="Html">
-                        Bài tập HTML
-                    </a>
+                    <a asp-controller="Exercises" asp-action="Html">Bài tập HTML</a>
                 </li>
                 <li>
-                    <a asp-controller="Exercises" asp-action="Css">
-                        Bài tập CSS
-                    </a>
+                    <a asp-controller="Exercises" asp-action="Css">Bài tập CSS</a>
                 </li>
                 <li>
-                    <a asp-controller="Exercises" asp-action="Advanced">
-                        Nâng cao
-                    </a>
+                    <a asp-controller="Exercises" asp-action="Advanced">Nâng cao</a>
                 </li>
             </ul>
         </nav>
     </div>
-</main>
+</div>
