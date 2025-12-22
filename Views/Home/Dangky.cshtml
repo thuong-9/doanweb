@@ -1,0 +1,45 @@
+@{
+    ViewBag.Title = "Đăng Ký Khóa Học";
+    Layout = null; // không dùng layout
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <!-- Link tới file CSS riêng -->
+    <link rel="stylesheet" href="~/css/Dangky.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="background-image">
+            <img src="/img/DKH.png" alt="Đăng Ký Khóa Học" />
+            <div class="register-container">
+            <form asp-action="DangKy" method="post" class="register-form">
+                <label for="HoTen">Họ và tên</label>
+                <input type="text" id="HoTen" name="HoTen" placeholder="Nhập họ tên" required />
+
+                <label for="SDT">Số điện thoại</label>
+                <input type="tel" id="SDT" name="SDT" placeholder="Nhập số điện thoại" required />
+
+                <label for="KhungGio">Khung giờ có thể liên hệ</label>
+                <select id="KhungGio" name="KhungGio" required>
+                    <option value="">-- Chọn khung giờ --</option>
+                    <option value="Sáng">Sáng (7:00 - 11:00)</option>
+                    <option value="Trưa">Trưa (11:00 - 13:00)</option>
+                    <option value="Chiều">Chiều (13:00 - 17:00)</option>
+                    <option value="Tối">Tối (17:00 - 21:00)</option>
+                </select>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-register">ĐĂNG KÝ NGAY</button>
+                    <a href="tel:0123456789" class="btn-contact">Liên hệ ngay</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

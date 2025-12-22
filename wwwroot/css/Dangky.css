@@ -1,0 +1,115 @@
+
+
+/* Container nền */
+.background-image {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ảnh nền phủ toàn div */
+.background-image img {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;/* cover, có thể cắt ảnh nhưng full màn hình */
+    z-index: 1;
+}
+
+
+.register-container {
+    position: relative;
+    z-index:3; /* cao hơn overlay và ảnh nền */
+    width: 100%;
+    top: 90px;
+    right: 330px;
+    max-width: 500px;
+    background: rgba(255,255,255,0.95); /* trong suốt 1 chút */
+    border-radius: 15px;
+    padding: 25px 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    color:#0084ff;
+}
+
+.register-form label {
+    display:block;
+    margin-bottom:2px;
+    font-weight:500;
+    font-size: 20px;
+}
+
+.register-form input,
+.register-form select {
+    width:90%;
+    padding:12px 15px;
+    margin-bottom:20px;
+    border-radius:8px;
+    border:1px solid #3795ec;
+    font-size:16px;
+    outline:none;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.register-form input:focus,
+.register-form select:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-color:#3498db;
+}
+
+/* Nút */
+.button-group {
+    display:flex;
+    gap:10px;
+}
+
+.btn-register,
+.btn-contact {
+    flex:1;
+    padding:14px 0;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+    cursor:pointer;
+    text-decoration:none;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    color:#fff;
+    font-size: 25px;
+}
+
+.btn-register {
+    background:#ff5722;
+    border:none;
+}
+.btn-register:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    background:#e64a19;
+}
+.btn-register:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.btn-contact {
+    background:#2ecc71;
+}
+.btn-contact:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Responsive */
+@media(max-width:500px){
+    .button-group {
+        flex-direction: column;
+    }
+    .register-container {
+        padding:25px 15px;
+    }
+}
