@@ -35,8 +35,38 @@
       </ul>
     </nav>
     <div class="auth-links">
+@if (User?.Identity?.IsAuthenticated == true)
+{
+                var displayName = (User?.Identity?.Name ?? "User").Trim();
+                var firstChar = displayName.Length > 0 ? displayName[0].ToString().ToUpperInvariant() : "U";
+            <div class="dropdown d-inline">
+                <a class="d-inline-flex align-items-center gap-2 text-decoration-none dropdown-toggle"
+                     href="#"
+                     role="button"
+                     data-bs-toggle="dropdown"
+                     aria-expanded="false"
+                     aria-label="Account menu">
+                    <span class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center"
+                                style="width:32px;height:32px;">
+                        @firstChar
+                    </span>
+                    <span class="me-1">@displayName</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <form asp-controller="Login" asp-action="Logout" method="post" class="px-2">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+}
+else
+{
       <a href="@Url.Action("Index", "Login")">Login</a>
       <a class="btn btn-primary" href="@Url.Action("Index", "Login", new { mode = "signup" })">Sign Up</a>
+}
     </div>
   </div>
 </header>
