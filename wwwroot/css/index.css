@@ -118,6 +118,12 @@ section.cta-section {
   height: 100%;
   background: linear-gradient(90deg, rgba(0,120,255,0.05), rgba(0,120,255,0.15));
   transition: left 0.4s ease;
+  z-index: 0;
+}
+
+.features .card > * {
+  position: relative;
+  z-index: 1;
 }
 .features .card .icon {
   font-size: 2.2rem;
