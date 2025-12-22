@@ -552,3 +552,12 @@ section.cta-section {
   text-decoration: none;
   color: #005fcc;
 }
+.Luyen_tap {
+    cursor: pointer;          /* Con trỏ chuột hiện kiểu click */
+    display: inline-block;    
+    transition: transform 0.3s;
+}
+
+.Luyen_tap:hover {
+    transform: scale(1.05);   /* Zoom nhẹ khi hover */
+}

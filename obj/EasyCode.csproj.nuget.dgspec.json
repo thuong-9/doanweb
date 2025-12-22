@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\html\\EasyCode\\EasyCode\\EasyCode.csproj": {}
+    "F:\\WEB\\doanweb\\EasyCode.csproj": {}
   },
   "projects": {
-    "E:\\html\\EasyCode\\EasyCode\\EasyCode.csproj": {
+    "F:\\WEB\\doanweb\\EasyCode.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\html\\EasyCode\\EasyCode\\EasyCode.csproj",
+        "projectUniqueName": "F:\\WEB\\doanweb\\EasyCode.csproj",
         "projectName": "EasyCode",
-        "projectPath": "E:\\html\\EasyCode\\EasyCode\\EasyCode.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "E:\\html\\EasyCode\\EasyCode\\obj\\",
+        "projectPath": "F:\\WEB\\doanweb\\EasyCode.csproj",
+        "packagesPath": "C:\\Users\\thudi\\.nuget\\packages\\",
+        "outputPath": "F:\\WEB\\doanweb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\thudi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -85,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

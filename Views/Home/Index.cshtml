@@ -23,8 +23,8 @@
             </video>
 
             <div class="cta-group">
-                <a class="btn btn-primary" href="@Url.Action("Index", "Login")">Bắt đầu học</a>
-                <a class="btn btn-outline" href="@Url.Action("Index", "Exercises")">Luyện tập ngay</a>
+                <a class="btn btn-primary" href="@Url.Action("Dangky", "Home")">ĐĂNG KÝ KHÓA HỌC</a>
+                <a class="btn btn-outline" href="@Url.Action("Index", "Tutorial")">XEM BÀI HỌC MẪU</a>
             </div>
         </section>
 
@@ -35,14 +35,11 @@
                 <!-- Phần luyện tập & khóa học mới -->
                 <div class="lt-new">
                 <!-- Hình luyện tập -->
+                <a href="@Url.Action("DangKy", "Home")">
                 <div class="Luyen_tap">
                     <img src="/img/luyen_tap.png" alt="Phần luyện tập chuyên sâu">
                 </div>
-                <script>
-                    function goDangKy() {
-                        window.location.href = "/DangKyHoc/DangKy";
-                    }
-                </script>
+                </a>
 
                 <!-- Khóa học mới -->
                  <div class="slider-container new-slider">
@@ -229,6 +226,6 @@
             <div class="container">
                 <h3>Đã sẵn sàng bắt đầu hành trình lập trình Frontend của bạn?</h3>
                 <p>Tham gia ngay khóa học <strong>HTML & CSS</strong> để tạo nền tảng vững chắc cho sự nghiệp Web Developer!</p>
-                                <a href="@Url.Action("Index", "Login")" class="btn btn-primary">🚀 Bắt đầu học ngay</a>
+                                <a href="@Url.Action("Dangky", "Home")" class="btn btn-primary">🚀 Bắt đầu học ngay</a>
             </div>
         </section>
