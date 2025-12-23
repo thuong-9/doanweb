@@ -11,6 +11,14 @@
 @section Scripts {
   <script src="~/js/lesson.js" asp-append-version="true"></script>
 }
+@if (ViewBag.ShowAttendance == true)
+{
+    <div id="attendanceButton">🏠</div>
+
+    <div id="takeAttendanceDiv" style="display:none;">
+        <!-- giao diện điểm danh -->
+    </div>
+}
 
 <div class="main_box">
             <div class="sidebar_menu">
