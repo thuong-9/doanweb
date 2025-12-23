@@ -1,25 +1,30 @@
-﻿<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EasyCode</title>
-    <link rel="icon" href="../img/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
-</head>
-<body>
-    <div data-include="partials/header.html"></div>
-    <main>
+﻿@{
+        ViewData["Title"] = "EasyCode";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        ViewData["NoContainer"] = true;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="~/js/new.js" asp-append-version="true"></script>
+    <script src="~/js/hot.js" asp-append-version="true"></script>
+    <script src="~/js/pk.js" asp-append-version="true"></script>
+}
+
        <section class="video">
             <video autoplay muted loop playsinline>
-                <source src="../img/vd.mp4" type="video/mp4">
+                                <source src="~/img/vd.mp4" type="video/mp4">
             </video>
 
             <div class="cta-group">
-                <a class="btn btn-primary" href="login.html">Bắt đầu học</a>
-                <a class="btn btn-outline" href="exercises.html">Luyện tập ngay</a>
+                <a class="btn btn-primary" href="@Url.Action("Dangky", "Home")">ĐĂNG KÝ KHÓA HỌC</a>
+                <a class="btn btn-outline" href="@Url.Action("Index", "Tutorial")">XEM BÀI HỌC MẪU</a>
             </div>
         </section>
 
@@ -30,14 +35,11 @@
                 <!-- Phần luyện tập & khóa học mới -->
                 <div class="lt-new">
                 <!-- Hình luyện tập -->
+                <a href="@Url.Action("DangKy", "Home")">
                 <div class="Luyen_tap">
                     <img src="/img/luyen_tap.png" alt="Phần luyện tập chuyên sâu">
                 </div>
-                <script>
-                    function goDangKy() {
-                        window.location.href = "/DangKyHoc/DangKy";
-                    }
-                </script>
+                </a>
 
                 <!-- Khóa học mới -->
                  <div class="slider-container new-slider">
@@ -48,7 +50,7 @@
                             <div class="course-info">
                             <h3>HTML Accessibility Web <br> mọi người</h3>
                             <p>Bắt đầu hành trình tạo ra những trang web dễ tiếp cận, giúp mọi người đều có thể trải nghiệm nội dung của bạn.</p>
-                            <span class="consulting-team"><a href="/html/contact.html">Đội ngũ tư vấn</a></span>
+                            <span class="consulting-team"><a href="@Url.Action("Index", "Contact")">Đội ngũ tư vấn</a></span>
                             </div>
                         </div>
 
@@ -58,7 +60,7 @@
                             <div class="course-info">
                             <h3>HTML Component hóa <br>Xu hướng Web Components</h3>
                             <p>Bước vào thế giới Web Components - nơi bạn có thể tự tạo những khối giao diện HTML riêng, hiện đại và dễ chia sẻ giữa các dự án.</p>
-                            <span class="consulting-team"><a href="/html/contact.html">Đội ngũ tư vấn</a></span>
+                            <span class="consulting-team"><a href="@Url.Action("Index", "Contact")">Đội ngũ tư vấn</a></span>
                             </div>
                         </div>
 
@@ -68,7 +70,7 @@
                             <div class="course-info">
                             <h3>HTML AI Content</h3>
                             <p>Khởi đầu kỷ nguyên sáng tạo nội dung thông minh - nơi HTML kết hợp cùng AI để tạo nên trải nghiệm web hấp dẫn và cá nhân hóa.</p>
-                            <span class="consulting-team"><a href="/html/contact.html">Đội ngũ tư vấn</a></span>
+                            <span class="consulting-team"><a href="@Url.Action("Index", "Contact")">Đội ngũ tư vấn</a></span>
                             </div>
                         </div>
                     </div>
@@ -85,7 +87,7 @@
                     <div class="course-info">
                     <h3>Cấu trúc chuẩn của trang html</h3>
                     <p>Bắt đầu hành trình thiết kế web với bước đầu tiên - hiểu rõ cấu trúc chuẩn của một trang HTML hiện đại.</p>
-                    <span class="consulting-team"><a href="/html/contact.html">Đội ngũ tư vấn</a></span>
+                    <span class="consulting-team"><a href="@Url.Action("Index", "Contact")">Đội ngũ tư vấn</a></span>
                     </div>
                 </div>
 
@@ -95,7 +97,7 @@
                     <div class="course-info">
                     <h3>Tối ưu hình ảnh & media hiện đại</h3>
                     <p>Tìm hiểu những kỹ thuật tối ưu hình ảnh và media giúp trang web tải nhanh - hiển thị đẹp - tiết kiệm băng thông.</p>
-                    <span class="consulting-team"><a href="/html/contact.html">Đội ngũ tư vấn</a></span>
+                    <span class="consulting-team"><a href="@Url.Action("Index", "Contact")">Đội ngũ tư vấn</a></span>
                     </div>
                 </div>
 
@@ -105,7 +107,7 @@
                     <div class="course-info">
                     <h3>Liên kết, nút và biểu tượng hiện đại</h3>
                     <p>Khám phá cách tạo liên kết (link), nút bấm (button) và biểu tượng (icon) theo phong cách hiện đại - chuyên nghiệp - chuẩn UI/UX.</p>
-                    <span class="consulting-team"><a href="/html/contact.html">Đội ngũ tư vấn</a></span>
+                    <span class="consulting-team"><a href="@Url.Action("Index", "Contact")">Đội ngũ tư vấn</a></span>
                     </div>
                 </div>
 
@@ -115,7 +117,7 @@
                     <div class="course-info">
                     <h3>HTML + CSS Layout hiện đại</h3>
                     <p>Làm chủ các kỹ thuật bố cục (layout) hiện đại giúp bạn tạo ra những trang web đẹp, linh hoạt và chuẩn responsive.</p>
-                    <span class="consulting-team"><a href="/html/contact.html">Đội ngũ tư vấn</a></span>
+                    <span class="consulting-team"><a href="@Url.Action("Index", "Contact")">Đội ngũ tư vấn</a></span>
                     </div>
                 </div>
 
@@ -125,7 +127,7 @@
                     <div class="course-info">
                     <h3>Kết hợp HTML + JavaScript cơ bản</h3>
                     <p>Khám phá cách biến trang web tĩnh thành trang web tương tác bằng JavaScript!</p>
-                    <span class="consulting-team"><a href="/html/contact.html">Đội ngũ tư vấn</a></span>
+                    <span class="consulting-team"><a href="@Url.Action("Index", "Contact")">Đội ngũ tư vấn</a></span>
                     </div>
                 </div>
                  </div>
@@ -224,18 +226,6 @@
             <div class="container">
                 <h3>Đã sẵn sàng bắt đầu hành trình lập trình Frontend của bạn?</h3>
                 <p>Tham gia ngay khóa học <strong>HTML & CSS</strong> để tạo nền tảng vững chắc cho sự nghiệp Web Developer!</p>
-                <a href="login.html" class="btn btn-primary">🚀 Bắt đầu học ngay</a>
+                                <a href="@Url.Action("Dangky", "Home")" class="btn btn-primary">🚀 Bắt đầu học ngay</a>
             </div>
         </section>
-
-    </main>
-
-    <div data-include="partials/footer.html"></div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="/js/include.js"></script>
-    <script src="/js/new.js"></script>
-    <script src="/js/hot.js"></script>
-    <script src="/js/pk.js"></script>
-</body>
-</html>

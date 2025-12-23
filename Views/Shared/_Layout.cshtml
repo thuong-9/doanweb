@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liên hệ với EasyCode</title>
+    <title>@(ViewData["Title"] ?? "EasyCode")</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EasyCode.styles.css" asp-append-version="true" />
     <link rel="icon" href="~/img/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="~/css/contact.css" asp-append-version="true">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <header class="site-header">
+<header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="@Url.Action("Index","Home")">
     <img src="~/img/logo.png" alt="EasyCode" height="32">
@@ -35,19 +35,62 @@
       </ul>
     </nav>
     <div class="auth-links">
-      <a href="@Url.Action("Index", "Account")">Login</a>
-      <a class="btn btn-primary" href="@Url.Action("Index", "Account")?mode=signup">Sign Up</a>
+@if (User?.Identity?.IsAuthenticated == true)
+{
+                var displayName = (User?.Identity?.Name ?? "User").Trim();
+                var firstChar = displayName.Length > 0 ? displayName[0].ToString().ToUpperInvariant() : "U";
+            <div class="dropdown d-inline">
+                <a class="d-inline-flex align-items-center gap-2 text-decoration-none dropdown-toggle"
+                     href="#"
+                     role="button"
+                     data-bs-toggle="dropdown"
+                     aria-expanded="false"
+                     aria-label="Account menu">
+                    <span class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center"
+                                style="width:32px;height:32px;">
+                        @firstChar
+                    </span>
+                    <span class="me-1">@displayName</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <form asp-controller="Login" asp-action="Logout" method="post" class="px-2">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+}
+else
+{
+      <a href="@Url.Action("Index", "Login")">Login</a>
+      <a class="btn btn-primary" href="@Url.Action("Index", "Login", new { mode = "signup" })">Sign Up</a>
+}
     </div>
+    
   </div>
 </header>
 
+@{
+    var noContainer = (ViewData["NoContainer"] as bool?) == true;
+}
+
+@if (noContainer)
+{
+    <main role="main">
+        @RenderBody()
+    </main>
+}
+else
+{
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+}
 
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <footer class="site-footer">
     <div class="footer-overlay">
         <div class="container footer-inner">

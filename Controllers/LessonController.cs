@@ -19,6 +19,16 @@ namespace EasyCode.Controllers
 
         public IActionResult Index()
         {
+            return RedirectToAction(nameof(Indexhtml));
+        }
+
+        public IActionResult Indexhtml()
+        {
+            return View();
+        }
+
+        public IActionResult Indexcss()
+        {
             return View();
         }
 

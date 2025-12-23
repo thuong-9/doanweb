@@ -102,6 +102,8 @@ section.cta-section {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   border-top: 4px solid #b4b4b4dc;
+  position: relative;
+  overflow: hidden;
 }
 .features .card:hover {
   transform: translateY(-8px);
@@ -116,6 +118,12 @@ section.cta-section {
   height: 100%;
   background: linear-gradient(90deg, rgba(0,120,255,0.05), rgba(0,120,255,0.15));
   transition: left 0.4s ease;
+  z-index: 0;
+}
+
+.features .card > * {
+  position: relative;
+  z-index: 1;
 }
 .features .card .icon {
   font-size: 2.2rem;
@@ -543,4 +551,13 @@ section.cta-section {
 .consulting-team a{
   text-decoration: none;
   color: #005fcc;
+}
+.Luyen_tap {
+    cursor: pointer;          /* Con trỏ chuột hiện kiểu click */
+    display: inline-block;    
+    transition: transform 0.3s;
+}
+
+.Luyen_tap:hover {
+    transform: scale(1.05);   /* Zoom nhẹ khi hover */
 }
