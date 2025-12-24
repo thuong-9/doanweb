@@ -17,13 +17,16 @@
     <div class="background-image">
             <img src="/img/DKH.png" alt="Đăng Ký Khóa Học" />
             <div class="register-container">
-            <form asp-action="DangKy" method="post" class="register-form">
+            <form id="registerForm" asp-action="DangKy" method="post" class="register-form">
                 <label for="HoTen">Họ và tên</label>
                 <input type="text" id="HoTen" name="HoTen" placeholder="Nhập họ tên" required />
                 <label for="SDT">Số điện thoại</label>
                 <input type="tel" id="SDT" name="SDT" placeholder="Nhập số điện thoại" required />
                 <label for="Gmail">Email</label>
-                <input type="email" id="Gmail" name="Gmail" placeholder="Nhập email" required />
+                <input type="email" id="Gmail" name="Gmail" 
+                    placeholder="Nhập email" 
+                    value="@ViewBag.UserEmail" 
+                    @(string.IsNullOrEmpty(ViewBag.UserEmail) ? "" : "readonly") />
                 <label for="KhungGio">Khung giờ có thể liên hệ</label>
                 <select id="KhungGio" name="KhungGio" required>
                     <option value="">-- Chọn khung giờ --</option>
@@ -76,29 +79,37 @@
     
 
     function showQR() {
-        document.getElementById("qrOverlay").style.display = "flex";
-        totalSeconds = 600;
+    const Gmail = document.getElementById('Gmail').value.trim();
+    if (!Gmail) {
+        alert("Vui lòng nhập email!");
+        return;
+    }
 
-        clearInterval(timer);
-        updateCountdown();
-
-        timer = setInterval(() => {
-            totalSeconds--;
-            updateCountdown();
-
-            if (totalSeconds <= 0) {
-                clearInterval(timer);
-                document.getElementById("countdown").innerText = "Hết hạn";
-                alert("Mã QR đã hết hạn!");
-                closeQR();
+    // Gọi API kiểm tra email đã đăng ký chưa
+    fetch('/Home/CheckEmail?email=' + encodeURIComponent(Gmail))
+        .then(res => res.json())
+        .then(data => {
+            if (data.exists) {
+                alert("Email này đã đăng ký khóa học rồi!");
+                return;
             }
-        }, 1000);
-    }
-
-    function closeQR() {
-        clearInterval(timer);
-        document.getElementById("qrOverlay").style.display = "none";
-    }
+            // Email chưa đăng ký → hiện QR
+            document.getElementById("qrOverlay").style.display = "flex";
+            totalSeconds = 600;
+            clearInterval(timer);
+            updateCountdown();
+            timer = setInterval(() => {
+                totalSeconds--;
+                updateCountdown();
+                if (totalSeconds <= 0) {
+                    clearInterval(timer);
+                    document.getElementById("countdown").innerText = "Hết hạn";
+                    alert("Mã QR đã hết hạn!");
+                    closeQR();
+                }
+            }, 1000);
+        });
+}
 
     function updateCountdown() {
         let minutes = Math.floor(totalSeconds / 60);
@@ -132,27 +143,42 @@
             }
         });
     }
+function verifyOTP() {
+    const otp = document.getElementById('otpInput').value;
+    const HoTen = document.getElementById('HoTen').value;
+    const SDT = document.getElementById('SDT').value;
+    const Gmail = document.getElementById('Gmail').value;
+    const KhungGio = document.getElementById('KhungGio').value;
 
-    function verifyOTP() {
-        const otp = document.getElementById('otpInput').value;
+    fetch('/Home/XacNhanOTP', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'otp=' + encodeURIComponent(otp)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (!data.success) {
+            alert("OTP sai!");
+            return;
+        }
 
-        fetch('/Home/XacNhanOTP', {
+        // OTP đúng → đăng ký
+        fetch('/Home/DangKyThanhCong', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'otp=' + otp
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ HoTen, SDT, Gmail, KhungGio })
         })
         .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                alert("Đăng ký thành công 🎉");
-                closeQR();
-            } else {
-                alert("OTP sai!");
+        .then(result => {
+            if (!result.success) {
+                alert(result.message);
+                return;
             }
+            alert("Đăng ký khóa học thành công 🎉");
+            window.location.href = result.redirect;
         });
-    }
+    });
+}
 
 </script>
 

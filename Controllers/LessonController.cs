@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -17,6 +12,14 @@ namespace EasyCode.Controllers
             _logger = logger;
         }
 
+        private bool CanShowAttendance()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return false;
+
+            return HttpContext.Session.GetInt32("HasCourse") == 1;
+        }
+
         public IActionResult Index()
         {
             return RedirectToAction(nameof(Indexhtml));
@@ -24,13 +27,14 @@ namespace EasyCode.Controllers
 
         public IActionResult Indexhtml()
         {
+            ViewBag.ShowAttendance = CanShowAttendance();
             return View();
         }
 
         public IActionResult Indexcss()
         {
+            ViewBag.ShowAttendance = CanShowAttendance();
             return View();
         }
-
     }
 }

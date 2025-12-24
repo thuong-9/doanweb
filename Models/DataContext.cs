@@ -14,6 +14,8 @@ namespace EasyCode.Models
 
         }
         public DbSet<Users> Users { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
