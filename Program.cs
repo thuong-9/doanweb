@@ -52,6 +52,15 @@ BEGIN
 
     IF COL_LENGTH(N'dbo.Users', N'UserName') IS NOT NULL
         EXEC(N'ALTER TABLE dbo.Users ALTER COLUMN [UserName] NVARCHAR(256) NOT NULL');
+
+    IF COL_LENGTH(N'dbo.Users', N'PasswordResetTokenHash') IS NULL
+        EXEC(N'ALTER TABLE dbo.Users ADD [PasswordResetTokenHash] NVARCHAR(256) NULL');
+
+    IF COL_LENGTH(N'dbo.Users', N'PasswordResetTokenExpiresUtc') IS NULL
+        EXEC(N'ALTER TABLE dbo.Users ADD [PasswordResetTokenExpiresUtc] DATETIME2 NULL');
+
+    IF COL_LENGTH(N'dbo.Users', N'AvatarPath') IS NULL
+        EXEC(N'ALTER TABLE dbo.Users ADD [AvatarPath] NVARCHAR(260) NULL');
 END
 ");
     }
