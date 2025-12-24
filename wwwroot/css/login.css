@@ -44,7 +44,7 @@
     width: 100%;
 }
 
-.form-side h1 {
+.form-side h1, .form-side h2 {
     font-weight: 700;
     margin-bottom: 10px;
     color: #0077ff;

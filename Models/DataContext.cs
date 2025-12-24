@@ -27,6 +27,8 @@ namespace EasyCode.Models
                 entity.Property(e => e.UserName).IsRequired().HasMaxLength(256);
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(256);
                 entity.Property(e => e.Password).IsRequired().HasMaxLength(512);
+                entity.Property(e => e.PasswordResetTokenHash).HasMaxLength(256);
+                entity.Property(e => e.AvatarPath).HasMaxLength(260);
             });
         }
     }
