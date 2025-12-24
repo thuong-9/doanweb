@@ -13,12 +13,37 @@
 }
 @if (ViewBag.ShowAttendance == true)
 {
-    <div id="attendanceButton">🏠</div>
-
-    <div id="takeAttendanceDiv" style="display:none;">
-        <!-- giao diện điểm danh -->
-    </div>
+    <partial name="_Attendance" />
 }
+
+<button id="openAttendance" title="Điểm danh"
+     style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px;
+            background-color: #5095fc; border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; cursor: pointer;
+            z-index: 9999; box-shadow: 0 2px 6px rgba(0,0,0,0.3); font-size: 30px;">🏠</button>
+
+<div id="attendanceOverlay">
+    <div class="attendance-container">
+        <button id="closeAttendance">✖</button>
+        <h2 class="attendance-title">Tích điểm hôm nay</h2>
+        <div class="attendance-grid">
+            <div class="day" data-day="1">🌟</div>
+            <div class="day" data-day="2">🌟</div>
+            <div class="day" data-day="3">🌟</div>
+            <div class="day" data-day="4">🌟</div>
+            <div class="day" data-day="5">🌟</div>
+            <div class="day" data-day="6">🌟</div>
+            <div class="day" data-day="7">🌟🌟</div>
+        </div>
+    </div>
+</div>
+<script>
+    window.lastCheckedDay = @((int)(ViewBag.LastCheckedDay ?? 0));
+    window.checkedToday = @(ViewBag.CheckedToday == true ? "true" : "false");
+</script>
+
+
+
 
 <div class="css-lesson">
   <div class="menu">

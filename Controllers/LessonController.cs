@@ -1,40 +1,64 @@
+using EasyCode.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace EasyCode.Controllers
 {
     public class LessonController : Controller
     {
-        private readonly ILogger<LessonController> _logger;
+        private readonly DataContext _context;
 
-        public LessonController(ILogger<LessonController> logger)
+        public LessonController(DataContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         private bool CanShowAttendance()
         {
-            if (!User.Identity.IsAuthenticated)
-                return false;
-
-            return HttpContext.Session.GetInt32("HasCourse") == 1;
+            return User.Identity!.IsAuthenticated &&
+                   HttpContext.Session.GetInt32("HasCourse") == 1;
         }
 
-        public IActionResult Index()
+        private int GetEnrollmentId()
         {
-            return RedirectToAction(nameof(Indexhtml));
+            return HttpContext.Session.GetInt32("EnrollmentId") ?? 0;
         }
 
+        private void LoadAttendanceViewBag()
+        {
+            ViewBag.ShowAttendance = CanShowAttendance();
+
+            if (!CanShowAttendance())
+            {
+                ViewBag.CheckedToday = false;
+                ViewBag.LastCheckedDay = 0;
+                return;
+            }
+
+            int enrollmentId = GetEnrollmentId();
+            var today = DateTime.Today;
+
+            var records = _context.Attendances
+                .Where(a => a.EnrollmentId == enrollmentId)
+                .OrderBy(a => a.AttendanceDate)
+                .ToList();
+
+            ViewBag.CheckedToday = records.Any(a => a.AttendanceDate.Date == today);
+
+            int totalDays = records.Count;
+            ViewBag.LastCheckedDay = totalDays == 0
+                ? 0
+                : ((totalDays - 1) % 7) + 1;
+        }
         public IActionResult Indexhtml()
         {
-            ViewBag.ShowAttendance = CanShowAttendance();
+            LoadAttendanceViewBag();
             return View();
         }
-
         public IActionResult Indexcss()
         {
-            ViewBag.ShowAttendance = CanShowAttendance();
+            LoadAttendanceViewBag();
             return View();
         }
-    }
-}
+}}
+            
