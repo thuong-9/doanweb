@@ -6,7 +6,8 @@
     <title>@(ViewData["Title"] ?? "EasyCode")</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/EasyCode.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/EasyCode.styles.css" asp-append-version="true" /> *@
     <link rel="icon" href="~/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     @await RenderSectionAsync("Styles", required: false)
@@ -22,7 +23,7 @@
       <ul>
         <li><a href="@Url.Action("Index","Home")">Home</a></li>
         <li class="dropdown">
-          <a href="#">Lesson</a>
+                    <a href="javascript:void(0)" role="button" aria-haspopup="true">Lesson</a>
           <ul class="dropdown-menu">
             <li><a href="@Url.Action(action: "Indexhtml", "lesson")">HTML</a></li>
             <li><a href="@Url.Action(action: "Indexcss", "lesson")">CSS</a></li>
@@ -39,22 +40,32 @@
 {
                 var displayName = (User?.Identity?.Name ?? "User").Trim();
                 var firstChar = displayName.Length > 0 ? displayName[0].ToString().ToUpperInvariant() : "U";
+                var avatar = User?.FindFirst("avatar")?.Value ?? string.Empty;
             <div class="dropdown d-inline">
                 <a class="d-inline-flex align-items-center gap-2 text-decoration-none dropdown-toggle"
-                     href="#"
+                     href="javascript:void(0)"
                      role="button"
                      data-bs-toggle="dropdown"
+                     data-bs-display="static"
                      aria-expanded="false"
                      aria-label="Account menu">
-                    <span class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center"
-                                style="width:32px;height:32px;">
-                        @firstChar
-                    </span>
+                    @if (!string.IsNullOrWhiteSpace(avatar))
+                    {
+                        <img src="@avatar" alt="Avatar" class="rounded-circle" style="width:32px;height:32px;object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <span class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center"
+                                    style="width:32px;height:32px;">
+                            @firstChar
+                        </span>
+                    }
                     <span class="me-1">@displayName</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <form asp-controller="Login" asp-action="Logout" method="post" class="px-2">
+                    <li><a class="dropdown-item" asp-controller="Login" asp-action="Profile">Hồ sơ của bạn</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><form asp-controller="Login" asp-action="Logout" method="post" class="px-2">
                             @Html.AntiForgeryToken()
                             <button type="submit" class="dropdown-item">Logout</button>
                         </form>
