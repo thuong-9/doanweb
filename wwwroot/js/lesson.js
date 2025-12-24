@@ -44,13 +44,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // ❌ hôm nay đã điểm
             if (checkedToday) {
-                alert("❌ Hôm nay bạn đã điểm danh rồi!");
+                alert("Bạn đã điểm danh hôm nay!");
                 return;
             }
 
             // ❌ sai thứ tự
             if (dayNumber !== lastCheckedDay + 1) {
-                alert("⚠️ Phải điểm danh đúng thứ tự!");
+                alert("Hãy lựa chọn lại thứ tự nhé!");
                 return;
             }
 
