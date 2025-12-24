@@ -23,5 +23,13 @@ namespace EasyCode.Models
         [MaxLength(512)]
         public string Password { get; set; } = string.Empty;
 
+        [MaxLength(256)]
+        public string? PasswordResetTokenHash { get; set; }
+
+        public DateTime? PasswordResetTokenExpiresUtc { get; set; }
+
+        [MaxLength(260)]
+        public string? AvatarPath { get; set; }
+
     }
 }

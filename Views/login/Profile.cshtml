@@ -1,0 +1,152 @@
+@model EasyCode.Models.Auth.ProfilePageViewModel
+
+@{
+    ViewData["Title"] = "Hồ sơ của bạn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["NoContainer"] = true;
+
+  var showPasswordTab = false;
+  foreach (var entry in ViewData.ModelState)
+  {
+    if (!string.IsNullOrWhiteSpace(entry.Key)
+      && entry.Key.StartsWith("Password.")
+      && entry.Value != null
+      && entry.Value.Errors.Count > 0)
+    {
+      showPasswordTab = true;
+      break;
+    }
+  }
+}
+
+@section Scripts {
+  @await Html.PartialAsync("_ValidationScriptsPartial")
+
+  <script>
+    (function () {
+      const btnProfile = document.getElementById('tab-profile');
+      const btnPassword = document.getElementById('tab-password');
+      const sectionProfile = document.getElementById('section-profile');
+      const sectionPassword = document.getElementById('section-password');
+
+      function setActive(tab) {
+        const isProfile = tab === 'profile';
+
+        sectionProfile.style.display = isProfile ? '' : 'none';
+        sectionPassword.style.display = isProfile ? 'none' : '';
+
+        btnProfile.classList.toggle('btn-primary', isProfile);
+        btnProfile.classList.toggle('btn-outline-primary', !isProfile);
+        btnPassword.classList.toggle('btn-primary', !isProfile);
+        btnPassword.classList.toggle('btn-outline-primary', isProfile);
+      }
+
+      btnProfile.addEventListener('click', function () { setActive('profile'); });
+      btnPassword.addEventListener('click', function () { setActive('password'); });
+
+      setActive('@(showPasswordTab ? "password" : "profile")');
+    })();
+  </script>
+}
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+
+    @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+    {
+      <div class="alert alert-info mt-3">@Model.StatusMessage</div>
+    }
+
+    <div class="card mt-4">
+      <div class="card-body">
+        <div class="d-flex align-items-center gap-3">
+          @if (!string.IsNullOrWhiteSpace(Model.AvatarUrl))
+          {
+            <img src="@Model.AvatarUrl" alt="Avatar" class="rounded-circle" style="width:64px;height:64px;object-fit:cover;" />
+          }
+          else
+          {
+            <div class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center" style="width:64px;height:64px;">
+              @Model.AvatarText
+            </div>
+          }
+
+          <div>
+            <div class="h5 mb-0">Hồ sơ của bạn</div>
+            <div class="text-muted">Cập nhật thông tin và ảnh đại diện</div>
+          </div>
+        </div>
+
+        <div class="btn-group mt-3" role="group" aria-label="Profile tabs">
+          <button id="tab-profile" type="button" class="btn btn-outline-primary">Hồ sơ của bạn</button>
+          <button id="tab-password" type="button" class="btn btn-outline-primary">Đổi mật khẩu</button>
+        </div>
+
+        <hr />
+
+        <div id="section-profile">
+          <form asp-controller="Login" asp-action="UpdateProfile" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+              <label class="form-label">Tên hiển thị</label>
+              <input asp-for="Update.UserName" class="form-control" />
+              <span asp-validation-for="Update.UserName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input asp-for="Update.Email" class="form-control" />
+              <span asp-validation-for="Update.Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Avatar (ảnh)</label>
+              <input asp-for="Update.AvatarFile" type="file" class="form-control" accept="image/*" />
+              <span asp-validation-for="Update.AvatarFile" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+          </form>
+        </div>
+
+        <div id="section-password">
+          <div class="h5">Đổi mật khẩu</div>
+          <div class="text-muted">Nhập mật khẩu hiện tại và mật khẩu mới</div>
+          <hr />
+
+          <form asp-controller="Login" asp-action="ChangePassword" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+              <label class="form-label">Mật khẩu hiện tại</label>
+              <input asp-for="Password.CurrentPassword" type="password" class="form-control" />
+              <span asp-validation-for="Password.CurrentPassword" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Mật khẩu mới</label>
+              <input asp-for="Password.NewPassword" type="password" class="form-control" />
+              <span asp-validation-for="Password.NewPassword" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Nhập lại mật khẩu mới</label>
+              <input asp-for="Password.ConfirmPassword" type="password" class="form-control" />
+              <span asp-validation-for="Password.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Cập nhật mật khẩu</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-4"></div>
+
+    </div>
+  </div>
+</div>
