@@ -88,35 +88,123 @@
 &lt;/html&gt;
 </code></pre>
                 </div>
+                <p>Minh hoạ:</p> 
+                        <img src="/img/a4.png" alt="ảnh minh hoạ", width="auto", height="300">
+                <h3 class="title2">Củng cố lại kiến thức</h3>
+                <div class="test-box" id="test-gioithieu">
+                <h2>Bài test: Giới thiệu HTML </h2>
+
+                <form id="form-gioithieu">
+                    <div class="question" data-answer="d">
+                        <p>Câu 1: HTML viết tắt của cụm từ nào?</p>
+                        <label><input type="radio" name="q1" value="a"> Hyperlinks and Text Markup Language</label>
+                        <label><input type="radio" name="q1" value="b"> Home Tool Markup Language</label>
+                        <label><input type="radio" name="q1" value="c"> Hyper Transfer Markup Language</label>
+                        <label><input type="radio" name="q1" value="d"> HyperText Markup Language</label>
+                        <span class="result"></span>
+                    </div>
+
+                    <div class="question" data-answer="a">
+                        <p>Câu 2: Ai là người tạo ra HTML đầu tiên?</p>
+                        <label><input type="radio" name="q2" value="a"> Tim Berners-Lee</label>
+                        <label><input type="radio" name="q2" value="b"> Bill Gates</label>
+                        <label><input type="radio" name="q2" value="c"> Steve Jobs</label>
+                        <label><input type="radio" name="q2" value="d"> Mark Zuckerberg</label>
+                        <span class="result"></span>
+                    </div>
+
+                    <div class="question" data-answer="c">
+                        <p>Câu 3: HTML được trình duyệt hiểu và xử lý như thế nào?</p>
+                        <label><input type="radio" name="q3" value="a"> Dưới dạng file thực thi</label>
+                        <label><input type="radio" name="q3" value="b"> Dưới dạng mã máy</label>
+                        <label><input type="radio" name="q3" value="c"> Dưới dạng mã đánh dấu (markup)</label>
+                        <label><input type="radio" name="q3" value="d"> Dưới dạng CSS</label>
+                        <span class="result"></span>
+                    </div>
+
+                    <div class="question" data-answer="b">
+                        <p>Câu 4: HTML là gì?</p>
+                        <label><input type="radio" name="q4" value="a"> Ngôn ngữ lập trình hướng đối tượng</label>
+                        <label><input type="radio" name="q4" value="b"> Ngôn ngữ đánh dấu siêu văn bản</label>
+                        <label><input type="radio" name="q4" value="c"> Hệ quản trị nội dung</label>
+                        <label><input type="radio" name="q4" value="d"> Trình biên dịch HTML</label>
+                        <span class="result"></span>
+            </div>
+
+        <button type="button" onclick="checkTest('gioithieu')">Hoàn thành</button>
+        <button type="button" class="btn-reset" onclick="resetTest('gioithieu')" style="display:none;">Làm lại</button>
+        <p id="msg-gioithieu" class="final-msg"></p>
+    </form>
+                </div>
             </div>
 
             <!-- CẤU TRÚC -->
             <div id="cautruc" class="content">
                 <h1 class="main-title">Cấu trúc của một tài liệu HTML</h1>
                 <p>Cấu trúc của HTML:</p>
-                <div class="code">
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="vi"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;Tiêu đề trang&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Nội dung trang&lt;/h1&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></div>
+                    <img src="/img/p1.png" alt="ảnh minh hoạ", width="auto", height="380">
                <p>Các thành phần chính:</p> 
                <div class="khung">
                 <ul>
                 <li><b>&lt;!DOCTYPE html&gt;</b>: Khai báo loại tài liệu HTML5.</li>
-                <li><b>&lt;head&gt;</b>: Chứa thông tin về trang (tiêu đề, charset, link CSS...)</li>
+                <li><b>&lt;html&gt;</b>: Là phần tử gốc của một trang HTML.</li>
+                <li><b>&lt;head&gt;</b>: Chứa thông tin về trang (tiêu đề, charset, link CSS...)</li> 
+                <li><b>&lt;title&gt;</b>: Chỉ định tiêu đề cho trang HTML (tiêu đề này sẽ được hiển thị trên thanh tiêu đề của trình duyệt hoặc trong tab của trang).</li>
                 <li><b>&lt;body&gt;</b>: Chứa nội dung hiển thị trên trình duyệt.</li>
+                <li><b>&lt;h1&gt;</b>: Định nghĩa một tiêu đề lớn.</li>
+                <li><b>&lt;p&gt;</b>: Định nghĩa một đoạn văn.</li>
                 </ul>
                 </div>
                 <div class="note">
                     <p><b>Chú ý</b>: Chỉ những phần nằm giữa <i>&lt;body&gt;</i><i>&lt;/body&gt;</i> mới được hiển thị trên trang web.</p>
                 </div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                    <div class="test-box" id="test-cautruc">
+                        <h2>Bài test: Cấu trúc HTML</h2>
+                        <form id="form-cautruc">
+
+                            <div class="question" data-answer="a">
+                                <p>Câu 1: Khai báo HTML5 đúng là?</p>
+                                <label><input type="radio" name="q1" value="a"> &lt;!DOCTYPE html&gt;</label>
+                                <label><input type="radio" name="q1" value="b"> &lt;DOCTYPE html&gt;</label>
+                                <label><input type="radio" name="q1" value="c"> &lt;html5&gt;</label>
+                                <label><input type="radio" name="q1" value="d"> &lt;doctype&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="b">
+                                <p>Câu 2: Thẻ chứa tiêu đề trang web?</p>
+                                <label><input type="radio" name="q2" value="a"> &lt;head&gt;</label>
+                                <label><input type="radio" name="q2" value="b"> &lt;title&gt;</label>
+                                <label><input type="radio" name="q2" value="c"> &lt;meta&gt;</label>
+                                <label><input type="radio" name="q2" value="d"> &lt;body&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="c">
+                                <p>Câu 3: Nội dung hiển thị trên trình duyệt nằm trong thẻ?</p>
+                                <label><input type="radio" name="q3" value="a"> &lt;html&gt;</label>
+                                <label><input type="radio" name="q3" value="b"> &lt;head&gt;</label>
+                                <label><input type="radio" name="q3" value="c"> &lt;body&gt;</label>
+                                <label><input type="radio" name="q3" value="d"> &lt;title&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="d">
+                                <p>Câu 4: Thẻ nào KHÔNG hiển thị nội dung?</p>
+                                <label><input type="radio" name="q4" value="a"> &lt;p&gt;</label>
+                                <label><input type="radio" name="q4" value="b"> &lt;h1&gt;</label>
+                                <label><input type="radio" name="q4" value="c"> &lt;div&gt;</label>
+                                <label><input type="radio" name="q4" value="d"> &lt;head&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <button type="button" onclick="checkTest('cautruc')">Hoàn thành</button>
+                            <button type="button" class="btn-reset" onclick="resetTest('cautruc')" style="display:none;">Làm lại</button>
+                            <p id="msg-cautruc" class="final-msg"></p>
+                        </form>
+                    </div>
+
             </div>
 
             <!-- SOẠN THẢO -->
@@ -137,11 +225,61 @@
                     <li>JSFiddle</li>
                     </ul>
                 </div>
-                <h3 class="vd">Ví dụ hướng dẫn tạo một trang web cơ bản dùng Notepad. Bạn đọc có thể sử dụng các công cụ được giới thiệu phía trên để viết mã của mình.</h3>
-                <h4>Bước 1: Mở Notepad</h4>
-                <h4>Bước 2: Viết một tài liệu HTML đơn giản</h4>
-                <h4>Bước 3: Lưu một tài liệu HTML</h4>
-                <h4>Bước 4: Xem tài liệu HTML trong trình duyệt</h4>
+                <h3 class="vd">Học HTML bằng Notepad hoặc TextEdit</h3>
+                <h4>Notepad</h4>
+                    <h5>Bước 1: Mở Notepad</h5>
+                    <h5>Bước 2: Viết một tài liệu HTML đơn giản</h5>
+                    <h5>Bước 3: Lưu một tài liệu HTML</h5>
+                    <h5>Bước 4: Xem tài liệu HTML trong trình duyệt</h5>
+                <h4>TextEdit</h4>
+                    <h5>Mở Finder > Ứng dụng > TextEdit</h5>
+                <h3 class="title2">Củng cố lại kiến thức</h3>
+                <div class="test-box" id="test-soanthao">
+                    <h2>Bài test: Soạn thảo văn bản HTML</h2>
+                    <form id="form-soanthao">
+
+                        <div class="question" data-answer="a">
+                            <p>Câu 1: Thẻ in đậm chữ mang ý nghĩa ngữ nghĩa?</p>
+                            <label><input type="radio" name="q1" value="a"> &lt;strong&gt;</label>
+                            <label><input type="radio" name="q1" value="b"> &lt;b&gt;</label>
+                            <label><input type="radio" name="q1" value="c"> &lt;bold&gt;</label>
+                            <label><input type="radio" name="q1" value="d"> &lt;text&gt;</label>
+                            <span class="result"></span>
+                        </div>
+
+                        <div class="question" data-answer="b">
+                            <p>Câu 2: Thẻ in nghiêng mang ý nghĩa nhấn mạnh?</p>
+                            <label><input type="radio" name="q2" value="a"> &lt;i&gt;</label>
+                            <label><input type="radio" name="q2" value="b"> &lt;em&gt;</label>
+                            <label><input type="radio" name="q2" value="c"> &lt;italic&gt;</label>
+                            <label><input type="radio" name="q2" value="d"> &lt;mark&gt;</label>
+                            <span class="result"></span>
+                        </div>
+
+                        <div class="question" data-answer="c">
+                            <p>Câu 3: Thẻ gạch chân văn bản?</p>
+                            <label><input type="radio" name="q3" value="a"> &lt;mark&gt;</label>
+                            <label><input type="radio" name="q3" value="b"> &lt;small&gt;</label>
+                            <label><input type="radio" name="q3" value="c"> &lt;u&gt;</label>
+                            <label><input type="radio" name="q3" value="d"> &lt;sub&gt;</label>
+                            <span class="result"></span>
+                        </div>
+
+                        <div class="question" data-answer="d">
+                            <p>Câu 4: Thẻ tô nổi (highlight) văn bản?</p>
+                            <label><input type="radio" name="q4" value="a"> &lt;b&gt;</label>
+                            <label><input type="radio" name="q4" value="b"> &lt;u&gt;</label>
+                            <label><input type="radio" name="q4" value="c"> &lt;em&gt;</label>
+                            <label><input type="radio" name="q4" value="d"> &lt;mark&gt;</label>
+                            <span class="result"></span>
+                        </div>
+
+                        <button type="button" onclick="checkTest('soanthao')">Hoàn thành</button>
+                        <button type="button" class="btn-reset" onclick="resetTest('soanthao')" style="display:none;">Làm lại</button>
+                        <p id="msg-soanthao" class="final-msg"></p>
+                    </form>
+                </div>
+
             </div>
 
             <!-- CÁC THẺ -->
@@ -199,8 +337,53 @@
                         <li>Một đề mục cấp 1 được định nghĩa bằng thẻ &lt;h1&gt;&lt;/h1&gt;.</li>
                         <li>Một đoạn văn được định nghĩa bằng thẻ &lt;p&gt;&lt;/p&gt;.</li>                
                 <div class="note">
-                <p ><b>Chú ý:</b> Thẻ mở nào được ghi trước thì thẻ đóng tương ứng của nó phải viết sau các phần tử khác (tạo thành bao đóng).</p>
-                </div>
+                <p ><b>Chú ý:</b> Thẻ mở nào được ghi trước thì thẻ đóng tương ứng của nó phải viết sau các phần tử khác (tạo thành bao đóng).</p></div>
+                   <h3 class="title2">Củng cố lại kiến thức</h3>
+                    <div class="test-box" id="test-cacthe">
+                        <h2>Bài test: Các thẻ HTML</h2>
+                        <form id="form-cacthe">
+
+                            <div class="question" data-answer="a">
+                                <p>Câu 1: Thẻ tiêu đề lớn nhất là?</p>
+                                <label><input type="radio" name="q1" value="a"> &lt;h1&gt;</label>
+                                <label><input type="radio" name="q1" value="b"> &lt;h2&gt;</label>
+                                <label><input type="radio" name="q1" value="c"> &lt;h5&gt;</label>
+                                <label><input type="radio" name="q1" value="d"> &lt;h6&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="c">
+                                <p>Câu 2: Thẻ dùng để viết đoạn văn?</p>
+                                <label><input type="radio" name="q2" value="a"> &lt;div&gt;</label>
+                                <label><input type="radio" name="q2" value="b"> &lt;span&gt;</label>
+                                <label><input type="radio" name="q2" value="c"> &lt;p&gt;</label>
+                                <label><input type="radio" name="q2" value="d"> &lt;br&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="b">
+                                <p>Câu 3: Thẻ dùng để in đậm chữ?</p>
+                                <label><input type="radio" name="q3" value="a"> &lt;i&gt;</label>
+                                <label><input type="radio" name="q3" value="b"> &lt;b&gt;</label>
+                                <label><input type="radio" name="q3" value="c"> &lt;u&gt;</label>
+                                <label><input type="radio" name="q3" value="d"> &lt;stronger&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="d">
+                                <p>Câu 4: Thẻ chỉ có thẻ mở?</p>
+                                <label><input type="radio" name="q4" value="a"> &lt;p&gt;</label>
+                                <label><input type="radio" name="q4" value="b"> &lt;div&gt;</label>
+                                <label><input type="radio" name="q4" value="c"> &lt;span&gt;</label>
+                                <label><input type="radio" name="q4" value="d"> &lt;img&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <button type="button" onclick="checkTest('cacthe')">Hoàn thành</button>
+                            <button type="button" class="btn-reset" onclick="resetTest('cacthe')" style="display:none;">Làm lại</button>
+                            <p id="msg-cacthe" class="final-msg"></p>
+                        </form>
+                    </div>
             </div>
 
             <!-- THUỘC TÍNH -->
@@ -269,10 +452,56 @@
                         <td>Khai báo sử dụng CSS ngay trong thẻ HTML</td>
                     </tr>
                      <tr>
-                        <td>value</t
+                        <td>value</td>
                         <td>Khai báo giá trị cho thẻ &lt;input&gt;</td>
                     </tr>
-                    </table>  
+                    </table> 
+                       <h3 class="title2">Củng cố lại kiến thức</h3>
+                        <div class="test-box" id="test-thuoctinh">
+                            <h2>Bài test: Thuộc tính HTML</h2>
+                            <form id="form-thuoctinh">
+
+                                <div class="question" data-answer="a">
+                                    <p>Câu 1: Thuộc tính chỉ ngôn ngữ trang?</p>
+                                    <label><input type="radio" name="q1" value="a"> lang</label>
+                                    <label><input type="radio" name="q1" value="b"> type</label>
+                                    <label><input type="radio" name="q1" value="c"> href</label>
+                                    <label><input type="radio" name="q1" value="d"> value</label>
+                                    <span class="result"></span>
+                                </div>
+
+                                <div class="question" data-answer="b">
+                                    <p>Câu 2: Thuộc tính liên kết dùng cho thẻ &lt;a&gt;?</p>
+                                    <label><input type="radio" name="q2" value="a"> src</label>
+                                    <label><input type="radio" name="q2" value="b"> href</label>
+                                    <label><input type="radio" name="q2" value="c"> alt</label>
+                                    <label><input type="radio" name="q2" value="d"> class</label>
+                                    <span class="result"></span>
+                                </div>
+
+                                <div class="question" data-answer="c">
+                                    <p>Câu 3: Thuộc tính chỉnh CSS trực tiếp?</p>
+                                    <label><input type="radio" name="q3" value="a"> class</label>
+                                    <label><input type="radio" name="q3" value="b"> id</label>
+                                    <label><input type="radio" name="q3" value="c"> style</label>
+                                    <label><input type="radio" name="q3" value="d"> title</label>
+                                    <span class="result"></span>
+                                </div>
+
+                                <div class="question" data-answer="d">
+                                    <p>Câu 4: Thuộc tính mô tả ảnh khi lỗi?</p>
+                                    <label><input type="radio" name="q4" value="a"> src</label>
+                                    <label><input type="radio" name="q4" value="b"> width</label>
+                                    <label><input type="radio" name="q4" value="c"> height</label>
+                                    <label><input type="radio" name="q4" value="d"> alt</label>
+                                    <span class="result"></span>
+                                </div>
+
+                                <button type="button" onclick="checkTest('thuoctinh')">Hoàn thành</button>
+                                <button type="button" class="btn-reset" onclick="resetTest('thuoctinh')" style="display:none;">Làm lại</button>
+                                <p id="msg-thuoctinh" class="final-msg"></p>
+                            </form>
+                        </div>
             </div>
 
             <!-- LIÊN KẾT -->
@@ -314,6 +543,52 @@
                         <td>Mở liên kết trên toàn cửa sổ.</td>
                     </tr>
                 </table>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                    <div class="test-box" id="test-lienket">
+                        <h2>Bài test: Liên kết HTML</h2>
+                        <form id="form-lienket">
+
+                            <div class="question" data-answer="b">
+                                <p>Câu 1: Thẻ tạo liên kết là?</p>
+                                <label><input type="radio" name="q1" value="a"> &lt;link&gt;</label>
+                                <label><input type="radio" name="q1" value="b"> &lt;a&gt;</label>
+                                <label><input type="radio" name="q1" value="c"> &lt;href&gt;</label>
+                                <label><input type="radio" name="q1" value="d"> &lt;nav&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="a">
+                                <p>Câu 2: Thuộc tính chỉ địa chỉ liên kết?</p>
+                                <label><input type="radio" name="q2" value="a"> href</label>
+                                <label><input type="radio" name="q2" value="b"> src</label>
+                                <label><input type="radio" name="q2" value="c"> link</label>
+                                <label><input type="radio" name="q2" value="d"> url</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="c">
+                                <p>Câu 3: Mở link sang tab mới?</p>
+                                <label><input type="radio" name="q3" value="a"> _self</label>
+                                <label><input type="radio" name="q3" value="b"> _parent</label>
+                                <label><input type="radio" name="q3" value="c"> _blank</label>
+                                <label><input type="radio" name="q3" value="d"> _top</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="d">
+                                <p>Câu 4: Liên kết email dùng?</p>
+                                <label><input type="radio" name="q4" value="a"> http://</label>
+                                <label><input type="radio" name="q4" value="b"> https://</label>
+                                <label><input type="radio" name="q4" value="c"> ftp://</label>
+                                <label><input type="radio" name="q4" value="d"> mailto:</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <button type="button" onclick="checkTest('lienket')">Hoàn thành</button>
+                            <button type="button" class="btn-reset" onclick="resetTest('lienket')" style="display:none;">Làm lại</button>
+                            <p id="msg-lienket" class="final-msg"></p>
+                        </form>
+                    </div>
             </div>
 
             <!-- HÌNH ẢNH -->
@@ -344,8 +619,54 @@
                        <img src="/img/a8.png" alt="ảnh minh hoạ">
                 <h2 class="title2">Hình ảnh ở một website khác</h2>
                 <p>Đôi khi bạn muốn lấy ảnh từ một website khác để chèn vào trong bài viết của mình. Cách đơn giản nhất là bạn hãy lấy địa chỉ của bức ảnh và dán vào phần url.</p>
-                    <div class="one">&lt;img src="http://www.tbit.vn/styles/default/xenforo/tbit.png" alt="Logo từ trang TBit"&gt;
-                </div>
+                    <div class="one">&lt;img src="http://www.tbit.vn/styles/default/xenforo/tbit.png" alt="Logo từ trang TBit"&gt;</div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                    <div class="test-box" id="test-hinhanh">
+                        <h2>Bài test: Hình ảnh HTML</h2>
+                        <form id="form-hinhanh">
+
+                            <div class="question" data-answer="a">
+                                <p>Câu 1: Thẻ chèn hình ảnh?</p>
+                                <label><input type="radio" name="q1" value="a"> &lt;img&gt;</label>
+                                <label><input type="radio" name="q1" value="b"> &lt;image&gt;</label>
+                                <label><input type="radio" name="q1" value="c"> &lt;pic&gt;</label>
+                                <label><input type="radio" name="q1" value="d"> &lt;photo&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="b">
+                                <p>Câu 2: Thuộc tính chỉ đường dẫn ảnh?</p>
+                                <label><input type="radio" name="q2" value="a"> alt</label>
+                                <label><input type="radio" name="q2" value="b"> src</label>
+                                <label><input type="radio" name="q2" value="c"> link</label>
+                                <label><input type="radio" name="q2" value="d"> href</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="d">
+                                <p>Câu 3: Thuộc tính mô tả ảnh?</p>
+                                <label><input type="radio" name="q3" value="a"> title</label>
+                                <label><input type="radio" name="q3" value="b"> src</label>
+                                <label><input type="radio" name="q3" value="c"> width</label>
+                                <label><input type="radio" name="q3" value="d"> alt</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="c">
+                                <p>Câu 4: Thẻ &lt;img&gt; là?</p>
+                                <label><input type="radio" name="q4" value="a"> Thẻ khối</label>
+                                <label><input type="radio" name="q4" value="b"> Thẻ chứa nội dung</label>
+                                <label><input type="radio" name="q4" value="c"> Thẻ không có thẻ đóng</label>
+                                <label><input type="radio" name="q4" value="d"> Thẻ meta</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <button type="button" onclick="checkTest('hinhanh')">Hoàn thành</button>
+                            <button type="button" class="btn-reset" onclick="resetTest('hinhanh')" style="display:none;">Làm lại</button>
+                            <p id="msg-hinhanh" class="final-msg"></p>
+                        </form>
+                    </div>
+
             </div>
 
             <!-- BẢNG BIỂU -->
@@ -458,6 +779,53 @@
                             <td>Hoa mai</td>
                         </tr>
                     </table>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                    <div class="test-box" id="test-bangbieu">
+                        <h2>Bài test: Bảng biểu HTML</h2>
+                        <form id="form-bangbieu">
+
+                            <div class="question" data-answer="a">
+                                <p>Câu 1: Thẻ tạo bảng?</p>
+                                <label><input type="radio" name="q1" value="a"> &lt;table&gt;</label>
+                                <label><input type="radio" name="q1" value="b"> &lt;tab&gt;</label>
+                                <label><input type="radio" name="q1" value="c"> &lt;tr&gt;</label>
+                                <label><input type="radio" name="q1" value="d"> &lt;td&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="b">
+                                <p>Câu 2: Thẻ tạo một hàng?</p>
+                                <label><input type="radio" name="q2" value="a"> &lt;th&gt;</label>
+                                <label><input type="radio" name="q2" value="b"> &lt;tr&gt;</label>
+                                <label><input type="radio" name="q2" value="c"> &lt;td&gt;</label>
+                                <label><input type="radio" name="q2" value="d"> &lt;row&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="c">
+                                <p>Câu 3: Thẻ ô dữ liệu?</p>
+                                <label><input type="radio" name="q3" value="a"> &lt;tr&gt;</label>
+                                <label><input type="radio" name="q3" value="b"> &lt;th&gt;</label>
+                                <label><input type="radio" name="q3" value="c"> &lt;td&gt;</label>
+                                <label><input type="radio" name="q3" value="d"> &lt;cell&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="d">
+                                <p>Câu 4: Thẻ ô tiêu đề bảng?</p>
+                                <label><input type="radio" name="q4" value="a"> &lt;table&gt;</label>
+                                <label><input type="radio" name="q4" value="b"> &lt;tr&gt;</label>
+                                <label><input type="radio" name="q4" value="c"> &lt;td&gt;</label>
+                                <label><input type="radio" name="q4" value="d"> &lt;th&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <button type="button" onclick="checkTest('bangbieu')">Hoàn thành</button>
+                            <button type="button" class="btn-reset" onclick="resetTest('bangbieu')" style="display:none;">Làm lại</button>
+                            <p id="msg-bangbieu" class="final-msg"></p>
+                        </form>
+                    </div>
+
                 </div>
             <!-- DANH SÁCH -->
             <div id="danhsach" class="content">
@@ -549,6 +917,53 @@
                                 </li>
                                 <li>JavaScript</li>
                             </ul></div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                    <div class="test-box" id="test-danhsach">
+                        <h2>Bài test: Danh sách HTML</h2>
+                        <form id="form-danhsach">
+
+                            <div class="question" data-answer="a">
+                                <p>Câu 1: Danh sách không thứ tự?</p>
+                                <label><input type="radio" name="q1" value="a"> &lt;ul&gt;</label>
+                                <label><input type="radio" name="q1" value="b"> &lt;ol&gt;</label>
+                                <label><input type="radio" name="q1" value="c"> &lt;li&gt;</label>
+                                <label><input type="radio" name="q1" value="d"> &lt;list&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="b">
+                                <p>Câu 2: Danh sách có thứ tự?</p>
+                                <label><input type="radio" name="q2" value="a"> &lt;ul&gt;</label>
+                                <label><input type="radio" name="q2" value="b"> &lt;ol&gt;</label>
+                                <label><input type="radio" name="q2" value="c"> &lt;li&gt;</label>
+                                <label><input type="radio" name="q2" value="d"> &lt;dl&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="c">
+                                <p>Câu 3: Thẻ cho mỗi mục?</p>
+                                <label><input type="radio" name="q3" value="a"> &lt;ul&gt;</label>
+                                <label><input type="radio" name="q3" value="b"> &lt;ol&gt;</label>
+                                <label><input type="radio" name="q3" value="c"> &lt;li&gt;</label>
+                                <label><input type="radio" name="q3" value="d"> &lt;item&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <div class="question" data-answer="d">
+                                <p>Câu 4: Danh sách mô tả?</p>
+                                <label><input type="radio" name="q4" value="a"> &lt;ul&gt;</label>
+                                <label><input type="radio" name="q4" value="b"> &lt;ol&gt;</label>
+                                <label><input type="radio" name="q4" value="c"> &lt;li&gt;</label>
+                                <label><input type="radio" name="q4" value="d"> &lt;dl&gt;</label>
+                                <span class="result"></span>
+                            </div>
+
+                            <button type="button" onclick="checkTest('danhsach')">Hoàn thành</button>
+                            <button type="button" class="btn-reset" onclick="resetTest('danhsach')" style="display:none;">Làm lại</button>
+                            <p id="msg-danhsach" class="final-msg"></p>
+                        </form>
+                    </div>
+
                 </div>
 
             <!-- CHÚ THÍCH -->
@@ -566,4 +981,3 @@
             </div>
             </div>
         </div>
-</div>
