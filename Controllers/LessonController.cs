@@ -1,11 +1,47 @@
+<<<<<<< HEAD
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+=======
 using EasyCode.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
 
 namespace EasyCode.Controllers
 {
     public class LessonController : Controller
     {
+<<<<<<< HEAD
+        private readonly ILogger<LessonController> _logger;
+
+        public LessonController(ILogger<LessonController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            return RedirectToAction(nameof(Indexhtml));
+        }
+
+        public IActionResult Indexhtml()
+        {
+            return View();
+        }
+
+        public IActionResult Indexcss()
+        {
+            return View();
+        }
+
+    }
+}
+=======
         private readonly DataContext _context;
 
         public LessonController(DataContext context)
@@ -62,3 +98,4 @@ namespace EasyCode.Controllers
         }
 }}
             
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f

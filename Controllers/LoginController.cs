@@ -3,9 +3,12 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Security.Claims;
+<<<<<<< HEAD
+=======
 using System.Security.Cryptography;
 using System.IO;
 using Microsoft.AspNetCore.WebUtilities;
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
 using EasyCode.Models;
 using EasyCode.Models.Auth;
 using Microsoft.AspNetCore.Authentication;
@@ -14,7 +17,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+<<<<<<< HEAD
+=======
 using Microsoft.AspNetCore.Hosting;
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
 
 namespace EasyCode.Controllers
 {
@@ -23,14 +29,22 @@ namespace EasyCode.Controllers
         private readonly ILogger<LoginController> _logger;
         private readonly DataContext _db;
         private readonly PasswordHasher<Users> _passwordHasher;
+<<<<<<< HEAD
+
+        public LoginController(ILogger<LoginController> logger, DataContext db)
+=======
         private readonly IWebHostEnvironment _env;
 
         public LoginController(ILogger<LoginController> logger, DataContext db, IWebHostEnvironment env)
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
         {
             _logger = logger;
             _db = db;
             _passwordHasher = new PasswordHasher<Users>();
+<<<<<<< HEAD
+=======
             _env = env;
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
         }
 
         [HttpGet]
@@ -48,6 +62,8 @@ namespace EasyCode.Controllers
             return View(vm);
         }
 
+<<<<<<< HEAD
+=======
         [HttpGet]
         public IActionResult ForgotPassword()
         {
@@ -325,6 +341,7 @@ namespace EasyCode.Controllers
             return Convert.ToBase64String(hash);
         }
 
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind(Prefix = "Register")] RegisterViewModel register)
@@ -447,7 +464,10 @@ namespace EasyCode.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName ?? user.Email ?? "User"),
                 new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
+<<<<<<< HEAD
+=======
                 new Claim("avatar", user.AvatarPath ?? string.Empty),
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
