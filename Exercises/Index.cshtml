@@ -1,0 +1,75 @@
+@{
+<<<<<<< HEAD
+    ViewData["Title"] = "Bài tập";
+=======
+    ViewData["Title"] = "Exercises";
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["NoContainer"] = true;
+}
+
+@section Styles {
+  <link rel="stylesheet" href="~/css/exercises.css" asp-append-version="true" />
+}
+
+@section Scripts {
+  <script src="~/js/menuicon.js" asp-append-version="true"></script>
+}
+
+<<<<<<< HEAD
+<div class="exercise-index">
+   
+
+    <div class="img-container">
+        <img src="~/img/exer.png" alt="Hãy bắt đầu luyện tập!" />
+
+        <!-- Hamburger icon + Menu (menu must be inside hamburger for CSS selector) -->
+        <div class="hamburger" id="hamburger" aria-label="Menu bài tập" role="button" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <nav class="menu" id="menu">
+                <ul>
+                    <li>
+                        <a asp-controller="Exercises" asp-action="Html">Bài tập HTML</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Exercises" asp-action="Css">Bài tập CSS</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Exercises" asp-action="Progress">Tiến độ Học Tập</a>
+                    </li>
+                   
+                </ul>
+            </nav>
+
+
+        </div>
+    </div>
+=======
+<div class="img-container">
+    <img src="~/img/exer.png" alt="Luyện tập ngay" />
+
+    <!-- Hamburger icon + Menu (menu must be inside hamburger for CSS selector) -->
+    <div class="hamburger" id="hamburger" aria-label="Exercises menu" role="button" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+
+        <nav class="menu" id="menu">
+            <ul>
+                <li>
+                    <a asp-controller="Exercises" asp-action="Html">Bài tập HTML</a>
+                </li>
+                <li>
+                    <a asp-controller="Exercises" asp-action="Css">Bài tập CSS</a>
+                </li>
+                <li>
+                    <a asp-controller="Exercises" asp-action="Advanced">Kiểm tra</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
