@@ -191,6 +191,7 @@ ul.list {
 img{
   display: block;
   margin: 20px auto;
+<<<<<<< HEAD
 }
 /* Overlay */
 #attendanceOverlay {
@@ -287,4 +288,6 @@ img{
     border-radius: 5px;
     cursor: pointer;
     margin: 20px;
+=======
+>>>>>>> d378627 (Initial commit)
 }

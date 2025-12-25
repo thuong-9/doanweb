@@ -12,6 +12,7 @@ function showContent(id, element) {
     menuItems.forEach((item) => item.classList.remove('active-link'));
     if (element) element.classList.add('active-link');
 }
+<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", function () {
 
     const overlay = document.getElementById("attendanceOverlay");
@@ -76,4 +77,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
     });
+=======
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Đảm bảo luôn có 1 tab + 1 content active
+    const hasActiveContent = document.querySelector('.content.active');
+    if (!hasActiveContent) {
+        const firstContent = document.querySelector('.content');
+        if (firstContent) firstContent.classList.add('active');
+    }
+
+    const hasActiveLink = document.querySelector('.sidebar_menu a.active-link, .menu a.active-link');
+    if (!hasActiveLink) {
+        const firstLink = document.querySelector('.sidebar_menu a, .menu a');
+        if (firstLink) firstLink.classList.add('active-link');
+    }
+>>>>>>> d378627 (Initial commit)
 });

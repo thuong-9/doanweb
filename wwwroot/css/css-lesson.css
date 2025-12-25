@@ -446,6 +446,7 @@ ul.horizontal1 li a:hover {
 ul.horizontal1 li a.active1 {
   background-color: #111111;
 }
+<<<<<<< HEAD
 /* Nút điểm danh */
 /* Overlay */
 #attendanceOverlay {
@@ -543,3 +544,5 @@ ul.horizontal1 li a.active1 {
     cursor: pointer;
     margin: 20px;
 }
+=======
+>>>>>>> d378627 (Initial commit)

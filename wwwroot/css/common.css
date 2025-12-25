@@ -84,7 +84,11 @@ main {
 }
 .main-nav a:hover,
 .main-nav a.active {
+<<<<<<< HEAD
   background: #0077ffb5;
+=======
+  background: var(--primary);
+>>>>>>> d378627 (Initial commit)
   color: #fff;
 }
 
@@ -124,7 +128,10 @@ ul.dropdown-menu {
 .dropdown-menu li a:hover {
   background: var(--primary);
   color: #fff;
+<<<<<<< HEAD
   margin: 0;
+=======
+>>>>>>> d378627 (Initial commit)
 }
 
 /* ======== AUTH LINKS ======== */
@@ -138,6 +145,7 @@ ul.dropdown-menu {
   color: #fff;
 }
 
+<<<<<<< HEAD
 /* Keep Bootstrap account dropdown stable and right-aligned */
 .auth-links .dropdown {
   position: relative;
@@ -150,6 +158,8 @@ ul.dropdown-menu {
   transition: none;
 }
 
+=======
+>>>>>>> d378627 (Initial commit)
 /* ======== BUTTONS ======== */
 .btn {
   display: inline-block;

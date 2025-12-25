@@ -3,10 +3,15 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+<<<<<<< HEAD
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
 
+=======
+builder.Services.AddSession();
+
+>>>>>>> d378627 (Initial commit)
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -52,6 +57,7 @@ BEGIN
 
     IF COL_LENGTH(N'dbo.Users', N'UserName') IS NOT NULL
         EXEC(N'ALTER TABLE dbo.Users ALTER COLUMN [UserName] NVARCHAR(256) NOT NULL');
+<<<<<<< HEAD
 
     IF COL_LENGTH(N'dbo.Users', N'PasswordResetTokenHash') IS NULL
         EXEC(N'ALTER TABLE dbo.Users ADD [PasswordResetTokenHash] NVARCHAR(256) NULL');
@@ -61,6 +67,8 @@ BEGIN
 
     IF COL_LENGTH(N'dbo.Users', N'AvatarPath') IS NULL
         EXEC(N'ALTER TABLE dbo.Users ADD [AvatarPath] NVARCHAR(260) NULL');
+=======
+>>>>>>> d378627 (Initial commit)
 END
 ");
     }
@@ -82,10 +90,17 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+<<<<<<< HEAD
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
+=======
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseSession();
+>>>>>>> d378627 (Initial commit)
 
 app.MapControllerRoute(
     name: "default",

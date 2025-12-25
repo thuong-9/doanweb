@@ -17,16 +17,24 @@
     <div class="background-image">
             <img src="/img/DKH.png" alt="Đăng Ký Khóa Học" />
             <div class="register-container">
+<<<<<<< HEAD
             <form id="registerForm" asp-action="DangKy" method="post" class="register-form">
+=======
+            <form asp-action="DangKy" method="post" class="register-form">
+>>>>>>> d378627 (Initial commit)
                 <label for="HoTen">Họ và tên</label>
                 <input type="text" id="HoTen" name="HoTen" placeholder="Nhập họ tên" required />
                 <label for="SDT">Số điện thoại</label>
                 <input type="tel" id="SDT" name="SDT" placeholder="Nhập số điện thoại" required />
                 <label for="Gmail">Email</label>
+<<<<<<< HEAD
                 <input type="email" id="Gmail" name="Gmail" 
                     placeholder="Nhập email" 
                     value="@ViewBag.UserEmail" 
                     @(string.IsNullOrEmpty(ViewBag.UserEmail) ? "" : "readonly") />
+=======
+                <input type="email" id="Gmail" name="Gmail" placeholder="Nhập email" required />
+>>>>>>> d378627 (Initial commit)
                 <label for="KhungGio">Khung giờ có thể liên hệ</label>
                 <select id="KhungGio" name="KhungGio" required>
                     <option value="">-- Chọn khung giờ --</option>
@@ -79,6 +87,7 @@
     
 
     function showQR() {
+<<<<<<< HEAD
     const Gmail = document.getElementById('Gmail').value.trim();
     if (!Gmail) {
         alert("Vui lòng nhập email!");
@@ -110,6 +119,31 @@
             }, 1000);
         });
 }
+=======
+        document.getElementById("qrOverlay").style.display = "flex";
+        totalSeconds = 600;
+
+        clearInterval(timer);
+        updateCountdown();
+
+        timer = setInterval(() => {
+            totalSeconds--;
+            updateCountdown();
+
+            if (totalSeconds <= 0) {
+                clearInterval(timer);
+                document.getElementById("countdown").innerText = "Hết hạn";
+                alert("Mã QR đã hết hạn!");
+                closeQR();
+            }
+        }, 1000);
+    }
+
+    function closeQR() {
+        clearInterval(timer);
+        document.getElementById("qrOverlay").style.display = "none";
+    }
+>>>>>>> d378627 (Initial commit)
 
     function updateCountdown() {
         let minutes = Math.floor(totalSeconds / 60);
@@ -143,6 +177,7 @@
             }
         });
     }
+<<<<<<< HEAD
 function verifyOTP() {
     const otp = document.getElementById('otpInput').value;
     const HoTen = document.getElementById('HoTen').value;
@@ -179,6 +214,29 @@ function verifyOTP() {
         });
     });
 }
+=======
+
+    function verifyOTP() {
+        const otp = document.getElementById('otpInput').value;
+
+        fetch('/Home/XacNhanOTP', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'otp=' + otp
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("Đăng ký thành công 🎉");
+                closeQR();
+            } else {
+                alert("OTP sai!");
+            }
+        });
+    }
+>>>>>>> d378627 (Initial commit)
 
 </script>
 

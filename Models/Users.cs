@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -53,3 +54,32 @@ namespace EasyCode.Models
     }
 }
 >>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
+=======
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+namespace EasyCode.Models
+{
+    [Table("Users")]
+    public class Users
+    {
+        [Key]
+        public int UserID { get; set; }
+        [Required]
+        [MaxLength(256)]
+        public string UserName { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(256)]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(512)]
+        public string Password { get; set; } = string.Empty;
+
+    }
+}
+>>>>>>> d378627 (Initial commit)

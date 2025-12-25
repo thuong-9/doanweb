@@ -1,5 +1,9 @@
 @{
+<<<<<<< HEAD
     ViewData["Title"] = "Exercises";
+=======
+    ViewData["Title"] = "Bài tập";
+>>>>>>> d378627 (Initial commit)
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["NoContainer"] = true;
 }
@@ -12,6 +16,7 @@
   <script src="~/js/menuicon.js" asp-append-version="true"></script>
 }
 
+<<<<<<< HEAD
 <div class="img-container">
     <img src="~/img/exer.png" alt="Luyện tập ngay" />
 
@@ -36,3 +41,35 @@
         </nav>
     </div>
 </div>
+=======
+<div class="exercise-index">
+   
+
+    <div class="img-container">
+        <img src="~/img/exer.png" alt="Hãy bắt đầu luyện tập!" />
+
+        <!-- Hamburger icon + Menu (menu must be inside hamburger for CSS selector) -->
+        <div class="hamburger" id="hamburger" aria-label="Menu bài tập" role="button" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <nav class="menu" id="menu">
+                <ul>
+                    <li>
+                        <a asp-controller="Exercises" asp-action="Html">Bài tập HTML</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Exercises" asp-action="Css">Bài tập CSS</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Exercises" asp-action="Progress">Tiến độ Học Tập</a>
+                    </li>
+                   
+                </ul>
+            </nav>
+
+
+        </div>
+    </div>
+>>>>>>> d378627 (Initial commit)
