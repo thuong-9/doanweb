@@ -1,0 +1,293 @@
+@import url('common.css');
+/* css của trang bài học */
+.main-content{
+    background-color: #e5f1f7;
+    background-size: 7px 7px;
+}
+ul.list {
+  list-style: none;  
+  padding-left: 0;    
+  margin: 0;  
+}
+.main_box {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+/* Scrollable sticky sidebar like exercises */
+.main_box .sidebar_menu{
+  position: sticky;
+  top: 71px;
+  background: rgba(255, 255, 255, 0.9);
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+  min-width: 300px;
+  height: 89vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none; /* Ẩn trên Firefox */
+}
+
+/* Ẩn thanh cuộn trên Chrome, Edge, Safari */
+.main_box .sidebar_menu::-webkit-scrollbar {
+  display: none;
+}
+.sidebar_menu .logo{
+    background-color: #fff;
+    align-content: center;
+    padding: 15px ;
+    font-size: 28px; 
+    font-weight: 700; 
+    color: #007bff; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    }   
+.sidebar_menu .list{
+    list-style: none;
+    padding: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.sidebar_menu .list li{
+    margin-top: 3px;
+    padding: 0;
+}
+.sidebar_menu .list li:hover{
+    border-left: 1px solid #ffffff;
+    box-shadow: 0 0 4px rgba(167, 167, 167, 0.5);
+}
+.sidebar_menu .list a{
+    display: block;
+    color: #4494df;
+    font-size: 22px;
+    text-decoration: none;
+    padding: 8px 20px;
+}
+.main-content{
+    flex-grow: 1;
+    padding: 10px 50px;
+    border-left: 1px solid #efefef;
+    /* margin-left: 300px; */
+  margin-top: 0;
+}
+.main-title {
+    color: white;
+    font-size: 30px;
+    background-color: #0097e6;
+    text-align:center;
+    border-radius: 8px;
+    box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.1),   
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.title2 {
+    font-weight: 50px;
+    font-size: 32px;
+    margin-top: 1em;
+    margin-bottom: 1px;
+    color:#0097e6
+}
+.khung {
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px 55px;
+  width: 550px;
+  font-size: 16px;
+  margin: 20px auto; 
+  display: block;    
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  color: #0077cc;
+}
+.one{
+  background: #fff;
+  border-radius: 15px;
+  padding: 10px 20px;
+  width: 580px;
+  font-size: 17px;
+  justify-items: center;
+  margin: 20px auto; 
+  display: block;   
+  text-align: center;  
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  color: #0077cc;
+}
+.content table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: 30px auto;
+  font-size: 16px;
+  text-align: left;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.content th, .content td {
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  vertical-align: top;
+}
+
+.content th {
+  background-color: #0077cc;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+}
+
+.content tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.content tr:hover {
+  background-color: #e6f0ff;
+  transition: background-color 0.3s;
+}
+.content { display: none; }
+.content.active { display: block; }
+
+.sidebar_menu a.active-link {
+  color: #fff;
+  background: #4494df;
+  border-radius: 5px;
+}
+.main-content .note {
+  background: #e8f9e9;             
+  border-left: 6px solid #28a745;  
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin: 25px auto;
+  width: 800px;
+  color: #1b5e20;
+  font-size: 18px;
+  line-height: 1.6;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.note:hover {
+  background: #d2f5d4;            
+  box-shadow: 0 0 15px rgba(40, 167, 69, 0.3);
+}
+.lesson p{
+  font-size: 18px;
+}
+.code{
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px 110px;
+  width: 550px;
+  font-size: 16px;
+  margin: 20px auto; 
+  display: block;    
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  color: #0077cc;
+}
+.th{
+  padding: 1px 50px;
+}
+img{
+  display: block;
+  margin: 20px auto;
+<<<<<<< HEAD
+=======
+}
+/* Overlay */
+#attendanceOverlay {
+    display: none;
+    position: fixed; top:0; left:0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 9999; overflow: auto;
+}
+
+/* Container */
+.attendance-container {
+    position: relative;
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+/* Nút đóng */
+#closeAttendance {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* Title */
+.attendance-title {
+    font-size: 24px;
+    color: #ff9900;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Grid 3+3+1 layout */
+.attendance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    justify-items: center;
+}
+
+/* Ô ngày */
+.day {
+    width: 85px;
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    color: white;
+    background-color: #c2c1c1f8; /* màu trắng mặc định */
+}
+
+/* Ô 7 căn giữa hàng 3 */
+.day[data-day="7"] {
+    grid-column: 2 / 3; /* nằm giữa */
+    margin-top: 15px;
+}
+
+/* Hover */
+.day:hover { transform: scale(1.1); }
+
+/* Checked colors theo thứ tự 1->7 */
+.day.checked[data-day="1"] { background-color: #a51414; }
+.day.checked[data-day="2"] { background-color: #bb4d04; }
+.day.checked[data-day="3"] { background-color: #ffd24d; }
+.day.checked[data-day="4"] { background-color: #07a707; }
+.day.checked[data-day="5"] { background-color: #1f3ab4; }
+.day.checked[data-day="6"] { background-color: #945de7; }
+.day.checked[data-day="7"] { background-color: #e904b0; }
+
+/* Nút mở overlay */
+#openAttendance {
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px;
+>>>>>>> bf3e2edcc384baa954f85aabdc33b5eaf544c18f
+}
