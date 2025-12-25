@@ -9,58 +9,25 @@
 }
 
 @section Scripts {
-  <script src="~/js/lesson.js" asp-append-version="true"></script>
+  <script src="~/js/css-lesson.js" asp-append-version="true"></script>
 }
-@if (ViewBag.ShowAttendance == true)
-{
-    <partial name="_Attendance" />
-}
-
-<button id="openAttendance" title="Điểm danh"
-     style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px;
-            background-color: #5095fc; border-radius: 50%; display: flex;
-            justify-content: center; align-items: center; cursor: pointer;
-            z-index: 9999; box-shadow: 0 2px 6px rgba(0,0,0,0.3); font-size: 30px;">🏠</button>
-
-<div id="attendanceOverlay">
-    <div class="attendance-container">
-        <button id="closeAttendance">✖</button>
-        <h2 class="attendance-title">Tích điểm hôm nay</h2>
-        <div class="attendance-grid">
-            <div class="day" data-day="1">🌟</div>
-            <div class="day" data-day="2">🌟</div>
-            <div class="day" data-day="3">🌟</div>
-            <div class="day" data-day="4">🌟</div>
-            <div class="day" data-day="5">🌟</div>
-            <div class="day" data-day="6">🌟</div>
-            <div class="day" data-day="7">🌟🌟</div>
-        </div>
-    </div>
-</div>
-<script>
-    window.lastCheckedDay = @((int)(ViewBag.LastCheckedDay ?? 0));
-    window.checkedToday = @(ViewBag.CheckedToday == true ? "true" : "false");
-</script>
-
-
-
 
 <div class="css-lesson">
   <div class="menu">
-      <div class="logo">CSS</div>
-      <ul class="list">
-          <li><a href="javascript:void(0)" onclick="showContent('Home', this)" class="active-link">Giới thiệu CSS</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('Syntax', this)">Cú pháp</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('Selectors', this)">Bộ chọn</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('cachthuchien', this)">Cách thực hiện</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('Comment', this)">Comment</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('Color', this)">Màu sắc</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('Nen', this)">Nền</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('Border', this)">Đường viền</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('Margins', this)">Lề CSS</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('dem', this)">Đệm</a></li>
-          <li><a href="javascript:void(0)" onclick="showContent('thanhdieuhuong', this)">Thanh điều hướng</a></li>
-      </ul>
+    <div class="logo">CSS</div>
+        <ul class="list">
+        <li><a href="javascript:void(0)" onclick="showContent('Home', this)" class="active-link">Giới thiệu CSS</a> <span id="menu-prog-Home" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Syntax', this)">Cú pháp</a> <span id="menu-prog-Syntax" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Selectors', this)">Bộ chọn</a> <span id="menu-prog-Selectors" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Cachthuchien', this)">Cách thực hiện</a> <span id="menu-prog-Cachthuchien" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Comment', this)">Comment</a> <span id="menu-prog-Comment" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Color', this)">Màu sắc</a> <span id="menu-prog-Color" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Nen', this)">Nền</a> <span id="menu-prog-Nen" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Border', this)">Đường viền</a> <span id="menu-prog-Border" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Margins', this)">Lề CSS</a> <span id="menu-prog-Margins" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Dem', this)">Đệm</a> <span id="menu-prog-Dem" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Thanhdieuhuong', this)">Thanh điều hướng</a> <span id="menu-prog-Thanhdieuhuong" class="menu-percent">(0%)</span></li>
+    </ul>
   </div>
 
   <!-- KHU VỰC NỘI DUNG -->
@@ -70,9 +37,8 @@
                     <h2 class = "title2">CSS là gì?</h2>
                     <div class = "khung">
                         <p>CSS (<b>C</b>ascading <b>S</b>tyle <b>S</b>heets) là ngôn ngữ dùng để tạo phong cách và định dạng cho các phần tử được xây dựng bằng HTML. Nếu HTML đóng vai trò xây dựng cấu trúc trang web (tạo đoạn văn, tiêu đề, bảng,…), thì CSS giúp tô điểm giao diện như thay đổi màu sắc, bố cục, font chữ, kích thước và hình dạng của các phần tử đó.</p>
-                        <br>
-                        <p>CSS được phát triển bởi <b>W3C</b> (World Wide Web Consortium) vào năm 1996, nhằm bổ sung khả năng định dạng cho HTML - vốn không được thiết kế để trình bày giao diện phức tạp.</p><br>
-                        <p>Cách hoạt động của CSS là dựa vào vùng chọn (selector) - có thể là tên thẻ HTML, ID, class,… rồi áp dụng các thuộc tính style tương ứng cho vùng đó.</p><br>
+                        <p>CSS được phát triển bởi <b>W3C</b> (World Wide Web Consortium) vào năm 1996, nhằm bổ sung khả năng định dạng cho HTML - vốn không được thiết kế để trình bày giao diện phức tạp.</p>
+                        <p>Cách hoạt động của CSS là dựa vào vùng chọn (selector) - có thể là tên thẻ HTML, ID, class,… rồi áp dụng các thuộc tính style tương ứng cho vùng đó.</p>
                         <p>Giữa HTML và CSS tồn tại mối quan hệ chặt chẽ: HTML xây dựng khung nội dung, còn CSS tạo nên diện mạo - hai ngôn ngữ này không thể tách rời trong thiết kế web.</p><br>
                     <img src="https://lirp.cdn-website.com/c57d8c85/dms3rep/multi/opt/css-la-gi-640w.webp" alt="Ảnh minh họa CSS" width="400" style="display:block; margin:auto; border-radius:10px;">
                     </div>
@@ -94,6 +60,7 @@
                             <li><b>Trải nghiệm người dùng tốt hơn:</b> Tạo ra các trang web có giao diện thu hút và chuyên nghiệp.</li>
                         </ul>
                     </div>
+                    <div id="quiz-area-Home" class="quiz-container"></div>
                 </div>
 
                 <div id="Syntax" class="content">
@@ -133,7 +100,9 @@
                             <li><b>p</b> là một bộ chọn trong CSS (nó trỏ đến phần tử HTML mà bạn muốn định dạng: &lt;p&gt;).</li>
                             <li><b>color</b> là một thuộc tính và redlà giá trị thuộc tính.</li>
                             <li><b>text-align</b> là một thuộc tính và centerlà giá trị thuộc tính</li>
-                        </ul></div>
+                        </ul>
+                        </div>
+                        <div id="quiz-area-Syntax" class="quiz-container"></div>
                 </div>
 
                 <div id="Selectors" class="content">
@@ -512,9 +481,10 @@
             <td>Selects all elements with a href attribute value containing the substring "w3schools"</td>
         </tr>
     </table>
+                    <div id="quiz-area-Selectors" class="quiz-container"></div>
                 </div>
 
-                <div id="cachthuchien" class="content">
+                <div id="Cachthuchien" class="content">
                     <h1 class = "main-title">Cách thực hiện CSS</h1>
                     <br>
                         <p><i>Khi trình duyệt đọc một bảng định kiểu, nó sẽ định dạng tài liệu HTML theo thông tin trong bảng định kiểu đó.</i></p>
@@ -584,6 +554,7 @@
                             <li>Internal CSS</li>
                             <li>External CSS (ưu tiên thấp nhất)</li>
                         </ol></div>
+                        <div id="quiz-area-Cachthuchien" class="quiz-container"></div>
                 </div>
 
                 <div id="Comment" class="content">
@@ -620,6 +591,7 @@ p {
   color: red;
 }</code></pre>
                     </div>
+                    <div id="quiz-area-Comment" class="quiz-container"></div>
                 </div>
 
                 <div id="Color" class="content">
@@ -711,7 +683,8 @@ p {
                             <div class="color-box1" style="background-color: hsla(300, 100%, 90%, 0.7);">hsla(300, 100%, 90%, 0.7)</div>
                             <div class="color-box1" style="background-color: hsla(300, 100%, 100%, 0.7);">hsla(300, 100%, 100%, 0.7)</div>
                     <br>
-                <p>Có thể tham khảo: <a href="https://ingiacong.co/bang-code-mau/"target="_blank" style="text-decoration:none; color:blue;">Truy cập tại đây</a></p>
+                    <p>Có thể tham khảo: <a href="https://ingiacong.co/bang-code-mau/"target="_blank" style="text-decoration:none; color:blue;">Truy cập tại đây</a></p>
+                    <div id="quiz-area-Color" class="quiz-container"></div>
                 </div>
                 
                 <div id="Nen" class="content">
@@ -776,6 +749,7 @@ background-attachment: fixed;}</code></pre></div>
                     <div class="note">
                         <p><b>Lưu ý:</b> Chỉ cần viết theo đúng thứ tự, không nhất thiết phải đầy đủ các đặc tính.</p>
                     </div>
+                    <div id="quiz-area-Nen" class="quiz-container"></div>
                 </div>
 
                 <div id="Border" class="content">
@@ -1021,7 +995,7 @@ background-attachment: fixed;}</code></pre></div>
                             <li>Trong phần style rule xác định cho thuộc tính border, bạn bắt buộc phải xác định giá trị cho thuộc tính border-style.</li>
                         </ul>
                         <p>Dưới đây là ví dụ minh họa cho cách sử dụng thuộc tính border trong CSS:</p>
-                        <div class="code"><pre><code>&lt;p style="border:4px solid red;&gt;
+                        <div class="code"><pre><code>&lt;p style="border:4px solid red;"&gt;
 Vi du xac dinh tat ca cac gia tri lien quan toi Border chi trong mot Style Rule.
 &lt;/p&gt;</code></pre></div>
                         <p>Kết quả:</p>
@@ -1029,6 +1003,7 @@ Vi du xac dinh tat ca cac gia tri lien quan toi Border chi trong mot Style Rule.
     <p style="border:4px solid red;">
     Vi du xac dinh tat ca cac gia tri lien quan toi Border chi trong mot Style Rule.
     </p></div>
+                    <div id="quiz-area-Border" class="quiz-container"></div>
                 </div>
 
                 <div id="Margins" class="content">
@@ -1144,9 +1119,10 @@ p.b {
                         <div class="code"><pre><code>p {
     margin: 35px 70px 50px 90px;
 }</code></pre></div>
+                    <div id="quiz-area-Margins" class="quiz-container"></div>
                 </div>
 
-                <div id="dem" class="content">
+                <div id="Dem" class="content">
                     <h1 class = "main-title">Đệm </h1>
                     <h2 class = "title2">Định nghĩa và cách sử dụng</h2>
                         <p><i>Khoảng đệm của một phần tử là khoảng cách giữa nội dung và đường viền của phần tử đó.</i></p>
@@ -1234,9 +1210,10 @@ p.b {
                         <div class="code"><pre><code>p {
   padding: 35px 70px 50px 90px;
 }</code></pre></div>
+                    <div id="quiz-area-Dem" class="quiz-container"></div>
                 </div>
                 
-                <div id="thanhdieuhuong" class="content">
+                <div id="Thanhdieuhuong" class="content">
                     <h1 class = "main-title">Thanh điều hướng</h1>
                     <br>
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-4iC4nb55qXXWsQxOU3HaN0SHvG1coR6tpA&s" alt="Ảnh minh họa CSS" width="400" style="display:block; margin:auto; border-radius:10px;">
@@ -1457,6 +1434,9 @@ ul li a:hover {
   display: flex;
   justify-content: center;
 }</code></pre></div>
+                                <div id="quiz-area-Thanhdieuhuong" class="quiz-container"></div>
+                                
                                 </div>
     </div>
 </div>
+
