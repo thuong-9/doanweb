@@ -446,3 +446,100 @@ ul.horizontal1 li a:hover {
 ul.horizontal1 li a.active1 {
   background-color: #111111;
 }
+/* Nút điểm danh */
+/* Overlay */
+#attendanceOverlay {
+    display: none;
+    position: fixed; top:0; left:0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 9999; overflow: auto;
+}
+
+/* Container */
+.attendance-container {
+    position: relative;
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+/* Nút đóng */
+#closeAttendance {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* Title */
+.attendance-title {
+    font-size: 24px;
+    color: #ff9900;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Grid 3+3+1 layout */
+.attendance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    justify-items: center;
+}
+
+/* Ô ngày */
+.day {
+    width: 85px;
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    color: white;
+    background-color: #c2c1c1f8; /* màu trắng mặc định */
+}
+
+/* Ô 7 căn giữa hàng 3 */
+.day[data-day="7"] {
+    grid-column: 2 / 3; /* nằm giữa */
+    margin-top: 15px;
+}
+
+/* Hover */
+.day:hover { transform: scale(1.1); }
+
+/* Checked colors theo thứ tự 1->7 */
+.day.checked[data-day="1"] { background-color: #a51414; }
+.day.checked[data-day="2"] { background-color: #bb4d04; }
+.day.checked[data-day="3"] { background-color: #ffd24d; }
+.day.checked[data-day="4"] { background-color: #07a707; }
+.day.checked[data-day="5"] { background-color: #1f3ab4; }
+.day.checked[data-day="6"] { background-color: #945de7; }
+.day.checked[data-day="7"] { background-color: #e904b0; }
+
+/* Nút mở overlay */
+#openAttendance {
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px;
+}
