@@ -446,7 +446,6 @@ ul.horizontal1 li a:hover {
 ul.horizontal1 li a.active1 {
   background-color: #111111;
 }
-<<<<<<< HEAD
 /* Nút điểm danh */
 /* Overlay */
 #attendanceOverlay {
@@ -463,64 +462,73 @@ ul.horizontal1 li a.active1 {
     max-width: 400px;
     margin: 50px auto;
     background-color: #fff;
+
+/* Khung bài tập */
+.quiz-container {
+    margin-top: 30px;
     padding: 20px;
+    background-color: #fcfcfc;
+    border: 1px solid #eee;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    text-align: center;
 }
 
-/* Nút đóng */
-#closeAttendance {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
+.question-item {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.opt-label {
+    display: block;
+    margin: 5px 0;
+    padding: 8px;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
     cursor: pointer;
-    background-color: red;
+}
+
+.opt-label:hover {
+    background: #f9f9f9;
+}
+
+.btn-check-section {
+    background: #2196F3;
     color: white;
     border: none;
-    width: 30px;
-    height: 30px;
-    line-height: 28px;
-    text-align: center;
+    padding: 10px 20px;
     border-radius: 5px;
-}
-
-/* Title */
-.attendance-title {
-    font-size: 24px;
-    color: #ff9900;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-/* Grid 3+3+1 layout */
-.attendance-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    justify-items: center;
-}
-
-/* Ô ngày */
-.day {
-    width: 85px;
-    height: 85px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-    color: white;
-    background-color: #c2c1c1f8; /* màu trắng mặc định */
+    margin-top: 10px;
 }
 
-/* Ô 7 căn giữa hàng 3 */
-.day[data-day="7"] {
-    grid-column: 2 / 3; /* nằm giữa */
-    margin-top: 15px;
+/* Tỉ lệ % to ngang chữ ở menu */
+.list li {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 15px !important;
+}
+
+.menu-percent {
+    font-size: 16px !important; /* To bằng chữ menu */
+    font-weight: bold !important;
+    color: #04AA6D !important;
+    margin-left: 10px;
+}
+
+/* Định dạng câu đúng/sai sau khi làm xong */
+.opt-label.correct-opt {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
+}
+
+.opt-label.incorrect-opt {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
 }
 
 /* Hover */
@@ -544,5 +552,7 @@ ul.horizontal1 li a.active1 {
     cursor: pointer;
     margin: 20px;
 }
-=======
->>>>>>> d378627 (Initial commit)
+/* Vô hiệu hóa click sau khi chọn để tránh đổi đáp án */
+.opt-label input:disabled {
+    cursor: not-allowed;
+}
