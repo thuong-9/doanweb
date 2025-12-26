@@ -1,0 +1,520 @@
+
+@import url('common.css');
+
+/* --- CSS TRANG BÀI TẬP --- */
+ul.list {
+  list-style: none;  
+  padding-left: 0;    
+  margin: 0;  
+}
+
+/* --- BỐ CỤC CHUNG --- */
+.main_box {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  gap: 20px; /* khoảng cách giữa sidebar và main */
+  background: #f0f4f8;
+  
+}
+
+/* --- MENU BÊN TRÁI --- */
+.main_box .sidebar_menu {
+  width: 280px;
+  flex-shrink: 0;
+  padding: 20px 15px;
+  background: linear-gradient(180deg, #ffffffcc, #e6f0ffcc);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  backdrop-filter: blur(5px);
+  /* thêm */
+    height: 99vh;
+    overflow-y: auto;          /* Thêm thanh cuộn dọc khi nội dung quá dài */
+  overflow-x: hidden;        /* Ẩn tràn ngang */
+  position: sticky;
+}
+
+/* Logo */
+.sidebar_menu .logo {
+  background-color: #fff;
+  text-align: center;
+  padding: 18px 12px;
+  font-size: 28px; 
+  font-weight: 700; 
+  color: #007bff; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: transform 0.3s;
+}
+
+.sidebar_menu .logo:hover {
+  transform: scale(1.05);
+}
+
+/* --- PHẦN TIÊU ĐỀ LỚN (PHẦN 1, PHẦN 2) --- */
+.part-title {
+  color: #004aad;
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 15px 10px 12px;
+  border-bottom: 2px solid #a7c7ff;
+  padding-bottom: 6px;
+}
+
+/* --- MỤC A, B (MỨC NHỎ HƠN) --- */
+.section-title {
+  color: #0066cc;
+  font-weight: 600;
+  font-size: 17px;
+  margin: 12px 0 6px 15px;
+}
+
+/* --- DANH SÁCH CÁC BÀI TRONG A/B --- */
+.section .list li a {
+  display: block;
+  color: #0d6efd;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 4px;
+}
+
+.section .list li a:hover {
+  background: #cce0ff;
+  color: #004aad;
+}
+
+.sidebar_menu a.active-link {
+  background: #cce0ff;       /* màu nền nổi bật */
+  color: #fff;               /* chữ trắng */
+  font-weight: 600;
+  border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* --- NỘI DUNG CHÍNH --- */
+.main-content {
+  flex-grow: 1;
+  padding: 30px 40px;
+  border-left: 1px solid #ddd;
+  background: #f9fbfd;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+/* --- TIÊU ĐỀ CHÍNH --- */
+.main-title {
+  color: white;
+  font-size: 1.8em;
+  background-color: #0077cc;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* --- TIÊU ĐỀ PHỤ --- */
+.title2 {
+  font-weight: 600;
+  font-size: 1.7em;
+  margin-top: 1.5em;
+  margin-bottom: 8px;
+  color: #0077cc;
+  border-left: 5px solid #0d6efd;
+  padding-left: 10px;
+}
+
+/* --- KHUNG BAO NỘI DUNG --- */
+.content-box {
+    background: #ffffff;
+    border: 1px solid #d0d7de;
+    border-radius: 12px;
+    padding: 30px; /* Tăng padding chút cho thoáng */
+    
+    /* CỐ ĐỊNH KÍCH THƯỚC */
+    width: 95%;          /* Chiếm 95% chiều ngang của cha */
+    max-width: 850px;    /* Không bao giờ to hơn 850px (chuẩn khổ giấy đọc sách) */
+    min-height: 500px;   /* Luôn cao ít nhất 500px, dù nội dung ít */
+    
+    /* Căn giữa */
+    margin: 0 auto 30px auto; 
+    
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    word-wrap: break-word; /* Chống tràn chữ ra ngoài */
+    
+    /* Giữ layout ổn định khi đổi tab bên trong */
+    display: flex;
+    flex-direction: column;
+}
+
+.content-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* --- KHUNG CHỨA CODE --- */
+
+
+/* --- BẢNG TRONG NỘI DUNG --- */
+.content table {
+  width: 90%;
+  border-collapse: collapse;
+  margin: 30px auto;
+  font-size: 16px;
+  text-align: left;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.content th, .content td {
+  border: 1px solid #ccc;
+  padding: 12px 18px;
+  vertical-align: top;
+}
+
+.content th {
+  background-color: #0077cc;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+}
+
+.content tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.content tr:hover {
+  background-color: #e6f4ff;
+  transition: background-color 0.3s;
+}
+
+/* --- HIỂN THỊ / ẨN NỘI DUNG --- */
+.content { display: none; }
+.content.active { display: block; }
+
+/* bài 1*/
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7faff;
+  
+}
+
+
+/* Tabs */
+.tabs {
+  display: flex;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #cfd8dc;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #f1f5f9;
+  font-weight: bold;
+  transition: background 0.3s;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.tab-button.active {
+  background-color: #b3e5fc;
+  border-bottom: 2px solid #0288d1;
+}
+
+/* Nội dung tab */
+.tab-content {
+  display: none;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Khung code */
+.khung {
+  background-color: #f4f8ff;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 10px;
+  overflow-x: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  
+}
+.khung ul {
+  margin: 0;
+  padding-left: 20px;                 /* thụt đầu dòng danh sách */
+}
+
+pre {
+  margin: 0;
+  font-family: Consolas, monospace;
+  font-size: 15px;
+  color: #222;
+  white-space: pre;        /* Giữ nguyên xuống dòng trong code */
+  word-wrap: normal;
+  overflow-x: auto;
+}
+
+.fixed-scroll {
+    height: calc(100vh - 20px); /* Chiều cao cố định */
+    padding: 20px;
+    
+    /* QUAN TRỌNG: Đổi từ 'auto' sang 'scroll' */
+    overflow-y: scroll; /* Luôn hiện thanh cuộn dọc để khung không bị giật chiều ngang */
+    
+    /* Hoặc dùng cách hiện đại hơn (nhưng chỉ hỗ trợ trình duyệt mới) */
+    /* scrollbar-gutter: stable; */ 
+}
+
+.sidebar_menu::-webkit-scrollbar,
+.fixed-scroll::-webkit-scrollbar,
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar_menu,
+.fixed-scroll,
+.main-content {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+
+.content-box h2 {
+  color: #0077cc;
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-shadow: 0 1px 3px rgba(0, 119, 204, 0.15);
+  border-left: 6px solid #0d6efd;
+  padding-left: 12px;
+}
+
+/* --- THANH TIẾN ĐỘ --- */
+.progress-container {
+  padding: 0 15px 20px 15px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+  transition: width 0.5s ease;
+}
+
+/* --- ICON CHECK & TRẠNG THÁI MENU --- */
+.check-icon {
+  float: right;
+  color: #2ecc71;
+  display: none; /* Mặc định ẩn */
+  margin-top: 4px;
+}
+
+.active-link .check-icon {
+  color: #fff; /* Đổi màu trắng nếu đang active */
+}
+
+.menu-completed {
+  color: #27ae60 !important; /* Màu xanh cho text menu đã xong */
+  background-color: #f0fff4;
+}
+
+/* --- NÚT HOÀN THÀNH BÀI TẬP (Đã gộp và sửa lỗi trùng) --- */
+.btn-finish {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;       /* Tăng kích thước nút một chút cho đẹp */
+  background-color: #fff;
+  border: 2px solid #2ecc71; /* Viền dày hơn xíu cho rõ */
+  color: #2ecc71;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-finish i {
+  margin-right: 5px;
+}
+
+/* --- KHUNG CHỨA TIẾN ĐỘ (Dashboard Card Style) --- */
+.progress-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  margin: 30px auto;
+  max-width: 900px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Bóng đổ mềm mại */
+  border: 1px solid #f0f0f0;
+}
+
+.progress-section h1 {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.progress-section h2 {
+  font-size: 1.5rem;
+  color: #34495e;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.progress-section h3 {
+  font-size: 1.3rem;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- THANH TIẾN ĐỘ (Progress Bar Modern) --- */
+.progress-summary {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  border: 1px solid #e9ecef;
+}
+
+.progress-bar-summary {
+  width: 100%;
+  height: 24px; /* Cao hơn chút cho rõ */
+  background-color: #e9ecef;
+  border-radius: 20px; /* Bo tròn hoàn toàn */
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); /* Bóng đổ vào trong tạo chiều sâu */
+}
+
+.progress-fill-summary {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); /* Hiệu ứng chạy mượt */
+  background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+  background-size: 1rem 1rem; /* Tạo vân sọc chéo */
+}
+
+/* Màu riêng cho từng loại thanh */
+#progressFillSummary { background-color: #2ecc71; background-image: linear-gradient(90deg, #2ecc71, #27ae60); }
+#progressFillHtml { background-color: #e67e22; background-image: linear-gradient(90deg, #f39c12, #d35400); }
+#progressFillCss { background-color: #3498db; background-image: linear-gradient(90deg, #3498db, #2980b9); }
+
+.progress-section p {
+  font-weight: 600;
+  color: #555;
+  text-align: right;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* --- DANH SÁCH BÀI ĐÃ HỌC (Grid Layout - Quan trọng) --- */
+#completed-list, #completed-list-html, #completed-list-css {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Tự chia cột, tối thiểu 220px */
+  gap: 15px; /* Khoảng cách giữa các thẻ */
+  list-style: none;
+  padding: 0;
+  max-height: none; /* Bỏ thanh cuộn nhỏ, cho hiện hết */
+}
+
+/* Style cho từng ô bài học */
+#completed-list li, #completed-list-html li, #completed-list-css li {
+  background: #fff;
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border: 1px solid #eee;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+/* Hiệu ứng khi di chuột vào từng bài */
+#completed-list-html li:hover, #completed-list-css li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* --- PHÂN MÀU CHO HTML VÀ CSS --- */
+
+/* HTML: Tông Cam/Đỏ */
+#completed-list-html li {
+  border-left: 4px solid #e67e22; /* Viền trái màu cam */
+}
+#completed-list-html li i {
+  color: #e67e22;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* CSS: Tông Xanh Dương */
+#completed-list-css li {
+  border-left: 4px solid #3498db; /* Viền trái màu xanh */
+}
+#completed-list-css li i {
+  color: #3498db;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* Thông báo trống */
+.empty-msg {
+    grid-column: 1 / -1; /* Chiếm hết hàng */
+    text-align: center;
+    color: #95a5a6;
+    font-style: italic;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}

@@ -1,0 +1,1085 @@
+@model IEnumerable<EasyCode.Models.Exercise>
+
+@{
+    ViewData["Title"] = "Bài tập CSS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["NoContainer"] = true;
+}
+
+@section Styles {
+  <link rel="stylesheet" href="~/css/btcss.css" asp-append-version="true" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+}
+
+@section Scripts {
+  <script src="~/js/menuicon.js" asp-append-version="true"></script>
+  <script>
+    function showContent(id, element) {
+      const contents = document.querySelectorAll('.content');
+      contents.forEach(c => c.classList.remove('active'));
+
+      const selected = document.getElementById(id);
+      if (selected) selected.classList.add('active');
+
+      const menuItems = document.querySelectorAll('.sidebar_menu a');
+      menuItems.forEach(item => item.classList.remove('active-link'));
+      element.classList.add('active-link');
+    }
+
+    // Tab functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          const tabContent = document.getElementById(tabId);
+          const parent = this.closest('.content-box');
+          
+          parent.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+          parent.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+          
+          this.classList.add('active');
+          if (tabContent) tabContent.classList.add('active');
+        });
+      });
+    });
+  </script>
+}
+
+<div class="main_box">
+  <div class="sidebar_menu">
+   <h2 class="part-title">PHẦN 2: CSS</h2>
+
+   <div class="progress-container">
+        <div class="progress-info">
+            <span>Tiến độ học tập</span>
+            <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progress-bar-fill" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">A. Mức cơ bản</p>
+      <ul class="list">
+        <li><a href="#" onclick="showContent('cssCuphap', this)" class="active-link" id="link-cssCuphap">Cú pháp <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('cssSelector', this)" id="link-cssSelector">Bộ chọn (Selector) <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('cssThucHien', this)" id="link-cssThucHien">Cách thực hiện <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('cssComment', this)" id="link-cssComment">Comment <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('cssMauNen', this)" id="link-cssMauNen">Màu & Nền <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('cssBorder', this)" id="link-cssBorder">Viền (Border) <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('cssMarginPadding', this)" id="link-cssMarginPadding">Lề & Đệm <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('cssMenu', this)" id="link-cssMenu">Thanh điều hướng <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fixed-scroll">
+    <div class="main-content">
+        
+    <div id="cssCuphap" class="content active">
+        <div class="content-box">
+            <h2>Bài 1: Viết quy tắc CSS đổi màu chữ và nền cho đoạn văn</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_cp1">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_cp1">Bài giải</button>
+            </div>
+            <div id="yc_cp1" class="tab-content active">
+                <p><strong>Yêu cầu:</strong></p>
+                <div class="khung">
+                    <ul>
+                        <li>Tạo một trang HTML có tiêu đề “Đổi màu chữ và nền bằng CSS”.</li>
+                        <li>Tạo ít nhất một đoạn văn bằng thẻ <code>&lt;p&gt;</code>.</li>
+                        <li>Dùng CSS để thay đổi:
+                          <ul>
+                            <li>Màu chữ thành màu xanh hoặc màu khác tùy chọn.</li>
+                            <li>Màu nền đoạn văn (background-color).</li>
+                          </ul>
+                        </li>
+                        <li>Thêm viền hoặc căn lề cho đẹp (không bắt buộc).</li>
+                        <li>Lưu lại và mở trên trình duyệt để xem kết quả.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_cp1" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Đổi màu chữ và nền bằng CSS&lt;/title&gt;
+  &lt;style&gt;
+    p {
+      color: #1a73e8; /* Màu chữ xanh */
+      background-color: #e3f2fd; /* Màu nền xanh nhạt */
+      padding: 15px; /* Tạo khoảng cách trong đoạn */
+      border: 2px solid #90caf9; /* Viền màu xanh nhạt */
+      border-radius: 8px; /* Bo góc viền */
+      width: 60%;
+      margin: 20px auto; /* Căn giữa trang */
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Ví dụ: Đổi màu chữ và nền cho đoạn văn&lt;/h1&gt;
+  &lt;p&gt;
+    CSS giúp bạn dễ dàng thay đổi màu sắc và giao diện cho các phần tử HTML.
+    Hãy thử thay đổi mã màu để thấy kết quả khác nhau!
+  &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssCuphap', 1, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 2: Phân biệt <code>property</code> và <code>value</code></h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_cp2">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_cp2">Bài giải</button>
+            </div>
+            <div id="yc_cp2" class="tab-content active">
+                <p><strong>Yêu cầu:</strong></p>
+                <div class="khung">
+                    <ul>
+                        <li>Hiểu rõ khái niệm <strong>property</strong> (thuộc tính) và <strong>value</strong> (giá trị) trong CSS. Tạo một trang HTML đơn giản để minh họa một số quy tắc CSS.</li>
+                        <li>Ví dụ: đổi màu chữ, cỡ chữ và kiểu chữ — trong đó:
+                          <ul>
+                            <li><code>color</code> là <em>property</em> (thuộc tính).</li>
+                            <li><code>red</code> là <em>value</em> (giá trị).</li>
+                          </ul>
+                        </li>
+                        <li>Giải thích cách viết cú pháp CSS cơ bản: <code>selector { property: value; }</code></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_cp2" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>p {
+  color: red;           /* property: color → value: red */
+  font-size: 20px;      /* property: font-size → value: 20px */
+  font-family: Arial;   /* property: font-family → value: Arial */
+  background-color: #fce4ec; /* property: background-color → value: mã màu hồng nhạt */
+}</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssCuphap', 2, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+    </div>
+
+    <div id="cssSelector" class="content">
+        <div class="content-box">
+            <h2>Bài 1: Dùng selector theo tên thẻ, class, id</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_sl1">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_sl1">Bài giải</button>
+            </div>
+            <div id="yc_sl1" class="tab-content active">
+                <p><strong>Yêu cầu:</strong></p>
+                <div class="khung">
+                    <ul>
+                        <li>Hiểu cách sử dụng <strong>selector</strong> trong CSS để chọn phần tử HTML.</li>
+                        <li>Tạo một trang HTML có:
+                          <ul>
+                            <li>Ít nhất một tiêu đề (<code>&lt;h1&gt;</code> hoặc <code>&lt;h2&gt;</code>).</li>
+                            <li>Hai đoạn văn, trong đó một đoạn có <code>class</code> và một đoạn có <code>id</code>.</li>
+                          </ul>
+                        </li>
+                        <li>Áp dụng quy tắc CSS:
+                          <ul>
+                            <li>Thay đổi màu chữ của tiêu đề bằng selector theo <strong>tên thẻ</strong>.</li>
+                            <li>Đổi màu nền cho đoạn có <strong>class</strong>.</li>
+                            <li>Tăng kích thước chữ cho đoạn có <strong>id</strong>.</li>
+                          </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_sl1" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>/* Selector theo tên thẻ */
+h1 {
+  color: darkblue;
+  text-align: center;
+}
+
+/* Selector theo class */
+.doan1 {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Selector theo id */
+#dacbiet {
+  font-size: 20px;
+  color: #d32f2f;
+  font-weight: bold;
+}</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssSelector', 1, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 2: Kết hợp nhiều bộ chọn và pseudo-class</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_sl2">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_sl2">Bài giải</button>
+            </div>
+            <div id="yc_sl2" class="tab-content active">
+                <p><strong>Yêu cầu:</strong></p>
+                <div class="khung">
+                    <ul>
+                        <li>Hiểu cách kết hợp nhiều bộ chọn trong CSS (ví dụ: <code>h1, h2, p</code> hoặc <code>div p</code>).</li>
+                        <li>Sử dụng pseudo-class để tạo hiệu ứng tương tác:
+                          <ul>
+                            <li><code>:hover</code> – thay đổi khi người dùng di chuột qua phần tử.</li>
+                            <li><code>:first-child</code> – chọn phần tử con đầu tiên trong nhóm.</li>
+                          </ul>
+                        </li>
+                        <li>Tạo một trang HTML có danh sách và một vài đoạn văn để minh họa hai pseudo-class này.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_sl2" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>/* Kết hợp nhiều selector */
+h1, h2 {
+  color: #1565c0;
+  text-align: center;
+}
+
+/* Pseudo-class :hover */
+p:hover {
+  background-color: #bbdefb;
+  color: #0d47a1;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Pseudo-class :first-child */
+ul li:first-child {
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+/* Kết hợp selector theo cấu trúc */
+div p {
+  border-left: 4px solid #1976d2;
+  padding-left: 8px;
+}</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssSelector', 2, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+    </div>
+
+    <div id="cssThucHien" class="content">
+        <div class="content-box">
+            <h2>Bài 1: Viết CSS nội tuyến, nội bộ và ngoài file</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_th1">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_th1">Bài giải</button>
+            </div>
+            <div id="yc_th1" class="tab-content active">
+                <p><strong>Yêu cầu:</strong></p>
+                <div class="khung">
+                    <ul>
+                        <li>Hiểu sự khác nhau giữa 3 cách viết CSS:
+                          <ul>
+                            <li><strong>CSS nội tuyến (inline):</strong> viết trực tiếp trong thẻ HTML bằng thuộc tính <code>style</code>.</li>
+                            <li><strong>CSS nội bộ (internal):</strong> viết trong cặp thẻ <code>&lt;style&gt;&lt;/style&gt;</code> trong phần <code>&lt;head&gt;</code>.</li>
+                            <li><strong>CSS ngoài file (external):</strong> viết trong file riêng (.css) và liên kết bằng thẻ <code>&lt;link&gt;</code>.</li>
+                          </ul>
+                        </li>
+                        <li>Tạo trang HTML minh họa cho cả 3 cách này.</li>
+                        <li>Quan sát và so sánh kết quả hiển thị.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_th1" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>&lt;!-- Inline --&gt;
+&lt;p style="color: red; font-weight: bold;"&gt;CSS nội tuyến&lt;/p&gt;
+
+&lt;!-- Internal --&gt;
+&lt;style&gt; 
+  p { color: #333; background-color: #e3f2fd; } 
+&lt;/style&gt;
+
+&lt;!-- External --&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssThucHien', 1, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 2: So sánh mức độ ưu tiên giữa 3 cách viết CSS</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_th2">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_th2">Bài giải</button>
+            </div>
+            <div id="yc_th2" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Hiểu rõ **thứ tự ưu tiên** của các kiểu CSS khi cùng áp dụng cho một phần tử:
+                          <ol>
+                            <li><strong>Inline CSS</strong> (viết trực tiếp trong thẻ HTML) có mức ưu tiên cao nhất.</li>
+                            <li><strong>Internal CSS</strong> (viết trong thẻ <code>&lt;style&gt;</code>) có mức ưu tiên trung bình.</li>
+                            <li><strong>External CSS</strong> (liên kết từ file ngoài) có mức ưu tiên thấp hơn.</li>
+                          </ol>
+                        </li>
+                        <li>Tạo một trang HTML có một đoạn văn, áp dụng đồng thời 3 kiểu CSS để quan sát kết quả.</li>
+                        <li>Giải thích tại sao đoạn văn hiển thị màu như vậy.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_th2" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>&lt;!-- CSS nội tuyến (inline) --&gt;
+&lt;p style="color: red;"&gt;
+  Đây là đoạn văn có cùng lúc 3 quy tắc CSS.
+  Màu chữ sẽ là ĐỎ vì Inline có ưu tiên cao nhất.
+&lt;/p&gt;</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssThucHien', 2, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+    </div>
+
+    <div id="cssComment" class="content">
+        <div class="content-box">
+            <h2>Bài 1: Thêm chú thích trong mã CSS, giải thích tác dụng từng đoạn</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_cm1">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_cm1">Bài giải</button>
+            </div>
+            <div id="yc_cm1" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Hiểu cú pháp viết chú thích (comment) trong CSS: <code>/* Đây là chú thích */</code></li>
+                        <li>Thêm chú thích mô tả tác dụng của từng nhóm quy tắc CSS.</li>
+                        <li>Tạo một trang HTML có một vài phần tử (tiêu đề, đoạn văn, nút bấm).</li>
+                        <li>Trong file CSS, thêm chú thích giải thích từng phần định dạng.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_cm1" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>/* ----- Định dạng cho toàn bộ trang ----- */
+body {
+  background-color: #f9fbe7; /* Màu nền nhạt */
+  text-align: center;
+}
+
+/* ----- Tiêu đề chính ----- */
+h1 {
+  color: #2e7d32; /* Màu xanh lá đậm */
+}
+
+/* ----- Nút bấm ----- */
+button {
+  background-color: #66bb6a; /* Màu nền nút */
+  color: white; /* Màu chữ */
+}</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssComment', 1, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+    </div>
+
+    <div id="cssMauNen" class="content">
+        <div class="content-box">
+            <h2>Bài 1: Đổi màu nền bằng <code>background-color</code></h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_mn1">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_mn1">Bài giải</button>
+            </div>
+            <div id="yc_mn1" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Tạo một trang HTML có ít nhất 3 phần tử: tiêu đề, đoạn văn và hộp nội dung.</li>
+                        <li>Dùng thuộc tính <code>background-color</code> trong CSS để:
+                          <ul>
+                            <li>Đổi màu nền cho toàn bộ trang.</li>
+                            <li>Đổi màu nền riêng cho từng phần tử (tiêu đề, đoạn văn, div).</li>
+                          </ul>
+                        </li>
+                        <li>Quan sát sự khác biệt giữa từng màu nền.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_mn1" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>body { background-color: #f1f8e9; }
+h1 { background-color: #aed581; }
+.hop { background-color: #c8e6c9; }</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssMauNen', 1, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 2: Thêm ảnh nền, căn chỉnh và lặp lại ảnh</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_mn2">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_mn2">Bài giải</button>
+            </div>
+            <div id="yc_mn2" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Sử dụng thuộc tính <code>background-image</code> để thêm ảnh nền cho trang web.</li>
+                        <li>Dùng các thuộc tính:
+                          <ul>
+                            <li><code>background-repeat</code> – để điều khiển việc lặp lại ảnh nền.</li>
+                            <li><code>background-position</code> – để căn chỉnh vị trí ảnh.</li>
+                            <li><code>background-size</code> – để thay đổi kích thước ảnh (cover, contain, auto,...).</li>
+                          </ul>
+                        </li>
+                        <li>Tạo ví dụ minh họa cho 3 kiểu: lặp lại, không lặp lại, và ảnh phủ toàn trang.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_mn2" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>body {
+  background-image: url('https://picsum.photos/1200/800');
+  background-size: cover;       /* Ảnh phủ toàn bộ trang */
+  background-repeat: no-repeat; /* Không lặp lại ảnh */
+  background-position: center;  /* Căn giữa ảnh */
+}
+
+.repeat-bg {
+  background-image: url('https://picsum.photos/200');
+  background-repeat: repeat;    /* Ảnh được lặp lại */
+}</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssMauNen', 2, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 3: Dùng <code>linear-gradient</code> tạo nền chuyển màu</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_mn3">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_mn3">Bài giải</button>
+            </div>
+            <div id="yc_mn3" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Tạo một trang HTML với tiêu đề và một vài khối nội dung (div).</li>
+                        <li>Dùng thuộc tính <code>background-image</code> kết hợp với hàm <code>linear-gradient()</code> để tạo nền chuyển màu.</li>
+                        <li>Thử thay đổi hướng chuyển màu và số lượng màu.</li>
+                        <li>Tạo ít nhất 3 ví dụ khác nhau.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_mn3" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>/* Gradient ngang (trái → phải) */
+.gradient1 {
+  background-image: linear-gradient(to right, #42a5f5, #478ed1);
+}
+
+/* Gradient dọc (trên → dưới) */
+.gradient2 {
+  background-image: linear-gradient(to bottom, #66bb6a, #43a047);
+}</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssMauNen', 3, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+    </div>
+
+    <div id="cssBorder" class="content">
+        <div class="content-box">
+            <h2>Bài 1: Tạo khung viền cho đoạn văn</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_bd1">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_bd1">Bài giải</button>
+            </div>
+            <div id="yc_bd1" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Tạo một trang HTML có ít nhất 3 đoạn văn bản.</li>
+                        <li>Dùng thuộc tính <code>border</code> trong CSS để thêm khung viền cho đoạn văn.</li>
+                        <li>Thử thay đổi:
+                          <ul>
+                            <li>Kiểu viền (<code>solid</code>, <code>dashed</code>, <code>dotted</code>)</li>
+                            <li>Màu và độ dày của viền</li>
+                          </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_bd1" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>/* Viền liền nét (solid) */
+.solid {
+  border: 3px solid #43a047; /* Viền xanh lá đậm */
+  border-radius: 6px;
+}
+
+/* Viền đứt nét (dashed) */
+.dashed {
+  border: 3px dashed #1e88e5; /* Viền xanh dương */
+}</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssBorder', 1, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 2: Làm tròn góc với <code>border-radius</code></h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_bd2">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_bd2">Bài giải</button>
+            </div>
+            <div id="yc_bd2" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Tạo một trang HTML có ít nhất 3 phần tử (div, ảnh hoặc nút). Dùng thuộc tính <code>border-radius</code> để làm tròn góc các phần tử.</li>
+                        <li>Thử các giá trị khác nhau:
+                          <ul>
+                            <li>Làm tròn nhẹ (5–15px)</li>
+                            <li>Làm tròn mạnh (50%) để tạo hình tròn hoặc bo tròn hoàn toàn</li>
+                          </ul>
+                        </li>
+                        <li>Tạo ví dụ minh họa với 3 mức độ bo góc khác nhau.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_bd2" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>/* Bo nhẹ góc 10px */
+.radius1 { border-radius: 10px; }
+
+/* Bo góc nhiều 30px */
+.radius2 { border-radius: 30px; }
+
+/* Bo tròn hoàn toàn (hình tròn) */
+.radius3 { border-radius: 50%; }</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssBorder', 2, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 3: Thêm hiệu ứng đổ bóng</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_bd3">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_bd3">Bài giải</button>
+            </div>
+            <div id="yc_bd3" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Tạo 3 khối (div) hoặc hình ảnh trên trang web.</li>
+                        <li>Dùng thuộc tính <code>box-shadow</code> để thêm hiệu ứng đổ bóng.</li>
+                        <li>Thử thay đổi độ dịch chuyển, độ mờ và màu của bóng.</li>
+                        <li>Tạo ít nhất 3 ví dụ với các mức đổ bóng khác nhau.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_bd3" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>/* Bóng nhẹ, mờ gần */
+.shadow1 {
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Bóng mạnh */
+.shadow3 {
+  box-shadow: 8px 8px 25px rgba(76, 175, 80, 0.6);
+}</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssBorder', 3, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+    </div>
+
+    <div id="cssMarginPadding" class="content">
+        <div class="content-box">
+            <h2>Bài 1: Thử thay đổi <code>margin</code>, <code>padding</code> cho các phần tử</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_mp1">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_mp1">Bài giải</button>
+            </div>
+            <div id="yc_mp1" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Tạo một trang HTML gồm nhiều khối. Dùng thuộc tính <code>margin</code> và <code>padding</code> để điều chỉnh khoảng cách.</li>
+                        <li>Quan sát sự khác biệt:
+                          <ul>
+                            <li><code>margin</code>: khoảng cách bên ngoài khối.</li>
+                            <li><code>padding</code>: khoảng cách bên trong khối.</li>
+                          </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_mp1" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>/* Padding nhỏ */
+.pad1 { padding: 5px; }
+
+/* Margin lớn */
+.margin2 { margin: 50px auto; }</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssMarginPadding', 1, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 2: Thực hành mô hình hộp (Box Model)</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_mp2">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_mp2">Bài giải</button>
+            </div>
+            <div id="yc_mp2" class="tab-content active">
+                <div class="khung">
+                    <ul>
+                        <li>Tạo một trang HTML có nhiều khối minh họa mô hình hộp.</li>
+                        <li>Thêm các thuộc tính: <code>width</code>, <code>height</code>, <code>padding</code>, <code>border</code>, <code>margin</code>.</li>
+                        <li>Quan sát sự thay đổi khi thay đổi từng thuộc tính.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_mp2" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>.box {
+  width: 200px;
+  height: 100px;
+  border: 5px solid #2e7d32; /* Viền */
+  padding: 20px;             /* Khoảng cách bên trong */
+  margin: 30px auto;         /* Khoảng cách bên ngoài */
+}</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssMarginPadding', 2, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+    </div>
+
+<div id="cssMenu" class="content">
+        <div class="content-box">
+            <h2>Bài 1: Tạo thanh menu ngang</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_menu1">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_menu1">Bài giải</button>
+            </div>
+            <div id="yc_menu1" class="tab-content active">
+                <p><strong>Yêu cầu:</strong></p>
+                <div class="khung">
+                    <ul>
+                        <li>Tạo thanh menu ngang bằng HTML và CSS.</li>
+                        <li>Dùng thẻ <code>&lt;ul&gt;</code> và <code>&lt;li&gt;</code> để tạo các mục menu.</li>
+                        <li>Ẩn dấu chấm đầu dòng của danh sách (<code>list-style: none;</code>).</li>
+                        <li>Hiển thị các mục nằm ngang bằng <code>display: inline-block;</code> hoặc <code>flex</code>.</li>
+                        <li>Thêm hiệu ứng đổi màu khi di chuột qua menu (<code>:hover</code>).</li>
+                        <li>Có ít nhất 4 mục menu: Trang chủ, Giới thiệu, Sản phẩm, Liên hệ.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_menu1" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Tạo thanh menu ngang&lt;/title&gt;
+  &lt;style&gt;
+    /* Thanh menu */
+    .menu {
+      background-color: #388e3c;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Danh sách menu */
+    .menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex; /* Xếp ngang */
+      justify-content: center;
+    }
+
+    .menu li {
+      display: inline-block;
+    }
+
+    /* Liên kết trong menu */
+    .menu a {
+      display: block;
+      padding: 15px 30px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+
+    /* Hiệu ứng hover */
+    .menu a:hover {
+      background-color: #66bb6a;
+      color: #1b5e20;
+      border-radius: 5px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;nav class="menu"&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Sản phẩm&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Liên hệ&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssMenu', 1, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 2: Dùng pseudo-class để đổi màu khi di chuột</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_menu2">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_menu2">Bài giải</button>
+            </div>
+            <div id="yc_menu2" class="tab-content active">
+                <p><strong>Yêu cầu:</strong></p>
+                <div class="khung">
+                    <ul>
+                        <li>Tạo ít nhất 3 phần tử (nút, liên kết hoặc khối <code>div</code>).</li>
+                        <li>Dùng pseudo-class <code>:hover</code> để thay đổi màu nền hoặc màu chữ khi di chuột qua.</li>
+                        <li>Thử thêm hiệu ứng chuyển mượt bằng <code>transition</code>.</li>
+                        <li>Quan sát sự thay đổi khi di chuột qua và khi rời chuột khỏi phần tử.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_menu2" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Pseudo-class :hover&lt;/title&gt;
+  &lt;style&gt;
+    /* Định dạng chung cho các hộp */
+    .box {
+      display: inline-block;
+      width: 150px;
+      height: 100px;
+      line-height: 100px;
+      margin: 15px;
+      background-color: #a5d6a7;
+      color: #1b5e20;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 10px;
+      transition: 0.3s; /* Hiệu ứng mượt mà */
+    }
+
+    /* Khi di chuột qua hộp */
+    .box:hover {
+      background-color: #66bb6a;
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Liên kết có hiệu ứng hover */
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      text-decoration: none;
+      background-color: #43a047;
+      color: white;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      background-color: #81c784;
+      color: #1b5e20;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;div class="box"&gt;Hộp 1&lt;/div&gt;
+  &lt;div class="box"&gt;Hộp 2&lt;/div&gt;
+  &lt;div class="box"&gt;Hộp 3&lt;/div&gt;
+
+  &lt;br&gt;
+  &lt;a href="#"&gt;Di chuột qua đây&lt;/a&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssMenu', 2, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+
+        <div class="content-box">
+            <h2>Bài 3: Làm menu cố định trên đầu trang</h2>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="yc_menu3">Yêu cầu</button>
+                <button class="tab-button" data-tab="bg_menu3">Bài giải</button>
+            </div>
+            <div id="yc_menu3" class="tab-content active">
+                <p><strong>Yêu cầu:</strong></p>
+                <div class="khung">
+                    <ul>
+                        <li>Tạo thanh menu ngang nằm ở đầu trang bằng HTML và CSS.</li>
+                        <li>Dùng thuộc tính <code>position: fixed;</code> để menu luôn cố định khi cuộn trang.</li>
+                        <li>Thêm khoảng trống ở phần đầu nội dung (<code>padding-top</code>) để không bị che khuất bởi menu.</li>
+                        <li>Thêm hiệu ứng đổi màu khi di chuột qua menu.</li>
+                        <li>Menu có ít nhất 4 mục: Trang chủ, Giới thiệu, Dịch vụ, Liên hệ.</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bg_menu3" class="tab-content">
+                <h3>Bài giải:</h3>
+                <div class="khung">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Menu cố định&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Thanh menu cố định */
+    .menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #388e3c;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+
+    .menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .menu a {
+      display: block;
+      padding: 15px 25px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .menu a:hover {
+      background-color: #66bb6a;
+    }
+
+    /* Nội dung trang */
+    .content {
+      padding-top: 80px; /* tạo khoảng trống để tránh menu che nội dung */
+      width: 80%;
+      margin: auto;
+      line-height: 1.6;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;nav class="menu"&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Dịch vụ&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Liên hệ&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+
+  &lt;div class="content"&gt;
+    &lt;h1&gt;Ví dụ: Menu cố định trên đầu trang&lt;/h1&gt;
+    &lt;p&gt;Khi bạn cuộn trang xuống, thanh menu vẫn luôn hiển thị ở phía trên cùng.&lt;/p&gt;
+    &lt;p&gt;Cuộn xuống để kiểm tra thử nhé!&lt;/p&gt;
+    &lt;p&gt;(Nội dung dài để test cuộn trang...)&lt;/p&gt;
+    &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+    &lt;p&gt;Vẫn thấy menu đúng không?&lt;/p&gt;
+  &lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </div>
+            <button class="btn-finish" onclick="markComplete('cssMenu', 3, this)">
+                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+            </button>
+        </div>
+    </div>
+   
+
+<script>
+    // Cấu hình số bài tập cho từng mục CSS
+    const sectionConfig = {
+        'cssCuphap': 2,
+        'cssSelector': 2,
+        'cssThucHien': 2,
+        'cssComment': 1,
+        'cssMauNen': 3,
+        'cssBorder': 3,
+        'cssMarginPadding': 2,
+        'cssMenu': 3
+    };
+
+    // Tính tổng số bài tập
+    const totalExercises = Object.values(sectionConfig).reduce((a, b) => a + b, 0);
+
+    // Chạy khi tải trang
+    document.addEventListener('DOMContentLoaded', function() {
+        loadProgress();
+    });
+
+    // Hàm đánh dấu hoàn thành
+    function markComplete(sectionId, exerciseIndex, btnElement) {
+        // Lấy danh sách CSS progress (khác với HTML)
+        let completed = JSON.parse(localStorage.getItem('css_progress_list')) || [];
+
+        const key = `${sectionId}-${exerciseIndex}`;
+        if (!completed.includes(key)) {
+            completed.push(key);
+        }
+
+        localStorage.setItem('css_progress_list', JSON.stringify(completed));
+        
+        // Cập nhật giao diện
+        updateButtonState(btnElement, true);
+        calculateProgress(completed);
+    }
+
+    // Hàm cập nhật nút
+    function updateButtonState(btn, isDone) {
+        if (isDone) {
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã hoàn thành';
+            btn.classList.add('done');
+        }
+    }
+
+    // Load dữ liệu khi vào trang
+    function loadProgress() {
+        let completed = JSON.parse(localStorage.getItem('css_progress_list')) || [];
+        calculateProgress(completed);
+
+        const allButtons = document.querySelectorAll('.btn-finish');
+        allButtons.forEach(btn => {
+            const onclickText = btn.getAttribute('onclick'); 
+            for (const section in sectionConfig) {
+                for (let i = 1; i <= sectionConfig[section]; i++) {
+                    if (onclickText.includes(`'${section}', ${i}`)) {
+                         if (completed.includes(`${section}-${i}`)) {
+                             updateButtonState(btn, true);
+                         }
+                    }
+                }
+            }
+        });
+    }
+
+    // Tính % và update menu
+    function calculateProgress(completedList) {
+        let percent = Math.round((completedList.length / totalExercises) * 100);
+        const barFill = document.getElementById('progress-bar-fill');
+        const barText = document.getElementById('progress-percent');
+        
+        if(barFill) barFill.style.width = percent + '%';
+        if(barText) barText.innerText = percent + '%';
+
+        // Update tích xanh menu sidebar
+        for (const [section, count] of Object.entries(sectionConfig)) {
+            let finishedCount = 0;
+            for (let i = 1; i <= count; i++) {
+                if (completedList.includes(`${section}-${i}`)) {
+                    finishedCount++;
+                }
+            }
+
+            if (finishedCount === count && count > 0) {
+                const link = document.getElementById(`link-${section}`);
+                if (link) {
+                    link.classList.add('menu-completed');
+                    const icon = link.querySelector('.check-icon');
+                    if (icon) icon.style.display = 'inline-block';
+                }
+            }
+        }
+    }
+</script>
