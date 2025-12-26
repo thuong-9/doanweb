@@ -1,0 +1,260 @@
+@import url('common.css');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 600px; 
+    background: #f8f9fa;
+}
+
+.auth-box {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    position: relative;
+    overflow: hidden;
+    width: 900px;
+    max-width: 100%;
+    min-height: 550px;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.6s ease-in-out;
+}
+
+/* FORM CHUNG */
+.form-side {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transition: all 0.6s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-side form {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 50px;
+    width: 100%;
+}
+
+.form-side h1, .form-side h2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #0077ff;
+}
+
+.form-side span {
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: darkblue;
+}
+
+.form-side input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+    border-radius: 6px;
+}
+
+.form-side button {
+    border-radius: 20px;
+    border: 1px solid #fefefe00;
+    background: linear-gradient(135deg, #8fdbde, #0571ff);
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.form-side button:hover {
+    transform: scale(1.03);
+}
+
+/* SOCIAL */
+.social-icons {
+    margin: 20px 0;
+}
+.social {
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    margin: 0 5px;
+    color: #0058cc;
+    font-weight: bold;
+    text-decoration: none;
+}
+.social:hover{
+    background-color: #0077ff73;
+}
+
+/* FORM VỊ TRÍ */
+.form-signin {
+    left: 0;
+    z-index: 2;
+}
+
+.auth-box.active .form-signin {
+    transform: translateX(100%);
+}
+
+.form-signup {
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+.auth-box.active .form-signup {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: fadeIn 0.6s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* OVERLAY */
+.overlay-wrapper {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 10;
+}
+
+.auth-box.active .overlay-wrapper {
+    transform: translateX(-100%);
+}
+
+.overlay {
+    background: linear-gradient(166deg, #00ff60, #0571ff), linear-gradient(483deg, #0571ff, #00ff60c4);
+    background-blend-mode: overlay;
+    color: #fff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.auth-box.active .overlay {
+    transform: translateX(50%);
+}
+
+.overlay-panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    padding: 0 40px;
+}
+
+.overlay-panel h1 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.overlay-panel p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.overlay-panel button.ghost {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 12px 23px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.overlay-panel button.ghost:hover{
+    transform: scale(1.03);
+}
+
+.overlay-left {
+    transform: translateX(-20%);
+}
+
+.auth-box.active .overlay-left {
+    transform: translateX(0);
+}
+
+.overlay-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.auth-box.active .overlay-right {
+    transform: translateX(20%);
+}
+
+@media (max-width: 768px) {
+    .auth-wrapper {
+        padding: 24px 16px;
+        min-height: auto;
+    }
+
+    .auth-box {
+        width: 100%;
+        min-height: 620px;
+        border-radius: 12px;
+    }
+
+    .overlay-wrapper {
+        display: none;
+    }
+
+    .form-side {
+        position: relative;
+        width: 100%;
+        height: auto;
+        transform: none !important;
+        opacity: 1;
+    }
+
+    .form-side form {
+        padding: 24px 18px;
+    }
+
+    .form-signup {
+        display: none;
+    }
+
+    .auth-box.active .form-signup {
+        display: flex;
+    }
+
+    .auth-box.active .form-signin {
+        display: none;
+    }
+}

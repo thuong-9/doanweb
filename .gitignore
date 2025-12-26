@@ -1,0 +1,11 @@
+# Build output
+bin/
+obj/
+
+# VS Code
+.vscode/
+
+# User-specific
+*.dll
+*.exe
+*.pdb

@@ -1,0 +1,1442 @@
+@{
+    ViewData["Title"] = "Bài học CSS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["NoContainer"] = true;
+}
+
+@section Styles {
+  <link rel="stylesheet" href="~/css/css-lesson.css" asp-append-version="true" />
+}
+
+@section Scripts {
+  <script src="~/js/css-lesson.js" asp-append-version="true"></script>
+}
+
+<div class="css-lesson">
+  <div class="menu">
+    <div class="logo">CSS</div>
+        <ul class="list">
+        <li><a href="javascript:void(0)" onclick="showContent('Home', this)" class="active-link">Giới thiệu CSS</a> <span id="menu-prog-Home" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Syntax', this)">Cú pháp</a> <span id="menu-prog-Syntax" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Selectors', this)">Bộ chọn</a> <span id="menu-prog-Selectors" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Cachthuchien', this)">Cách thực hiện</a> <span id="menu-prog-Cachthuchien" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Comment', this)">Comment</a> <span id="menu-prog-Comment" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Color', this)">Màu sắc</a> <span id="menu-prog-Color" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Nen', this)">Nền</a> <span id="menu-prog-Nen" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Border', this)">Đường viền</a> <span id="menu-prog-Border" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Margins', this)">Lề CSS</a> <span id="menu-prog-Margins" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Dem', this)">Đệm</a> <span id="menu-prog-Dem" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Thanhdieuhuong', this)">Thanh điều hướng</a> <span id="menu-prog-Thanhdieuhuong" class="menu-percent">(0%)</span></li>
+    </ul>
+  </div>
+
+  <!-- KHU VỰC NỘI DUNG -->
+  <div class="NoiDung">
+                <div id="Home" class="content active">
+                    <h1 class = "main-title">Giới thiệu CSS </h1>
+                    <h2 class = "title2">CSS là gì?</h2>
+                    <div class = "khung">
+                        <p>CSS (<b>C</b>ascading <b>S</b>tyle <b>S</b>heets) là ngôn ngữ dùng để tạo phong cách và định dạng cho các phần tử được xây dựng bằng HTML. Nếu HTML đóng vai trò xây dựng cấu trúc trang web (tạo đoạn văn, tiêu đề, bảng,…), thì CSS giúp tô điểm giao diện như thay đổi màu sắc, bố cục, font chữ, kích thước và hình dạng của các phần tử đó.</p>
+                        <p>CSS được phát triển bởi <b>W3C</b> (World Wide Web Consortium) vào năm 1996, nhằm bổ sung khả năng định dạng cho HTML - vốn không được thiết kế để trình bày giao diện phức tạp.</p>
+                        <p>Cách hoạt động của CSS là dựa vào vùng chọn (selector) - có thể là tên thẻ HTML, ID, class,… rồi áp dụng các thuộc tính style tương ứng cho vùng đó.</p>
+                        <p>Giữa HTML và CSS tồn tại mối quan hệ chặt chẽ: HTML xây dựng khung nội dung, còn CSS tạo nên diện mạo - hai ngôn ngữ này không thể tách rời trong thiết kế web.</p><br>
+                    <img src="https://lirp.cdn-website.com/c57d8c85/dms3rep/multi/opt/css-la-gi-640w.webp" alt="Ảnh minh họa CSS" width="400" style="display:block; margin:auto; border-radius:10px;">
+                    </div>
+                    <h2 class = "title2">Vai trò của CSS</h2>
+                    <div class = "khung">
+                        <p> Nếu HTML cung cấp cấu trúc và nội dung cho trang web (bộ xương), thì <b>CSS</b> chịu trách nhiệm cho <b>kiểu dáng, màu sắc, bố cục và hiệu ứng</b> (trang phục và vẻ ngoài).</p>
+                        <ul>
+                            <li>Quyết định màu chữ, màu nền, font chữ.</li>
+                            <li>Kiểm soát vị trí của các phần tử (layout).</li>
+                            <li>Tạo hiệu ứng động và giao diện người dùng tương tác.</li>
+                            <li>Giúp trang web hiển thị đẹp và tối ưu trên nhiều thiết bị (Responsive Design).</li>
+                        </ul>
+                    </div>
+                    <h2 class = "title2"> Tại sao CSS lại quan trọng?</h2>
+                    <div class = "khung">
+                        <ul>
+                            <li><b>Tiết kiệm thời gian:</b> Có thể định dạng hàng trăm trang HTML chỉ bằng cách thay đổi một tệp CSS duy nhất.</li>
+                            <li><b>Phân tách nhiệm vụ:</b> Tách biệt cấu trúc (HTML) và trình bày (CSS), giúp code dễ đọc, dễ bảo trì và cập nhật.</li>
+                            <li><b>Trải nghiệm người dùng tốt hơn:</b> Tạo ra các trang web có giao diện thu hút và chuyên nghiệp.</li>
+                        </ul>
+                    </div>
+                    <div id="quiz-area-Home" class="quiz-container"></div>
+                </div>
+
+                <div id="Syntax" class="content">
+                    <h1 class = "main-title">Cú pháp CSS</h1>
+                    <br>
+                        <p>CSS được tạo thành từ các <b>Style Rule</b>. Một rule gồm 3 phần:</p>
+                        <div class="code">selector { property: value }</div>
+                        <br>
+                        <p>Giải thích các thẻ:</p>
+                        <div class="khung">
+                        <ul>
+                            <li><b>Selector:</b> Bộ chọn phần tử HTML (ví dụ: div, p, span,...)</li>
+                            <li><b>Property:</b> Thuộc tính CSS như <i>color</i>, <i>border</i>,...</li>
+                            <li><b>Value:</b> Giá trị của thuộc tính (ví dụ: red, #fff,...)</li>
+                        </ul>
+                        </div>
+                    <br>
+                    <p>Ví dụ 1:</p>
+                        <img src="https://www.w3schools.com/css/img_selector.gif" alt="Ảnh minh họa CSS" width="400" style="display:block; margin:auto; border-radius:10px;">
+                        <br>
+                        <p>Giải thích các thẻ:</p>
+                        <div class="khung">
+                        <ul>
+                            <li>Trong ví dụ trên, selector trỏ tới phần tử HTML là <b>h1</b>. Đây là phần tử mà mình muốn tạo style cho nó.</li>
+                            <li>Khối khai báo Declaration có thể bao gồm một hoặc nhiều khối và được đặt phân biệt nhau bởi dấu ";".</li>
+                            <li>Mỗi khối khai báo này bao gồm một tên của CSS property (trong ví dụ là color và font-size) và một giá trị (trong ví dụ là blue và 12px) được gán cho property đó.</li>
+                            <li>Bạn cần chú ý một điều rằng, một khai báo CSS luôn luôn kết thúc với một dấu chấm phẩy và phần khai báo sẽ được bao quanh bởi cặp dấu {}.</li>
+                        </ul></div>
+                    <div class = "vidu">Ví dụ 2:</div>
+                        <div class="code">p {
+  color: red;
+  text-align: center;
+}</div>
+                        <p>Giải thích các thẻ:</p>
+                        <div class="khung">
+                        <ul>
+                            <li><b>p</b> là một bộ chọn trong CSS (nó trỏ đến phần tử HTML mà bạn muốn định dạng: &lt;p&gt;).</li>
+                            <li><b>color</b> là một thuộc tính và redlà giá trị thuộc tính.</li>
+                            <li><b>text-align</b> là một thuộc tính và centerlà giá trị thuộc tính</li>
+                        </ul>
+                        </div>
+                        <div id="quiz-area-Syntax" class="quiz-container"></div>
+                </div>
+
+                <div id="Selectors" class="content">
+                    <h1 class = "main-title">Bộ chọn CSS</h1>
+                    <br>
+                    <p><i>Bộ chọn CSS được sử dụng để "tìm" (hoặc chọn) các phần tử HTML mà bạn muốn định kiểu.</i></p>
+                    <div class = "khung">
+                    <p>Chúng ta có thể chia bộ chọn CSS thành năm loại:</p>
+                    <ul>
+                        <li>Bộ chọn đơn giản.</li>
+                        <li>Bộ chọn kết hợp.</li>
+                        <li>Bộ chọn lớp giả.</li>
+                        <li>Bộ chọn phần tử giả.</li>
+                        <li>Bộ chọn thuộc tính.</li>
+                    </ul></div>
+                    <h2 class = "title2">Bộ chọn đơn giản</h2>
+                        <p><i>Bộ chọn đơn giản chọn các phần tử dựa trên tên phần tử, ID và lớp.</i></p>
+                        <table class="css-table">
+    <tr>
+        <th>Selector</th>
+        <th>Example</th>
+        <th>Example description</th>
+    </tr>
+    <tr>
+        <td><em>element</em></td>
+        <td>p</td>
+        <td>Selects all &lt;p&gt; elements</td>
+    </tr>
+    <tr>
+        <td><em>#id</em></td>
+        <td>#firstname</td>
+        <td>Selects the element with id="firstname"</td>
+    </tr>
+    <tr>
+        <td>*</td>
+        <td>*</td>
+        <td>Selects all elements</td>
+    </tr>
+    <tr>
+        <td><em>.class</em></td>
+        <td>.intro<br>p.intro</td>
+        <td>Selects all elements with class="intro"<br>Selects all &lt;p&gt; elements with class="intro"</td>
+    </tr>
+</table>
+                    <br>
+                    <h2 class = "title2">Bộ chọn kết hợp</h2>
+                        <p><i>Bộ kết hợp là dấu hiệu giải thích mối quan hệ giữa các bộ chọn.</i></p>
+                        <table class="css-table">
+    <tr>
+        <th>Name</th>
+        <th>Sign</th>
+        <th>Example</th>
+        <th>Example Result</th>
+    </tr>
+    <tr>
+        <td>Child combinator</td>
+        <td>&gt;</td>
+        <td>div &gt; p</td>
+        <td>Selects every &lt;p&gt; element that are direct children of a &lt;div&gt; element</td>
+    </tr>
+    <tr>
+        <td>Descendant combinator</td>
+        <td>(single space)</td>
+        <td>div p</td>
+        <td>Selects all &lt;p&gt; elements inside &lt;div&gt; elements</td>
+    </tr>
+    <tr>
+        <td>Namespace separator</td>
+        <td>|</td>
+        <td>ns | h2</td>
+        <td>Selects all &lt;h2&gt; elements in namespace ns</td>
+    </tr>
+    <tr>
+        <td>Next-sibling combinator</td>
+        <td>+</td>
+        <td>div + p</td>
+        <td>Selects the first &lt;p&gt; element that is placed immediately after &lt;div&gt; elements</td>
+    </tr>
+    <tr>
+        <td>Selector list</td>
+        <td>,</td>
+        <td>div, p</td>
+        <td>Selects all &lt;div&gt; elements and all &lt;p&gt; elements</td>
+    </tr>
+    <tr>
+        <td>Subsequent-sibling combinator</td>
+        <td>~</td>
+        <td>p ~ ul</td>
+        <td>Selects all &lt;ul&gt; elements that are preceded by a &lt;p&gt; element</td>
+    </tr>
+</table>
+                    <br>
+                    <h2 class = "title2">Bộ chọn lớp giả</h2>
+                        <p><i>Lớp giả CSS là một từ khóa có thể được thêm vào bộ chọn để xác định kiểu cho trạng thái đặc biệt của một phần tử.</i></p>
+                        <p>Một số cách sử dụng phổ biến cho lớp giả:</p>
+                        <ul>
+                            <li>Tạo kiểu cho một phần tử khi người dùng di chuyển chuột qua nó.</li>
+                            <li>Kiểu liên kết đã truy cập và chưa truy cập khác nhau.</li>
+                            <li>Tạo kiểu cho một phần tử khi nó được chú ý.</li>
+                            <li>Kiểu các thành phần biểu mẫu hợp lệ/không hợp lệ/bắt buộc/tùy chọn.</li>
+                            <li>Định dạng một phần tử là phần tử con đầu tiên của phần tử cha của nó.</li>
+                        </ul>
+                        <div class = "khung"><p><b>Cú pháp:</b> Các lớp giả luôn được biểu thị bằng dấu hai chấm (:) theo sau là tên lớp giả</p>
+                        <p>selector:pseudo-class-name {
+  CSS properties
+}</p></div>
+                        <p>Bảng dưới đây liệt kê tất cả các từ khóa pseudo-class trong CSS:</p>
+                        <table class="css-table">
+    <tr>
+        <th>Pseudo-class</th>
+        <th>Examples</th>
+        <th>Example description</th>
+    </tr>
+    <tr>
+  <td>:active</td>
+  <td>a:active</td>
+  <td>Selects the active link</td>
+</tr>
+<tr>
+  <td>:any-link</td>
+  <td>a:anylink<br>area:anylink</td>
+  <td>Selects any &lt;a&gt; or &lt;area&gt; element with an href attribute</td>
+</tr>
+<tr>
+  <td>:auto-fill</td>
+  <td>input:autofill</td>
+  <td>Selects any &lt;input&gt; element with its value autofilled by the browser</td>
+</tr>
+<tr>
+  <td>:checked</td>
+  <td>input:checked<br>option:checked</td>
+  <td>Matches any &lt;input&gt; or &lt;option&gt; element that is checked</td>
+</tr>
+<tr>
+  <td>:default</td>
+  <td>input:default<br>button:default<br>option:default</td>
+  <td>Selects form elements that are default in a group of related elements</td>
+</tr>
+<tr>
+  <td>:defined</td>
+  <td>:defined</td>
+  <td>Selects any element that has been defined (standard or custom elements)</td>
+</tr>
+<tr>
+  <td>:dir()</td>
+  <td>:dir(ltr)<br>:dir(rtl)</td>
+  <td>Selects any element with the specified text direction</td>
+</tr>
+<tr>
+  <td>:disabled</td>
+  <td>:disabled<br>input:disabled<br>option:disabled</td>
+  <td>Selects any element that is disabled. Most used for form elements</td>
+</tr>
+<tr>
+  <td>:empty</td>
+  <td>div:empty</td>
+  <td>Selects any element that has no children (including text nodes)</td>
+</tr>
+<tr>
+  <td>:enabled</td>
+  <td>:enabled<br>input:enabled</td>
+  <td>Selects any element that is enabled. Most used for form elements</td>
+</tr>
+<tr>
+  <td>:first-child</td>
+  <td>p:first-child<br>li:first-child</td>
+  <td>Selects the element that is the first child of its parent</td>
+</tr>
+<tr>
+  <td>:first-of-type</td>
+  <td>p:first-of-type<br>li:first-of-type</td>
+  <td>Selects the first element of its type among a group of sibling elements</td>
+</tr>
+<tr>
+  <td>:focus</td>
+  <td>input:focus<br>select:focus</td>
+  <td>Selects the element that gets focus. Most used for form elements</td>
+</tr>
+<tr>
+  <td>:focus-visible</td>
+  <td>button:focus-visible</td>
+  <td>Applies focus styles only when the keyboard is used to focus something</td>
+</tr>
+<tr>
+  <td>:hover</td>
+  <td>a:hover<br>p:hover</td>
+  <td>Selects element on mouse over</td>
+</tr>
+<tr>
+  <td>:invalid</td>
+  <td>input:invalid<br>fieldset:invalid</td>
+  <td>Selects invalid form elements</td>
+</tr>
+<tr>
+  <td>:not()</td>
+  <td>:not(p)</td>
+  <td>Selects any element that is not a &lt;p&gt; element</td>
+</tr>
+<tr>
+  <td>:nth-child()</td>
+  <td>p:nth-child(2)</td>
+  <td>Selects any &lt;p&gt; element that is the second child of its parent</td>
+</tr>
+<tr>
+  <td>:root</td>
+  <td>:root</td>
+  <td>Selects the document's root element</td>
+</tr>
+<tr>
+  <td>:visited</td>
+  <td>a:visited<br>area:visited</td>
+  <td>Selects all visited links</td>
+</tr></table>
+                    <br>
+                    <h2 class = "title2">Bộ chọn phần tử giả</h2>
+                        <p><i>Phần tử giả CSS được sử dụng để định kiểu cho các phần cụ thể của một phần tử.</i></p>
+                        <div class = "khung">
+                        <p>Ví dụ, nó có thể được sử dụng để:</p>
+                        <ul>
+                            <li>Định dạng chữ cái hoặc dòng đầu tiên của một phần tử.</li>
+                            <li>Chèn nội dung trước hoặc sau một phần tử.</li>
+                            <li>Định dạng các điểm đánh dấu của các mục danh sách.</li>
+                            <li>Định dạng hộp xem phía sau hộp thoại.</li>
+                        </ul></div>
+                        <p>Bảng dưới đây hiển thị các phần tử giả khác nhau trong CSS:</p>
+                        <table class="css-table">
+    <tr>
+        <th>Pseudo-element</th>
+        <th>Example</th>
+        <th>Example description</th>
+    </tr>
+    <tr>
+  <td><code>::after</code></td>
+  <td><code>p::after</code><br><code>div::after</code></td>
+  <td>Inserts something after the content of the specified element</td>
+</tr>
+
+<tr>
+  <td><code>::backdrop</code></td>
+  <td><code>dialog::backdrop</code></td>
+  <td>Styles the viewbox behind a dialog box or popover element</td>
+</tr>
+
+<tr>
+  <td><code>::before</code></td>
+  <td><code>p::before</code><br><code>div::before</code></td>
+  <td>Inserts something before the content of the specified element</td>
+</tr>
+
+<tr>
+  <td><code>::file-selector-button</code></td>
+  <td><code>::file-selector-button</code></td>
+  <td>Selects any button of type &lt;input type="file"&gt;</td>
+</tr>
+
+<tr>
+  <td><code>::first-letter</code></td>
+  <td><code>p::first-letter</code></td>
+  <td>Selects the first letter of every &lt;p&gt; element</td>
+</tr>
+
+<tr>
+  <td><code>::first-line</code></td>
+  <td><code>p::first-line</code></td>
+  <td>Selects the first line of every &lt;p&gt; element</td>
+</tr>
+
+<tr>
+  <td><code>::grammar-error</code></td>
+  <td><code>::grammar-error</code></td>
+  <td>Styles a text that the browser has flagged as grammatically incorrect</td>
+</tr>
+
+<tr>
+  <td><code>::highlight()</code></td>
+  <td><code>::highlight(custom-name)</code></td>
+  <td>Selects a custom highlight</td>
+</tr>
+
+<tr>
+  <td><code>::marker</code></td>
+  <td><code>::marker</code></td>
+  <td>Selects the markers of list items</td>
+</tr>
+
+<tr>
+  <td><code>::placeholder</code></td>
+  <td><code>input::placeholder</code><br><code>textarea::placeholder</code></td>
+  <td>Styles the placeholder text of &lt;input&gt; or &lt;textarea&gt; elements</td>
+</tr>
+
+<tr>
+  <td><code>::selection</code></td>
+  <td><code>::selection</code></td>
+  <td>Styles the user-selected text</td>
+</tr>
+
+<tr>
+  <td><code>::spelling-error</code></td>
+  <td><code>::spelling-error</code></td>
+  <td>Styles a text that the browser has flagged as incorrectly spelled</td>
+</tr>
+
+<tr>
+  <td><code>::view-transition</code></td>
+  <td><code>::view-transition</code></td>
+  <td>Represents the root of the view transitions overlay, which contains all view transitions on the page</td>
+</tr>
+
+<tr>
+  <td><code>::view-transition-group</code></td>
+  <td><code>::view-transition-group</code></td>
+  <td>Represents a single view transition snapshot group</td>
+</tr>
+
+<tr>
+  <td><code>::view-transition-image-pair</code></td>
+  <td><code>::view-transition-image-pair</code></td>
+  <td>Represents a container for a view transition’s "old" and "new" view states - before and after the transition</td>
+</tr>
+
+<tr>
+  <td><code>::view-transition-new</code></td>
+  <td><code>::view-transition-new</code></td>
+  <td>Represents the "new" view state of a view transition</td>
+</tr>
+
+<tr>
+  <td><code>::view-transition-old</code></td>
+  <td><code>::view-transition-old</code></td>
+  <td>Represents the "old" view state of a view transition</td>
+</tr>
+                        </table>
+                    <br>
+                    <h2 class = "title2">Bộ chọn thuộc tính</h2>
+                        <p><i>Bộ chọn thuộc tính sẽ chọn các phần tử HTML có tập hợp thuộc tính nhất định.</i></p>
+                        <table class="css-table">
+    <tr>
+        <th>Selector</th>
+        <th>Example</th>
+        <th>Example description</th>
+    </tr>
+    <tr>
+            <td>[attribute]</td>
+            <td>[lang]</td>
+            <td>Selects all elements with a lang attribute</td>
+        </tr>
+        <tr>
+            <td>[attribute=value]</td>
+            <td>[lang="it"]</td>
+            <td>Selects all elements with lang="it"</td>
+        </tr>
+        <tr>
+            <td>[attribute~=value]</td>
+            <td>[title~="flower"]</td>
+            <td>Selects all elements with a title attribute containing the word "flower"</td>
+        </tr>
+        <tr>
+            <td>[attribute|=value]</td>
+            <td>[lang|="en"]</td>
+            <td>Selects all elements with a lang attribute value equal to "en" or starting with "en-"</td>
+        </tr>
+        <tr>
+            <td>[attribute^=value]</td>
+            <td>[href^="https"]</td>
+            <td>Selects all elements with a href attribute value that begins with "https"</td>
+        </tr>
+        <tr>
+            <td>[attribute$=value]</td>
+            <td>[href$=".pdf"]</td>
+            <td>Selects all elements with a href attribute value ends with ".pdf"</td>
+        </tr>
+        <tr>
+            <td>[attribute*=value]</td>
+            <td>[href*="w3schools"]</td>
+            <td>Selects all elements with a href attribute value containing the substring "w3schools"</td>
+        </tr>
+    </table>
+                    <div id="quiz-area-Selectors" class="quiz-container"></div>
+                </div>
+
+                <div id="Cachthuchien" class="content">
+                    <h1 class = "main-title">Cách thực hiện CSS</h1>
+                    <br>
+                        <p><i>Khi trình duyệt đọc một bảng định kiểu, nó sẽ định dạng tài liệu HTML theo thông tin trong bảng định kiểu đó.</i></p>
+                        <div class="khung"><p>Chúng ta sẽ có ba cách sử dụng CSS trong HTML là:</p>
+                        <ul>
+                            <li><b>Inline:</b> mã CSS viết tại thuộc tính Style của phần tử HTML</li>
+                            <li><b>Internal:</b> mã CSS trong chính văn bản HTML, nằm trong khối thẻ &lt;style&gt;</li>
+                            <li><b>External:</b> mã CSS ở một file riêng biệt sau đó nạp vào trong HTML bằng phần tử &lt;link&gt;</li>
+                        </ul></div>
+                    <h2 class = "title2">Inline CSS</h2>
+                        <p><i>Đặt thuộc tính style vào thẻ mở của phần tử HTML, giá trị của thuộc tính <b>style</b> là các cặp thuộc tính định dạng CSS.</i></p>
+                        <p>Ví dụ</p>
+                        <div class="code"><pre><code>&lt;!DOCTYPE html&gt;
+<br>&lt;html&gt;
+&lt;body&gt;
+    &lt;img src="http://webcoban.vn/image/h2.jpg" style="width:200px;height:100px"&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+                    <br>
+                    <h2 class = "title2">Internal CSS</h2>
+                        <ul>
+                            <li>Ta đặt các cặp thuộc tính định dạng CSS vào bên trong cặp thẻ &lt;style&gt;&lt;type=”text/css”&gt;&lt;/style&gt;</li>
+                            <li>Cặp thẻ &lt;style type=”text/css”&gt;&lt;/style&gt; thì được đặt bên trong cặp thẻ &lt;head&gt;&lt;/head&gt;</li>
+                        </ul>
+                        <p><b>Ví dụ</b></p>
+                        <div class="code"> <pre><code>&lt;!DOCTYPE html>
+&lt;html&gt;
+&lt;head&gt;    
+    &lt;style type=”text/css”&gt;        
+        h1 { font-size:30px; color:white; background-color:red;}        
+        p { background-color:gray; }    
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;    
+    &lt;h1&gt;webcoban.vn (WEB CƠ BẢN .VN)&lt;/h1&gt;    
+    &lt;p&gt;Hướng dẫn học lập trình web từ cơ bản đến nâng cao&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+                    </div>
+                    <br>
+                    <h2 class = "title2">External CSS</h2>
+                        <ul>
+                            <li>Với External CSS, ta đặt các thuộc tính định dạng vào bên trong tập tin CSS.</li>
+                            <li>Trong cặp thẻ &lt;head&gt;&lt;/head&gt; của tập tin HTML, ta dùng thẻ sau để nhúng tin CSS vào trang web.
+                                <div class = "khung"><b>&lt;link rel=”stylesheet’type=”text/css”href=”đường dẫn đến tập tin CSS”</b>&gt;</div> </li>
+                        </ul>
+                        <p>Ví dụ</p>
+                        <div class="code"> <pre><code><p>Có một tập tin dinhdang.css (cùng cấp với tập tin HTML) có nội dung là:
+    h1 { color:red; font-size:50px; font-family:Courier;}
+                            <p>Khi thực thi tập tin HTML có nội dung:</p>&lt;!DOCTYPE html&gt;
+    &lt;html&gt;    
+        &lt;head&gt;        
+            &lt;link rel=”stylesheet” type=”text/css” href=”dinhdang.css”&gt;    
+        &lt;/head&gt; 
+        &lt;body&gt;&gt;       
+            &lt;h1&gt;Hello HTML&lt;/h1&gt;    
+        &lt;/body&gt;
+    &lt;/html&gt;</code></pre></div>
+                    <hr>
+                    <h2 class = "title2">Thứ tự ưu tiên các cách sử dụng CSS</h2>
+                        <div class ="khung">
+                        <p><i>Khi một thuộc tính nào đó của phần tử được thiết lập bởi nhiều cách, thì thuộc tính sẽ nhận giá trị của các cách sử dụng CSS theo độ ưu tiên như sau:</i></p>
+                        <ol>
+                            <li>Inline CSS (ưu tiên cao nhất)</li>
+                            <li>Internal CSS</li>
+                            <li>External CSS (ưu tiên thấp nhất)</li>
+                        </ol></div>
+                        <div id="quiz-area-Cachthuchien" class="quiz-container"></div>
+                </div>
+
+                <div id="Comment" class="content">
+                    <h1 class = "main-title">Comment trong CSS</h1>
+                    <br>
+                    <ul>
+                        <li>Bình luận được sử dụng để giải thích mã CSS và có thể hữu ích khi bạn chỉnh sửa mã nguồn sau này.</li>
+                        <li>Bình luận cũng được sử dụng để tạm thời vô hiệu hóa các phần mã CSS trong bảng định kiểu.</li>
+                        <li>Trình duyệt sẽ bỏ qua các bình luận!</li>
+                        <li>Bình luận CSS được đặt bên trong phần tử &lt;style&gt; của HTML và bắt đầu bằng <code><b>/*</b></code> và kết thúc bằng <code><b>*/</b></code></li>
+                    </ul>
+                    <p><b>Ví dụ 1:</b></p>
+                    <div class="code"> <pre><code>/* This is a single-line comment */
+    p {
+    color: red;
+}</code></pre></div>
+                    <br>
+                        <p><b>Ví dụ 2:</b> Bạn có thể thêm bình luận về bất cứ đâu bạn muốn trong mã.</p>
+                    <div class="code"> <pre><code>p {
+color: red;  /* Set text color to red */
+}</code></pre></div>
+                    <br>
+                        <p><b>Ví dụ 3:</b> Ngay giữa một dòng mã.</p>
+                        <div class="code"> <pre><code>p {
+  color: /*red*/blue; 
+}</code></pre></div>
+                    <br>
+                        <p><b>Ví dụ 4:</b> Bình luận cũng có thể kéo dài nhiều dòng</p>
+                        <div class="code"> <pre><code>/* This is
+a multi-line
+comment */
+
+p {
+  color: red;
+}</code></pre>
+                    </div>
+                    <div id="quiz-area-Comment" class="quiz-container"></div>
+                </div>
+
+                <div id="Color" class="content">
+                    <h1 class = "main-title">Màu sắc</h1>
+                    <br>
+                    <img src="https://ingiacong.co/wp-content/uploads/2021/11/bang-code-mau.jpg" alt="Minh họa màu sắc" width="400" style="display:block; margin:auto; border-radius:10px;">
+                    <br>
+                        <p><i>Trong CSS, màu sắc được chỉ định bằng cách sử dụng tên màu được xác định trước hoặc bằng giá trị RGB, HEX, HSL, RGBA, HSLA.</i></p>  
+                    <h2 class = "title2">Mã màu RGB</h2>
+                        <p>Màu sắc trong CSS có thể được định nghĩa bằng mã màu RGB (R = Red, G = Green và B= Blue). Nói cách khác chúng ta có thể tạo ra tất cả các màu sắc khác từ việc pha trộn 3 màu đỏ (RED), xanh lá cây (Green) và xanh da trời (Blue). Cú pháp giá trị màu RGB trong CSS:</p>
+                        <div class="code"> <pre><code>rgb(red, green, blue)</code></pre>
+                            <p>Trong đó giá trị của các màu red, green và blue dao động từ 0 tới 255, thể hiện độ độ đậm của chúng để hình thành nên màu sắc cuối cùng (cao nhất là 255 và thấp nhất là 0). </p>
+                        </div>
+                            <p>Ví dụ:</p>
+                            <div class = "khung">
+                            <p>Giá trị rgb(255,0,0) là màu đỏ vì màu đỏ có giá trị cao nhất là 255 còn xanh lá cây và xanh da trời là 0.
+                                 <span class="color-box" style="background-color: rgb(255,0,0);"></span>
+                            </p></div>
+                    <br>
+                    <h2 class = "title2">Mã màu HEX</h2>
+                        <p>Trong CSS cũng có một cách khác để chỉ định màu sắc đó chính là giá trị HEX. Hex (<b>H</b>exadecimal) là  một trong những phương pháp định nghĩa màu sắc được sử dụng phổ biến nhất trên web. Phương pháp này sử dụng các số trong hệ cơ số 16 để thể hiện giá trị của màu sắc.</p>
+                        <p>Cú pháp giá trị màu HEX trong CSS:</p>
+                        <div class="code"> <pre><code>#rrggbb</code></pre></div>
+                        <p>Trong đó:</p>
+                        <div class = "khung">
+                                <p>- rr (red), gg (green) và bb (blue) tương ứng là thành phần màu đỏ, xanh lá cây và xanh da trời. Nó được biểu diễn bởi các giá trị trong hệ thập lục phân (tương đương 0 - 255 trong hệ thập phân). </p>
+                                <p>- Ở cơ số 16, giá trị mỗi màu trong ba màu trên dao động từ 00 (không có màu) tới FF (full color).</p>
+                        </div>
+                        <p>Ví dụ:</p>
+                            <div class = "khung">
+                                <p>#ffffff đại diện cho màu trắng. <span class="color-box" style="background-color: #ffffff;"></span></p>
+                                <p>#000000 đại diện cho màu đen. <span class="color-box" style="background-color: #000000;"></span></p>
+                                <p>#ff0000 đại diện cho màu đỏ. <span class="color-box" style="background-color: #ff0000;"></span></p>
+                            </div>
+                    <br>
+                    <h2 class = "title2">Mã màu HSL</h2>
+                            <img src="https://st.quantrimang.com/photos/image/2019/04/27/color-trong-css-1.jpg" alt="Minh họa CSS" width="400" style="display:block; margin:auto; border-radius:10px;">
+                            <p>HSL là chữ cái đầu viết tắt của Hue, Saturation và Lightness, ký hiệu của nó là hsl(hue, saturation, lightness).</p>
+                            <p>Trong đó:</p>
+                            <div class = "khung">
+                            <ul>
+                                <li><b>Hue</b> là độ của màu trong vòng tròn màu có giá trị từ 0 đến 360 (0 là màu đỏ, 120 là màu xanh lá, 240 là màu xanh da trời)</li>
+                                <li><b>Saturation</b> có giá trị phần trăm (%) cường độ màu, cao nhất là 100% (full)</li>
+                                <li><b>Lightness</b> cũng có giá trị phần trăm, là độ sáng của màu theo phần trăm, 0% là tối và 100% là sáng trắng.</li>
+                            </ul></div>
+                            <br>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 10%);">hsl(300, 100%, 10%)</div>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 20%);">hsl(300, 100%, 20%)</div>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 30%);">hsl(300, 100%, 30%)</div>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 40%);">hsl(300, 100%, 40%)</div>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 50%);">hsl(300, 100%, 50%)</div>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 60%);">hsl(300, 100%, 60%)</div>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 70%);">hsl(300, 100%, 70%)</div>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 80%);">hsl(300, 100%, 80%)</div>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 90%); color:black;">hsl(300, 100%, 90%)</div>
+                            <div class="color-box1" style="background-color: hsl(300, 100%, 100%); color:black;">hsl(300, 100%, 100%)</div>
+                    <br>
+                    <h2 class = "title2">Mã màu RGBA</h2>
+                            <p><b>RGBA color</b> là phần mở rộng của giá trị màu RGB với thành phần bổ sung là chỉ số opacity quy định độ mờ/độ trong suốt của màu sắc.</p>
+                            <div class="code"><pre><code>rgba(red, green, blue, alpha)</code></pre></div>
+                            <p>Trong đó:</p>
+                            <div class = "khung">alpha là chỉ số opacity có giá trị từ 0.0 - 1.0, giá trị càng nhỏ thì độ trong suốt càng nhiều.</p></div>
+                            <br>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 0.1);">rgba(88,37,123, 0.1)</div>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 0.2);">rgba(88,37,123, 0.2)</div>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 0.3);">rgba(88,37,123, 0.3)</div>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 0.4);">rgba(88,37,123, 0.4)</div>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 0.5);">rgba(88,37,123, 0.5)</div>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 0.6);">rgba(88,37,123, 0.6)</div>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 0.7);">rgba(88,37,123, 0.7)</div>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 0.8);">rgba(88,37,123, 0.8)</div>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 0.9);">rgba(88,37,123, 0.9)</div>
+                            <div class="color-box1" style="background-color: rgba(88,37,123, 1.0);">rgba(88,37,123, 1.0)</div>
+                    <br>
+                    <h2 class = "title2">Mã màu HSLA</h2>
+                            <p><b>HSLA Color</b> là phần mở rộng của giá trị màu HSL với thành phần bổ sung là chỉ số opacity quy định độ mờ/độ trong suốt của màu sắc.</p>
+                            <div class="code"><pre><code>hsla(hue, saturation, lightness, alpha)</code></pre></div>
+                            <p>Trong đó:</p>
+                            <div class = "khung">alpha là chỉ số opacity có giá trị từ 0.0 - 1.0, giá trị càng nhỏ thì độ trong suốt càng nhiều.</p></div>
+                            <br>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 10%, 0.7);">hsla(300, 100%, 10%, 0.7)</div>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 20%, 0.7);">hsla(300, 100%, 20%, 0.7)</div>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 30%, 0.7);">hsla(300, 100%, 30%, 0.7)</div>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 40%, 0.7);">hsla(300, 100%, 40%, 0.7)</div>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 50%, 0.7);">hsla(300, 100%, 50%, 0.7)</div>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 60%, 0.7);">hsla(300, 100%, 60%, 0.7)</div>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 70%, 0.7);">hsla(300, 100%, 70%, 0.7)</div>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 80%, 0.7);">hsla(300, 100%, 80%, 0.7)</div>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 90%, 0.7);">hsla(300, 100%, 90%, 0.7)</div>
+                            <div class="color-box1" style="background-color: hsla(300, 100%, 100%, 0.7);">hsla(300, 100%, 100%, 0.7)</div>
+                    <br>
+                    <p>Có thể tham khảo: <a href="https://ingiacong.co/bang-code-mau/"target="_blank" style="text-decoration:none; color:blue;">Truy cập tại đây</a></p>
+                    <div id="quiz-area-Color" class="quiz-container"></div>
+                </div>
+                
+                <div id="Nen" class="content">
+                    <h1 class = "main-title">Nền</h1>
+                    <br>
+                    <p><i>Đặc tính nền trong CSS được dùng để định nghĩa hiệu ứng nền cho các phần tử. Các đặc tính của nền trong CSS gồm:</i></p>
+                    <div class = "khung"><ul>
+                        <li>Thuộc tính <b>background-color:</b> Sử dụng để thiết lập màu nền của một phần tử.</li>
+                        <li>Thuộc tính <b>background-image:</b> Sử dụng để thiết lập hình nền cho một phần tử.</li>
+                        <li>Thuộc tính <b>background-repeat:</b> Sử dụng để điều khiển sự lặp đi lặp lại của một hình ảnh nền theo chiều dọc hoặc chiều ngang.</li>
+                        <li>Thuộc tính <b>background-position:</b> Sử dụng để điều khiển vị trí của một hình ảnh nền.</li>
+                        <li>Thuộc tính <b>background-attachment:</b> Sử dụng để xác định xem có hay không một hình nền là cố định hoặc có thể scroll với phần còn lại của trang.</li>
+                    </ul></div>
+                    <h2 class = "title2">Màu nền</h2>
+                        <p><i>Đặc tính <b>backgroud-color</b> xác định màu nền cho phần tử.</i></p>
+                        <div class="code"> <pre><code>body { background-color: lightblue;}</code></pre></div>
+                        <p>Màu sắc trong CSS thường được xác định bằng</p>
+                        <div class = "khung">
+                        <ul>
+                            <li>Tên màu, như “red”...</li>
+                            <li>Giá trị màu HEX, như #ff0000…</li>
+                            <li>Giá trị RGB, như rgb(255,0,0)...</li>
+                        </ul></div>
+                        <p>Ví dụ: các phần tử &lt;h1&gt;, &lt;p&gt; và &lt;div&gt; có màu nền khác nhau.</p>
+                        <div class="code"><pre><code>h1 { background-color: green;}
+div { background-color: lightblue;}
+p { background-color: yellow;}</code></pre></div>
+                    <br>
+                    <h2 class = "title2">Ảnh nền</h2>
+                        <p><i>Đặc tính <b>background-image</b> lấy hình ảnh làm nền cho phần tử. Mặc định ảnh sẽ được sao chép lặp lại để bao phủ toàn bộ phần tử.</i></p>
+                        <div class="code"><pre><code>body { background-image: url("paper.gif");}</code></pre></div>
+                        <br>
+                        <p><b>Ảnh nền lặp đi lặp lại theo chiều dọc và ngang</b></p>
+                        <p>Mặc định đặc tính <b><i>background-image</b></i> sẽ lặp đi lặp lại theo cả chiều ngang và chiều dọc để bao phủ toàn bộ phần tử. 
+                            Một số ảnh chỉ nên lặp theo 1 chiều, nếu không trông sẽ rất xấu. Khi đó hãy dùng thêm đặc tính <b><i>background-repeat:</b></i> <b><i>repeat-x;</b></i> để lặp theo chiều ngang và <b><i>background-repeat:</b></i> <b><i>repeat-y;</b></i> để lặp theo chiều dọc.</p>
+                        <div class="code"><pre><code>body { background-image: url("gradient_bg.png"); background-repeat: repeat-x;}</code></pre></div>
+                        <br>
+                        <p><b>Ảnh nền, đặt vị trí và không lặp lại</b></p>
+                        <p>Để lấy một ảnh làm nền và không muốn lặp lại thì dùng đặc tính <b><i>background-repeat.</b></i></p>
+                        <div class="code"><pre><code>body { background-image: url("img_trejpg"); background-repeat: no-repeat;}</code></pre></div>
+                        <br>
+                        <p><b>Ảnh nền, cố định vị trí</b></p>
+                        <p>Để chỉ định ảnh nền cố định (không bị cuộn theo cả trang), dùng đặc tính <b><i>background-attachment.</i></b></p>
+                        <div class="code"><pre><code>body { background-image: url("img_tree.jpg"); 
+background-repeat: no-repeat; 
+background-position: right top; 
+background-attachment: fixed;}</code></pre></div>
+                        <br>
+                        <p><b>Ảnh nền, đặc tính rút gọn</b></p>
+                        <p>Để rút ngắn code, bạn có thể chỉ định tất cả các đặc tính cho nền trong một đặc tính duy nhất, đây gọi là đặc tính rút gọn. Đặc tính rút gọn của nền là <b><i>background.</i></b></p>
+                        <div class="code"><pre><code>body { background: #ffffff url("img_tree.jpg") no-repeat right top;}</code></pre></div>
+                    <hr>
+                    <div class = "khung">
+                    <p><i><b>Khi dùng đặc tính rút gọn, thứ tự các giá trị sẽ là</b></i></p>
+                        <ol>
+                            <li>background-color</li>
+                            <li>background-image</li>
+                            <li>background-repeat</li>
+                            <li>background-attachment</li>
+                            <li>background-position</li>
+                        </ol></div>
+                    <div class="note">
+                        <p><b>Lưu ý:</b> Chỉ cần viết theo đúng thứ tự, không nhất thiết phải đầy đủ các đặc tính.</p>
+                    </div>
+                    <div id="quiz-area-Nen" class="quiz-container"></div>
+                </div>
+
+                <div id="Border" class="content">
+                    <h1 class = "main-title">Đường viền</h1>
+                    <br>
+                        <p><i>Thuộc tính border trong CSS giúp bạn xác định style, độ rộng và màu của đường viền bao quanh một phần tử. Tương ứng, bạn sẽ có ba thuộc tính sau giúp bạn thực hiện việc này:</i></p>
+                        <ul>
+                            <li>Thuộc tính <b>border-color</b> xác định màu của đường viền.</li>
+                            <li>Thuộc tính <b>border-style</b> giúp bạn xác định xem đường viền nên là solid, dashed, double, …</li>
+                            <li>Thuộc tính <b>border-width</b> giúp bạn xác định độ rộng của đường viền.</li>
+                        </ul>
+                    <h2 class = "title2">Thuộc tính border-color trong CSS</h2>
+                        <p>Để xác định màu cho đường viền trong CSS, bạn sử dụng thuộc tính border-color. 
+                            Ngoài việc xác định màu cho toàn bộ đường viền bao quanh phần tử, bạn cũng có thể xác định riêng rẽ màu cho từng phần của đường viền, chẳng hạn như phần trên, đáy, cạnh trái hoặc cạnh phải. 
+                            Tùy theo mục đích, bạn sử dụng một trong các thuộc tính sau đây.</p>
+                        <div class = "khung"><ul>
+                            <li>Thuộc tính <b>border-bottom-color</b> giúp bạn thay đổi màu của đáy đường viền.</li>
+                            <li>Thuộc tính <b>border-top-color</b> giúp bạn thay đổi màu của phần trên đường viền.</li>
+                            <li>Thuộc tính <b>border-left-color</b> giúp bạn thay đổi màu của cạnh trái đường viền.</li>
+                            <li>Thuộc tính <b>border-right-color</b> giúp bạn thay đổi màu của cạnh phải đường viền.</li>
+                        </ul></div>
+                        <p>Dưới đây là ví dụ minh họa cách sử dụng các thuộc tính trên để thay đổi màu của đường viền trong CSS:</p>
+                    <div class="code"><pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;style type="text/css"&gt;
+        p.example1{
+            border:1px solid;
+            border-bottom-color:#009900; /* Green */
+            border-top-color:#FF0000;    /* Red */
+            border-left-color:#330000;   /* Black */
+            border-right-color:#0000CC;  /* Blue */
+        }
+        p.example2{
+            border:1px solid;
+            border-color:#009900;        /* Green */
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+    &lt;body&gt;
+        &lt;p class="example1"&gt;
+            Vi du hien thi Border voi cac mau khac nhau tren cac canh.
+        &lt;/p&gt; 
+        &lt;p class="example2"&gt;
+            Vi du hien thi Border voi mau duy nhat tren tat ca cac canh.
+        &lt;/p&gt;
+    &lt;/body&gt;
+ &lt;/head&gt;
+&lt;/html&gt;</code></pre></div>
+                    <p>Kết quả:</p>
+                    <div class = "khung">
+                      <style type="text/css">
+                          p.example1{
+                              border:1px solid;
+                              border-bottom-color:#009900; /* Green */
+                              border-top-color:#FF0000;    /* Red */
+                              border-left-color:#330000;   /* Black */
+                              border-right-color:#0000CC;  /* Blue */
+                          }
+
+                          p.example2{
+                              border:1px solid;
+                              border-color:#009900;        /* Green */
+                          }
+                      </style>
+
+                      <p class="example1">
+                          Vi du hien thi Border voi cac mau khac nhau tren cac canh.
+                      </p>
+                      <br>
+                      <p class="example2">
+                          Vi du hien thi Border voi mau duy nhat tren tat ca cac canh.
+                      </p>
+                    </div>
+                    <br>
+                    <h2 class = "title2">Thuộc tính border-style trong CSS</h2>
+                        <p>Để xác định xem style của đường viền là solid, dotted, dashed, double, …, bạn có thể sử dụng thuộc tính border-style trong CSS. Thuộc tính này có thể nhận các giá trị sau:</p>
+                        <ul>
+                            <li><b>none</b></li>
+                            <li><b>solid</b></li>
+                            <li><b>dotted</b></li>
+                            <li><b>dashed</b></li>
+                            <li><b>double</b></li>
+                            <li><b>groove</b></li>
+                            <li><b>ridge</b></li>
+                            <li><b>inset</b></li>
+                            <li><b>outset</b></li>
+                            <li><b>hidden</b></li>
+                        </ul>
+                        <p>Dưới đây là ví dụ minh họa cách sử dụng các thuộc tính trên trong CSS.</p>
+                    <div class="code"><pre><code>&lt;html&gt;
+    &lt;head&gt;
+    &lt;/head&gt;
+   
+    &lt;body&gt;
+      &lt;p style="border-width:4px; border-style:none;"&gt;
+      Vi du Border co dang la none.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:4px; border-style:solid;"&gt;
+      Vi du Border dang solid.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:4px; border-style:dashed;"&gt;
+      Vi du Border dang dahsed.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:4px; border-style:double;"&gt;
+      Vi du Border dang double.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:4px; border-style:groove;"&gt;
+      Vi du Border dang groove.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:4px; border-style:ridge"&gt;
+      Vi du Border dang aridge.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:4px; border-style:inset;"&gt;
+      Vi du Border dang inset.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:4px; border-style:outset;"&gt;
+      Vi du Border dang outset.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:4px; border-style:hidden;"&gt;
+      Vi du Border dang hidden.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:4px;border-top-style:solid;
+      border-bottom-style:dashed; border-left-style:groove; 
+      border-right-style:double;"&gt;
+      Vi du Border voi 4 Style khac nhau cho cac canh.
+      &lt;/p&gt;
+   &lt;/body&gt;
+   
+&lt;/html&gt;</code></pre></div>
+                        <p>Kết quả:</p>
+                        <div class = "khung">
+      <p style="border-width:4px; border-style:none;">
+      Vi du Border co dang la none.
+      </p>
+      <br>
+      <p style="border-width:4px; border-style:solid;">
+      Vi du Border dang solid.
+      </p>
+      <br>
+      <p style="border-width:4px; border-style:dashed;">
+      Vi du Border dang dahsed.
+      </p>
+      <br>
+      <p style="border-width:4px; border-style:double;">
+      Vi du Border dang double.
+      </p>
+      <br>
+      <p style="border-width:4px; border-style:groove;">
+      Vi du Border dang groove.
+      </p>
+      <br>
+      <p style="border-width:4px; border-style:ridge">
+      Vi du Border dang aridge.
+      </p>
+      <br>
+      <p style="border-width:4px; border-style:inset;">
+      Vi du Border dang inset.
+      </p>
+      <br>
+      <p style="border-width:4px; border-style:outset;">
+      Vi du Border dang outset.
+      </p>
+      <br>
+      <p style="border-width:4px; border-style:hidden;">
+      Vi du Border dang hidden.
+      </p>
+      <br>
+      <p style="border-width:4px;
+          border-top-style:solid;
+          border-bottom-style:dashed;
+          border-left-style:groove;
+          border-right-style:double;">
+    Ví dụ Border với 4 Style khác nhau cho các cạnh.
+</p></div>
+                    <h2 class = "title2">Thuộc tính border-width trong CSS</h2>
+                        <p>Sử dụng thuộc tính border-width trong CSS giúp bạn thay đổi độ rộng của đường viền bao quanh một phần tử. 
+                            Thuộc tính này có thể nhận một giá trị đo chiều dài với đơn vị là px, pt hoặc cm hoặc có thể là <i>thin</i>, <i>medium</i> hoặc <i>thick</i>.</p>
+                        <p>Dưới đây là ví dụ minh họa cách sử dụng các thuộc tính trên để thay đổi độ rộng của đường viền trong CSS:</p>
+                    <div class="code"><pre><code>
+      &lt;p style="border-width:2px; border-style:solid;"&gt;
+      Vi du Border dang solid co do rong la 2px.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:6pt; border-style:solid;"&gt;
+      Vi du Border dang solid co do rong la 6pt.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:thin; border-style:solid;"&gt;
+      Vi du Border dang solid co do rong la thin.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:medium; border-style:solid;"&gt;
+      Vi du Border dang solid co do rong la medium.
+      &lt;/p&gt;
+      
+      &lt;p style="border-width:thick; border-style:solid;"&gt;
+      Vi du Border dang solid co do rong la thick.
+      &lt;/p&gt;
+      
+      &lt;p style="border-bottom-width:4px;border-top-width:10px;
+      border-left-width: 2px;border-right-width:15px;border-style:solid;"&gt;
+      Vi du Border dang solid co do rong khac nhau cho cac canh.
+      &lt;/p&gt;</code></pre></div>
+                        <p>Kết quả:</p>
+                        <div class = "khung">
+      <p style="border-width:2px; border-style:solid;">
+      Vi du Border dang solid co do rong la 2px.
+      </p>
+      <br>
+      <p style="border-width:6pt; border-style:solid;">
+      Vi du Border dang solid co do rong la 6pt.
+      </p>
+      <br>
+      <p style="border-width:thin; border-style:solid;">
+      Vi du Border dang solid co do rong la thin.
+      </p>
+      <br>
+      <p style="border-width:medium; border-style:solid;">
+      Vi du Border dang solid co do rong la medium.
+      </p>
+      <br>
+      <p style="border-width:thick; border-style:solid;">
+      Vi du Border dang solid co do rong la thick.
+      </p>
+      <br>
+      <p style="border-bottom-width:4px;border-top-width:10px;
+      border-left-width: 2px;border-right-width:15px;border-style:solid;">
+      Vi du Border dang solid co do rong khac nhau cho cac canh.
+      </p></div>
+                    <br>
+                    <h2 class = "title2">Thuộc tính border trong CSS</h2>
+                        <ul>
+                            <li>Sử dụng thuộc tính border trong CSS, bạn có thể tối thiểu hóa lượng code cần viết mà vẫn có thể xác định đầy đủ style cho đường viền</li>
+                            <li>Trong phần style rule xác định cho thuộc tính border, bạn bắt buộc phải xác định giá trị cho thuộc tính border-style.</li>
+                        </ul>
+                        <p>Dưới đây là ví dụ minh họa cho cách sử dụng thuộc tính border trong CSS:</p>
+                        <div class="code"><pre><code>&lt;p style="border:4px solid red;"&gt;
+Vi du xac dinh tat ca cac gia tri lien quan toi Border chi trong mot Style Rule.
+&lt;/p&gt;</code></pre></div>
+                        <p>Kết quả:</p>
+                        <div class = "khung">
+    <p style="border:4px solid red;">
+    Vi du xac dinh tat ca cac gia tri lien quan toi Border chi trong mot Style Rule.
+    </p></div>
+                    <div id="quiz-area-Border" class="quiz-container"></div>
+                </div>
+
+                <div id="Margins" class="content">
+                    <h1 class = "main-title">Lề</h1>
+                    <h2 class = "title2">Định nghĩa và cách sử dụng</h2>
+                        <p>Thuộc tính này <b>margin</b> thiết lập lề cho một phần tử và là thuộc tính viết tắt của các thuộc tính sau:</p>
+                        <ul>
+                            <li>margin-top</li>
+                            <li>margin-right</li>
+                            <li>margin-bottom</li>
+                            <li>margin-left</li>
+                        </ul>
+                        <br>
+                        <p>Ví dụ:</p>
+                            <p>1. Nếu thuộc tính margin có bốn giá trị:</p>
+                            <div class="code"><pre><code>margin:10px 5px 15px 20px;</code></pre></div>
+                                <div class = "khung">
+                                <ul>
+                                    <li>top margin: 10px</li>
+                                    <li>right margin: 5px</li>
+                                    <li>bottom margin: 15px</li>
+                                    <li>left margin: 20px</li>
+                                </ul>
+                            </div>
+                        
+                            <p>2. Nếu thuộc tính margin có ba giá trị:</p>
+                                <div class="code"><pre><code>margin:10px 5px 15px;</code></pre></div>
+                                <div class = "khung">
+                                <ul>
+                                    <li>top margin: 10px</li>
+                                    <li>right and left margin: 5px</li>
+                                    <li>bottom margin: 15px</li>
+                                </ul>
+                                </div>
+                            <p>3. Nếu thuộc tính margin có hai giá trị:</p>
+                                <div class="code"><pre><code>margin:10px 5px;</code></pre></div>
+                                <div class = "khung">
+                                <ul>
+                                    <li>top and bottom margin: 10px</li>
+                                    <li>right and left margin: 5px</li>
+                                </ul>
+                                </div>
+                        
+                            <p>4. Nếu thuộc tính margin có một giá trị:</p>
+                                <div class="code"><pre><code>margin:10px;</code></pre></div>
+                                <div class = "khung">
+                                <ul>
+                                    <li>all four margins: 10px</li>
+                                </ul>
+                                </div>
+                        <div class = "note">
+                            <p><b>Lưu ý:</b> Giá trị âm được chấp nhận.</p>
+                        </div>
+                        <br>
+                        <h2 class = "title2">Cú pháp CSS</h2>
+                            <div class="code"><pre><code>padding: margin: length|auto|initial|inherit;</code></pre></div>
+                            <table class="css-table">
+    <tr>
+        <th>Value</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><em>length</em></td>
+        <td>Chỉ định khoảng đệm theo px, pt, cm, v.v. Giá trị mặc định là 0.</td>
+    </tr>
+    <tr>
+        <td><em>%</em></td>
+        <td>Chỉ định khoảng đệm theo px, pt, cm, v.v. Giá trị mặc định là 0.</td>
+    </tr>
+    <tr>
+        <td><em>auto</em></td>
+        <td>Trình duyệt tính toán biên độ</td>
+    </tr>
+    <tr>
+        <td><em>initial</em></td>
+        <td>Đặt thuộc tính này về giá trị mặc định.</td>
+    </tr>
+    <tr>
+        <td><em>inherit</em></td>
+        <td>Kế thừa thuộc tính này từ phần tử cha của nó.</td>
+    </tr>
+                    </table>
+                    <br>
+                    <h2 class = "title2">Sụp đổ lề</h2>
+                        <p>- Lề trên và lề dưới của các phần tử đôi khi được thu gọn thành một lề duy nhất bằng lề lớn nhất trong hai lề.</p>
+                        <p>- Điều này không xảy ra với lề ngang (trái và phải)! Chỉ xảy ra với lề dọc (trên và dưới)!</p>
+                        <div class="code"><pre><code>p.a {
+  margin: 30px 0;
+}
+
+p.b {
+  margin: 20px 0;
+}</code></pre></div>
+                        <p>Ví dụ:</p>
+                        <div class = "khung">
+                        <ul>
+                            <li>Trong ví dụ trên, phần tử &lt;p class="a"&gt; có lề trên và lề dưới là 30px. Phần tử &lt;p class="b"&gt; có lề trên và lề dưới là 20px.</li>
+                            <li>Điều này có nghĩa là lề dọc giữa &lt;p class="a"&gt; và &lt;p class="b"&gt; phải là 50px (30px + 20px). Nhưng do việc thu gọn lề, lề thực tế lại là 30px!</li>
+                        </ul></div>
+                        <br>
+                        <h2 class = "title2">Ví dụ</h2>
+                        <p>Đặt lề cho phần tử &lt;p&gt; thành 35 pixel cho phần trên và phần dưới, và thành 70 pixel cho phần bên phải và bên trái:</p>
+                            <div class="code"><pre><code>p {
+  margin: 35px 70px;
+}</code></pre></div>
+                        <br>
+                        <p>Đặt lề cho phần tử &lt;p&gt; thành 35 pixel cho phần trên, 70 pixel cho phần bên phải và bên trái, và 50 pixel cho phần dưới:</p>
+                            <div class="code"><pre><code>p {
+    marging: 35px 70px 50px;
+}</code></pre></div>
+                        <br>
+                        <p>Đặt khoảng đệm cho phần tử &lt;p&gt; thành 35 pixel cho phần trên, 70 pixel cho phần bên phải, 50 pixel cho phần dưới và 90 pixel cho phần bên trái:</p>
+                        <div class="code"><pre><code>p {
+    margin: 35px 70px 50px 90px;
+}</code></pre></div>
+                    <div id="quiz-area-Margins" class="quiz-container"></div>
+                </div>
+
+                <div id="Dem" class="content">
+                    <h1 class = "main-title">Đệm </h1>
+                    <h2 class = "title2">Định nghĩa và cách sử dụng</h2>
+                        <p><i>Khoảng đệm của một phần tử là khoảng cách giữa nội dung và đường viền của phần tử đó.</i></p>
+                        <div class = "khung">
+                        <p>Thuộc tính này <b>padding</b> là viết tắt của:</p>
+                        <ul>
+                            <li>padding-top</li>
+                            <li>padding-right</li>
+                            <li>padding-bottom</li>
+                            <li>padding-left</li>
+                        </ul></div>
+                        <div class = "note"><p><b>Lưu ý:</b> Padding tạo thêm khoảng trống bên trong một phần tử, trong khi margin tạo thêm khoảng trống xung quanh một phần tử.</p></div>
+                        <br>
+                        <p>Thuộc tính này có thể có từ một đến bốn giá trị.</p>
+                            <p>1. Nếu thuộc tính padding có bốn giá trị:</p>
+                                <div class="code"><pre><code>padding:10px 5px 15px 20px;</code></pre></div>
+                                <div class = "khung">
+                                <ul>
+                                    <li>top padding: 10px</li>
+                                    <li>right padding: 5px</li>
+                                    <li>bottom padding: 15px</li>
+                                    <li>left padding: 20px</li>
+                                </ul></div>
+                            <p>2. Nếu thuộc tính padding có ba giá trị:</p>
+                                <div class="code"><pre><code>padding:10px 5px 15px;</code></pre></div>
+                                <div class = "khung">
+                                <ul>
+                                    <li>top padding: 10px</li>
+                                    <li>right and left padding: 5px</li>
+                                    <li>bottom padding: 15px</li>
+                                </ul></div>
+                            <p>3. Nếu thuộc tính padding có hai giá trị:</p>
+                                <div class="code"><pre><code>padding:10px 5px;</code></pre></div>
+                                <div class = "khung">
+                                <ul>
+                                    <li>top and bottom padding: 10px</li>
+                                    <li>right and left padding: 5px</li>
+                                </ul></div>
+                            <p>4. Nếu thuộc tính padding có một giá trị:</p>
+                                <div class="code"><pre><code>padding:10px;</code></pre></div>
+                                <div class = "khung">
+                                <ul>
+                                    <li>all four paddings: 10px</li>
+                                </div>
+                        <br>
+                        <div class="note"><p><b>Lưu ý:</b> Không được phép nhập giá trị âm.</p></div>
+                        <br>
+                        <h2 class = "title2">Cú pháp CSS</h2>
+                            <div class="code"><pre><code>padding: length|initial|inherit;</code></pre></div>
+                            <table class="css-table">
+    <tr>
+        <th>Value</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><em>length</em></td>
+        <td>Chỉ định khoảng đệm theo px, pt, cm, v.v. Giá trị mặc định là 0.</td>
+    </tr>
+    <tr>
+        <td><em>%</em></td>
+        <td>Chỉ định khoảng đệm theo px, pt, cm, v.v. Giá trị mặc định là 0.</td>
+    </tr>
+    <tr>
+        <td><em>initial</em></td>
+        <td>Đặt thuộc tính này về giá trị mặc định.</td>
+    </tr>
+    <tr>
+        <td><em>inherit</em></td>
+        <td>Kế thừa thuộc tính này từ phần tử cha của nó.</td>
+    </tr>
+                    </table>
+                    <br>
+                    <h2 class = "title2">Ví dụ:</h2>
+                        <p>Đặt khoảng đệm cho phần tử &lt;p&gt; thành 35 pixel cho phần trên và phần dưới, và thành 70 pixel cho phần bên phải và bên trái:</p>
+                        <div class="code"><pre><code>p {
+  padding: 35px 70px;
+}</code></pre></div>
+                        <br>
+                        <p>Đặt khoảng đệm cho phần tử &lt;p&gt; thành 35 pixel cho phần trên, 70 pixel cho phần bên phải và bên trái, và 50 pixel cho phần dưới:</p>
+                        <div class="code"><pre><code>p {
+  padding: 35px 70px 50px;
+}</code></pre></div>
+                        <br>
+                        <p>Đặt khoảng đệm cho phần tử &lt;p&gt; thành 35 pixel cho phần trên, 70 pixel cho phần bên phải, 50 pixel cho phần dưới và 90 pixel cho phần bên trái:</p>
+                        <div class="code"><pre><code>p {
+  padding: 35px 70px 50px 90px;
+}</code></pre></div>
+                    <div id="quiz-area-Dem" class="quiz-container"></div>
+                </div>
+                
+                <div id="Thanhdieuhuong" class="content">
+                    <h1 class = "main-title">Thanh điều hướng</h1>
+                    <br>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-4iC4nb55qXXWsQxOU3HaN0SHvG1coR6tpA&s" alt="Ảnh minh họa CSS" width="400" style="display:block; margin:auto; border-radius:10px;">
+                    <ul>
+                        <li>Có một hệ thống điều hướng dễ sử dụng là rất quan trọng đối với bất kỳ trang web nào!</li>
+                        <li>Thanh điều hướng CSS là một thành phần quan trọng của thiết kế web. Thanh điều hướng giúp người dùng dễ dàng điều hướng giữa các phần khác nhau của trang web.</li>
+                        <li>Thanh điều hướng thường được xây dựng bằng các phần tử danh sách HTML (&lt;ul&gt; và &lt;li&gt;), sau đó được định dạng bằng CSS để có giao diện đẹp mắt.</li>
+                        <li>Thanh điều hướng thường nằm ở đầu hoặc bên cạnh trang web.</li>
+                    </ul>
+                    
+                    <h2 class = "title2">Thanh điều hướng = Danh sách liên kết</h2>
+                        <ul>
+                            <li>Thanh điều hướng cần có HTML chuẩn làm cơ sở.</li>
+                            <li>Thanh điều hướng về cơ bản là một danh sách các liên kết, do đó việc sử dụng các phần tử &lt;ul&gt; và &lt;li&gt; là hoàn toàn hợp lý:</li>
+                        </ul>
+                        <p><b>Ví dụ:</b></p>
+                            <div class="code"><pre><code>&lt;ul&gt;
+  &lt;li&gt;&lt;a href="default.asp"&gt;Home&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="news.asp"&gt;News&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="contact.asp"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="about.asp"&gt;Abou&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre></div>
+                        <p>Bây giờ chúng ta hãy xóa các dấu đầu dòng, lề và phần đệm khỏi phần tử &lt;ul&gt;:</p>
+                        <p><b>Ví dụ:</b></p>
+                        <div class="code"><pre><code>ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}</code></pre></div>
+                        <p>Ví dụ được giải thích:</p>
+                        <div class = "khung">
+                        <ul>
+                            <li>Đặt <b>list-style-type: none;</b> - Xóa các dấu đầu dòng khỏi danh sách</li>
+                            <li>Đặt <b>margin: 0;</b> - Đặt lại lề trình duyệt mặc định</li>
+                            <li>Đặt <b>padding: 0;</b>- Đặt lại phần đệm mặc định của trình duyệt</li>
+                        </ul></div>
+                        <div class = "note"><p><b>Lưu ý:</b> Mã HTML và CSS trong ví dụ trên là mã cơ sở được sử dụng cho cả thanh điều hướng dọc và ngang.</p></div>
+                    <br>
+                    <h2 class = "title2">Thanh điều hướng dọc CSS</h2>
+                        <div class = "doc">
+                        <ul class="vertical">
+                            <li><a class="active" href="javascript:void(0)">Trang chủ</a></li>
+                            <li><a href="javascript:void(0)">Tin tức</a></li>
+                            <li><a href="javascript:void(0)">Liên hệ</a></li>
+                            <li><a href="javascript:void(0)">Về</a></li>
+                        </ul>
+                        <div class="content1">
+                            <ul>
+                                <li>Trong thanh điều chỉnh hướng dọc, các liên kết điều hướng được sắp xếp theo chiều dọc (đồng lên nhau) và thường được điều chỉnh theo chiều dọc theo bên trái hoặc bên phải của trang web.</li>
+                                <li>Cơ sở của thanh điều hướng dọc là danh sách không có thứ tự (&lt;ul&gt;), với các danh sách mục (&lt;li&gt;), mỗi mục chứa một liên kết (&lt;a&gt;). </li>
+                            </ul>
+                        </div>
+                        </div>
+                        <br>
+                        <p><b>Ví dụ:</b></p>
+                            <p>Tạo một cơ sở dọc điều hướng cho màu nền xám và chúng tôi cũng thay đổi màu nền và chữ màu của các liên kết khi người dùng di chuột qua chúng</p>
+                            <div class="code"><pre><code>ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+}
+
+li a {
+  display: block;
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+/* Change the link and background color on hover */
+li a:hover {
+  background-color: #555555;
+  color: white;
+}</code></pre></div>
+                        <p><b>Kết quả:</b></p>
+                        <div class = "doc">
+                            <ul class="vertical1">
+                                <li><a class="active1" href="javascript:void(0)">Trang chủ</a></li>
+                                <li><a href="javascript:void(0)">Tin tức</a></li>
+                                <li><a href="javascript:void(0)">Liên hệ</a></li>
+                                <li><a href="javascript:void(0)">Về</a></li>
+                            </ul>
+                            <div class="content1">
+                                <ul>
+                                    <li>Khối đầu tiên (ul) tương tự như trang trước. Ngoài ra, chúng tôi đã chỉ định cố định chiều rộng (200px) và màu nền xám nhạt.</li>
+                                    <li>Khối tiếp theo (li a) các phần tử &lt;a&gt; được định nghĩa bên trong các phần tử &lt;li&gt;.</li>
+                                    <li>Hiển thị các liên kết dưới dạng phần tử giúp toàn bộ liên kết vùng có thể nhấp (không chỉ văn bản) và cho phép chúng tôi xác định chiều rộng, khoảng đệm, cột, chiều cao, v.v. Chúng tôi thêm liên kết màu và một số khoảng đệm. Chúng tôi cũng xóa bỏ phần tử &lt;a&gt; này.</li>
+                                    <li>Khối cuối cùng (li a:hover) thay đổi màu liên kết và màu nền khi người dùng di chuột qua chúng.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br>
+                        <h3><b>Trạng thái hoạt động</b></h3>
+                            <p>Bây giờ chúng ta thêm một lớp " hoạt động " để làm liên kết nổi bật tương ứng với trang hiện tại để cho người dùng biết họ đang ở trang/phần nào.</p>
+                            <div class="code"><pre><code>.active {
+  background-color: #04AA6D;
+  color: white;
+}</code></pre></div>
+                        <br>
+                        <h3><b>Liên kết thanh điều hướng trung tâm & Thêm đường viền</b></h3>
+                            <ul>
+                                <li>Để điều hướng giữa các liên kết, hãy thêm <b>text-align: center;</b> vào &lt;li&gt; hoặc &lt;a&gt;.</li>
+                                <li>Nếu bạn muốn có đường viền xung quanh thanh điều hướng, hãy thêm thuộc tính border vào &lt;ul&gt;.</li>
+                                <li>Nếu bạn cũng muốn có đường viền bên trong thanh điều hướng, hãy thêm thuộc tính <b>border-bottom</b> vào tất cả các phần tử &lt;li&gt;, ngoại trừ phần tử cuối cùng:</li>
+                            </ul>
+                            <p><b>Ví dụ:</b></p>
+                                <div class="code"><pre><code>ul {
+  border: 1px solid #555555;
+}
+
+li {
+  text-align: center;
+  border-bottom: 1px solid #555555;
+}
+
+li:last-child {
+  border-bottom: none;
+}</code></pre></div>
+                            <p><b>Kết quả:</b></p>
+                            <ul class="vertical1">
+                                <li><a class="active1" href="javascript:void(0)">Trang chủ</a></li>
+                                <li><a href="javascript:void(0)">Tin tức</a></li>
+                                <li><a href="javascript:void(0)">Liên hệ</a></li>
+                                <li><a href="javascript:void(0)">Về</a></li>
+                            </ul>
+                        <br>
+                    <h2 class = "title2">Thanh điều hướng ngang CSS</h2>
+                            <ul class="horizontal">
+                                <li><a class="active" href="javascript:void(0)">Trang chủ</a></li>
+                                <li><a href="javascript:void(0)">Tin tức</a></li>
+                                <li><a href="javascript:void(0)">Liên hệ</a></li>
+                                <li><a href="javascript:void(0)">Về</a></li>
+                            </ul>
+                            <ul>
+                                <li>Trong điều chỉnh hướng ngang, các liên kết điều hướng được xếp chồng lên theo chiều ngang (cạnh nhau) và thường được điều chỉnh ở đầu trang web.</li>
+                                <li>Cơ sở của thanh điều hướng ngang là danh sách không có thứ tự (&lt;ul&gt;), với các danh sách mục (&lt;li&gt;), mỗi mục chứa một liên kết (&lt;a&gt;). </li>
+                                <li>Người ta cũng thường thêm phần tử &lt;nav&gt; vào phần tử &lt;ul&gt; để đóng vai trò trò chơi như một vùng chứa điều hướng của bạn.</li>
+                            </ul>
+                            <br>
+                            <h3><b>Thanh điều hướng ngang sử dụng Float</b></h3>
+                                <p><i>Một cách để tạo thanh điều hướng ngang là thêm thuộc tính <b>float</b> vào phần tử &lt;li&gt;.</i></p>
+                                <p>Ở đây chúng ta tạo một thanh điều hướng ngang cơ bản với màu nền tối và thay đổi màu nền của các liên kết khi người dùng di chuột qua chúng:</p>
+                                <br>
+                                <p><b>Ví dụ:</b></p>
+                                <div class="code"><pre><code>ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333333;
+}
+
+ul li {
+  float: left;
+}
+
+ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #111111;
+}</code></pre></div>
+                            <ul class="horizontal1">
+                                    <li><a class="active1" href="javascript:void(0)">Trang chủ</a></li>
+                                    <li><a href="javascript:void(0)">Tin tức</a></li>
+                                    <li><a href="javascript:void(0)">Liên hệ</a></li>
+                                    <li><a href="javascript:void(0)">Về</a></li>
+                            </ul>
+                            <br>
+                            <p><b>Giải thích:</b></p>
+                            <div class = "khung">
+                            <ul>
+                                <li><b>overflow: hidden;</b> - Ngăn các mục danh sách ra khỏi danh sách</li>
+                                <li><b>background-color: #333333;</b> - Thêm màu nền đen vào phần tử &lt;ul&gt;</li>
+                                <li><b>float: left;</b> - Làm cho các phần tử &lt;li&gt; nổi cạnh nhau</li>
+                                <li><b>display: block;</b> - Cho phép chúng ta chỉ định phần đệm, chiều cao, chiều rộng và lề cho &lt;a&gt;</a></li>
+                                <li><b>padding:</b> 14px 16px; - Thêm một số khoảng đệm giữa mỗi phần tử &lt;a&gt;.</a></li>
+                                <li><b>text-decoration: none;</b> - Xóa gạch chân khỏi các liên kết</li>
+                            </ul></div>
+                            <br>
+                            <h3><b>Thanh điều hướng ngang sử dụng Flex</b></h3>
+                                <p>Một cách hiện đại hơn để tạo thanh điều hướng ngang là sử dụng CSS flexbox.</p>
+                                <div class="code"><pre><code>ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #333333;
+  display: flex;
+}
+
+ul li a {
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #111111;
+}</code></pre></div>           
+                                <ul>
+                                    <li>Giải pháp ở đây là <b>display: flex;</b>. Lệnh này tạo ra một ngữ cảnh flex và theo mặc định, các mục được hiển thị từ trái sang phải.</li>
+                                    <li>Và chỉ cần thêm một dòng vào khối ul: <b>justify-content: center;</b> , bạn sẽ có thanh điều hướng được căn giữa theo chiều ngang:</li>
+                                </ul>
+                                <p><b>Ví dụ:</b> Thanh điều hướng nằm ngang ở giữa với flex</p>
+                                <div class="code"><pre><code>ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #333333;
+  display: flex;
+  justify-content: center;
+}</code></pre></div>
+                                <div id="quiz-area-Thanhdieuhuong" class="quiz-container"></div>
+                                
+                                </div>
+    </div>
+</div>
+

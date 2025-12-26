@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@(ViewData["Title"] ?? "EasyCode")</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/EasyCode.styles.css" asp-append-version="true" /> *@
+    <link rel="icon" href="~/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="@Url.Action("Index","Home")">
+    <img src="~/img/logo.png" alt="EasyCode" height="32">
+      EasyCode
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li class="dropdown">
+                    <a href="javascript:void(0)" role="button" aria-haspopup="true">Lesson</a>
+          <ul class="dropdown-menu">
+            <li><a href="@Url.Action(action: "Indexhtml", "lesson")">HTML</a></li>
+            <li><a href="@Url.Action(action: "Indexcss", "lesson")">CSS</a></li>
+          </ul>
+        </li>
+
+        <li><a href="@Url.Action("Index", "Exercises")">Exercises</a></li>
+        <li><a href="@Url.Action("Index", "Tutorial")">Tutorial</a></li>
+        <li><a href="@Url.Action("Index", "Contact")">Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="auth-links">
+@if (User?.Identity?.IsAuthenticated == true)
+{
+                var displayName = (User?.Identity?.Name ?? "User").Trim();
+                var firstChar = displayName.Length > 0 ? displayName[0].ToString().ToUpperInvariant() : "U";
+                var avatar = User?.FindFirst("avatar")?.Value ?? string.Empty;
+            <div class="dropdown d-inline">
+                <a class="d-inline-flex align-items-center gap-2 text-decoration-none dropdown-toggle"
+                     href="javascript:void(0)"
+                     role="button"
+                     data-bs-toggle="dropdown"
+                     data-bs-display="static"
+                     aria-expanded="false"
+                     aria-label="Account menu">
+                    @if (!string.IsNullOrWhiteSpace(avatar))
+                    {
+                        <img src="@avatar" alt="Avatar" class="rounded-circle" style="width:32px;height:32px;object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <span class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center"
+                                    style="width:32px;height:32px;">
+                            @firstChar
+                        </span>
+                    }
+                    <span class="me-1">@displayName</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" asp-controller="Login" asp-action="Profile">Hồ sơ của bạn</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><form asp-controller="Login" asp-action="Logout" method="post" class="px-2">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+}
+else
+{
+      <a href="@Url.Action("Index", "Login")">Login</a>
+      <a class="btn btn-primary" href="@Url.Action("Index", "Login", new { mode = "signup" })">Sign Up</a>
+}
+    </div>
+    
+  </div>
+</header>
+
+@{
+    var noContainer = (ViewData["NoContainer"] as bool?) == true;
+}
+
+@if (noContainer)
+{
+    <main role="main">
+        @RenderBody()
+    </main>
+}
+else
+{
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+}
+
+    <footer class="site-footer">
+    <div class="footer-overlay">
+        <div class="container footer-inner">
+
+        <!-- Logo & giới thiệu -->
+        <div class="footer-logo">
+            <img src="~/img/logo.png" alt="EasyCode Logo">
+            <h3>EasyCode Education</h3>
+            <!-- <p>Học lập trình web cho người mới bắt đầu</p> -->
+        </div>
+
+        <!-- Thông tin trang web -->
+        <div class="footer-about">
+            <h4>Về EasyCode</h4>
+            <p>EasyCode là nền tảng học HTML và CSS trực tuyến miễn phí, giúp học viên 
+                rèn luyện kỹ năng phát triển web thông qua các bài học, ví dụ thực hành và dự án thực tế.</p>
+            <p>Trang web: <a href="/html/index.html" target="_blank">easycode.vn</a></p>
+        </div>
+
+        <!-- Khu vực bên phải: Liên hệ + MXH -->
+        <div class="footer-right">
+            <!-- Liên hệ -->
+            <div class="footer-info">
+            <h4>Liên hệ</h4>
+            <ul>
+                <li><i class="fa-solid fa-phone"></i> <a href="tel:0123456789">0123 456 789</a></li>
+                <li><i class="fa-solid fa-envelope"></i> <a href="mailto:easycode@gmail.com">easycode@gmail.com</a></li>
+                <li><i class="fa-solid fa-location-dot"></i> 123 Đường ABC, Quận 1, TP.HCM</li>
+                <li><i class="fa-regular fa-clock"></i> 8:00 - 17:00 (Thứ 2 - Thứ 6)</li>
+            </ul>
+            </div>
+        </div>
+
+        </div>
+
+        <!-- Dòng bản quyền -->
+        <div class="footer-bottom">
+        <p>© 2025 EasyCode. Học HTML & CSS cho người mới bắt đầu.</p>
+            <!-- Mạng xã hội -->
+            <div class="social-icons">
+                <a href="#" class="social"><i class="fa-brands fa-google-plus-g"></i></a>
+                <a href="#" class="social"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="social"><i class="fa-brands fa-square-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+    </footer>
+ 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

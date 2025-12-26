@@ -1,0 +1,188 @@
+
+@{
+    ViewData["Title"] = "Tutorial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["NoContainer"] = true;
+}
+
+@section Styles {
+  <link rel="stylesheet" href="~/css/tutorial.css" asp-append-version="true" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+}
+
+@section Scripts {
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script src="~/js/slick-slider.js" asp-append-version="true"></script>
+}
+
+    <section class="img">
+      <img src="~/img/anh_tutorial.png" alt="anh_tutorial" />
+    </section>
+    <section class="tutorial-section container">
+      <h2><i class="fa-solid fa-book-open"></i> Danh mục hướng dẫn</h2>
+
+      <div class="tutorial-grid center">
+        <div class="tutorial-card">
+          <h3><i class="fa-solid fa-seedling"></i> Cơ bản</h3>
+          <ul>
+            <li><a href="#">Giới thiệu về HTML</a></li>
+            <li><a href="#">Cấu trúc thẻ HTML cơ bản</a></li>
+            <li><a href="#">Làm việc với văn bản và hình ảnh</a></li>
+            <li><a href="#">Giới thiệu về CSS và cú pháp cơ bản</a></li>
+          </ul>
+        </div>
+
+        <div class="tutorial-card">
+          <h3><i class="fa-solid fa-layer-group"></i> Trung cấp</h3>
+          <ul>
+            <li><a href="#">Hộp & Mô hình Box Model</a></li>
+            <li><a href="#">Làm việc với Flexbox</a></li>
+            <li><a href="#">Thiết kế bố cục với Grid Layout</a></li>
+            <li><a href="#">Responsive Design – Giao diện thích ứng</a></li>
+          </ul>
+        </div>
+
+        <div class="tutorial-card">
+          <h3><i class="fa-solid fa-code"></i> Nâng cao</h3>
+          <ul>
+            <li><a href="#">Animation & Transition trong CSS</a></li>
+            <li><a href="#">Biến CSS (CSS Variables)</a></li>
+            <li><a href="#">Tối ưu hóa và tổ chức mã CSS</a></li>
+            <li><a href="#">Dự án nhỏ: Tạo giao diện website hoàn chỉnh</a></li>
+          </ul>
+        </div>
+        <div class="tutorial-card">
+            <h3><i class="fa-solid fa-laptop-code"></i> Dự án thực hành</h3>
+            <ul>
+            <li><a href="#">Xây dựng trang portfolio cá nhân</a></li>
+            <li><a href="#">Tạo website bán hàng đơn giản</a></li>
+            <li><a href="#">Làm blog cá nhân với HTML & CSS</a></li>
+            <li><a href="#">Thiết kế landing page chuyên nghiệp</a></li>
+            </ul>
+        </div>
+      </div>
+    </section>
+<!-- ===== THỰC HÀNH TƯƠNG TÁC ===== -->
+<section class="practice container">
+  <h2><i class="fa-solid fa-laptop-code"></i> Thực hành tương tác</h2>
+  <p class="intro-text">Thử ngay các công cụ thực hành để rèn kỹ năng lập trình web.</p>
+
+  <div class="practice-grid">
+    <div class="practice-item">
+      <i class="fa-solid fa-code"></i>
+      <h3>Trình soạn HTML trực tuyến</h3>
+      <p>Soạn và chạy thử HTML ngay lập tức với ví dụ thực tế.</p>
+      <button class="btn-learn" type="button" data-editor="html">Thử ngay</button>
+    </div>
+
+    <div class="practice-item">
+      <i class="fa-solid fa-palette"></i>
+      <h3>Trình thử CSS trực tuyến</h3>
+      <p>Tùy chỉnh màu sắc, font, bố cục và xem kết quả trực tiếp.</p>
+      <button class="btn-learn" type="button" data-editor="css">Thử ngay</button>
+    </div>
+
+    <div class="practice-item">
+      <i class="fa-solid fa-layer-group"></i>
+      <h3>Bài tập bố cục thực tế</h3>
+      <p>Tạo bố cục bằng Flexbox & Grid, học thiết kế hiện đại.</p>
+      <button class="btn-learn" type="button" data-editor="layout">Thử ngay</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LIVE EDITOR ẨN BAN ĐẦU ===== -->
+<section id="live-editor" class="interactive container" style="display:none;">
+  <h2><i class="fa-solid fa-flask-vial"></i> Thực hành tương tác</h2>
+  <button id="back-btn" class="btn-back" type="button">
+  <i class="fa-solid fa-arrow-left"></i> Quay lại
+</button>
+  <p class="intro-text">Gõ thử mã HTML & CSS và xem kết quả ngay bên dưới!</p>
+
+  <div class="editor-area">
+    <div class="editor-input">
+      <label for="html-code"><i class="fa-solid fa-code"></i> Mã HTML</label>
+      <textarea id="html-code" spellcheck="false">
+<h1>Xin chào EasyCode!</h1>
+<p>Đây là ví dụ HTML đầu tiên của bạn.</p>
+</textarea>
+
+      <label for="css-code"><i class="fa-solid fa-paintbrush"></i> Mã CSS</label>
+      <textarea id="css-code" spellcheck="false">
+body { 
+  font-family: Arial; 
+  text-align: center; 
+  background: #f0f8ff; 
+  color: #333;
+}
+h1 { color: #0078ff; }
+</textarea>
+
+      <button id="run-btn"><i class="fa-solid fa-play"></i> Chạy thử</button>
+    </div>
+
+    <div class="editor-preview">
+      <iframe id="preview"></iframe>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ===== BỘ CÔNG CỤ LẬP TRÌNH WEB ===== -->
+<section class="toolkit container">
+  <h2><i class="fa-solid fa-gears"></i> Bộ công cụ lập trình web</h2>
+  <p class="intro-text">Những công cụ hữu ích hỗ trợ bạn học và xây dựng website hiệu quả hơn.</p>
+
+  <div class="single-item">
+    <video autoplay muted loop playsinline>
+      <source src="/img/cc (1).mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline>
+      <source src="/img/cc (2).mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline>
+      <source src="/img/cc (3).mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline>
+      <source src="/img/cc (4).mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<!-- ===== HỌC VIÊN NỔI BẬT ===== -->
+<section class="top-learners container">
+  <h2><i class="fa-solid fa-user-graduate"></i> Học viên nổi bật</h2>
+  <p class="intro-text">Cùng xem các dự án ấn tượng được tạo ra bởi học viên EasyCode.</p>
+
+  <div class="learner-grid">
+    <div class="learner-card second">
+      <div class="medal silver"><i class="fa-solid fa-medal"></i></div>
+      <img src="/img/avt1.jpg" alt="Học viên 2">
+      <h3>Nguyễn Hoàng Minh</h3>
+      <p>Dự án: <b>Website bán hàng mini</b></p>
+      <a href="#" class="view-btn">Xem dự án</a>
+    </div>
+
+    <div class="learner-card first">
+      <div class="medal gold"><i class="fa-solid fa-trophy"></i></div>
+      <img src="/img/avt2.jpg" alt="Học viên 1">
+      <h3>Trần Thị Hồng</h3>
+      <p>Dự án: <b>Portfolio cá nhân</b></p>
+      <a href="#" class="view-btn">Xem dự án</a>
+    </div>
+
+    <div class="learner-card third">
+      <div class="medal bronze"><i class="fa-solid fa-award"></i></div>
+      <img src="/img/avt3.jpg" alt="Học viên 3">
+      <h3>Phạm Gia Hưng</h3>
+      <p>Dự án: <b>Blog chia sẻ kiến thức</b></p>
+      <a href="#" class="view-btn">Xem dự án</a>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+

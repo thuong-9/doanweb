@@ -1,0 +1,309 @@
+@{
+    ViewData["Title"] = "Dashboard Tiến độ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+  <link rel="stylesheet" href="~/css/btcss.css" asp-append-version="true" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    /* Tổng quan Dashboard */
+    .dashboard-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-header p {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+    }
+
+    /* Grid Layout cho các thẻ */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    /* Card Style */
+    .stat-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #f0f0f0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+    }
+
+    .card-html::before { background: linear-gradient(90deg, #ff9966, #ff5e62); }
+    .card-css::before { background: linear-gradient(90deg, #56ccf2, #2f80ed); }
+    .card-total::before { background: linear-gradient(90deg, #11998e, #38ef7d); }
+
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #34495e;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Circular Progress Bar */
+    .circular-progress {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: conic-gradient(#e0e0e0 0deg, #e0e0e0 360deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+
+    .circular-progress::before {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: white;
+    }
+
+    .progress-value {
+        position: relative;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .stat-info {
+        text-align: center;
+        color: #7f8c8d;
+        font-size: 0.95rem;
+    }
+
+    /* Danh sách chi tiết */
+    .details-section {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+
+    .details-header {
+        font-size: 1.4rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #f1f2f6;
+        padding-bottom: 10px;
+    }
+
+    .completed-list {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 15px;
+    }
+
+    .completed-list li {
+        background: #f8f9fa;
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: #555;
+        border-left: 4px solid #bdc3c7;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s;
+    }
+
+    .completed-list li:hover {
+        background: #fff;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    /* Màu riêng cho danh sách */
+    #completed-list-html li { border-left-color: #ff5e62; }
+    #completed-list-html li i { color: #ff5e62; margin-right: 10px; }
+
+    #completed-list-css li { border-left-color: #2f80ed; }
+    #completed-list-css li i { color: #2f80ed; margin-right: 10px; }
+
+    .empty-msg {
+        grid-column: 1 / -1;
+        text-align: center;
+        color: #95a5a6;
+        font-style: italic;
+        padding: 20px;
+    }
+  </style>
+}
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1><i class="fa-solid fa-chart-line"></i> Dashboard Học Tập</h1>
+        <p>Theo dõi quá trình chinh phục HTML & CSS của bạn</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card card-html">
+            <div class="card-title"><i class="fa-brands fa-html5" style="color: #ff5e62;"></i> HTML Cơ Bản</div>
+            <div class="circular-progress" id="circle-html">
+                <span class="progress-value" id="val-html">0%</span>
+            </div>
+            <p class="stat-info" id="text-html">0 / 20 bài</p>
+        </div>
+
+        <div class="stat-card card-css">
+            <div class="card-title"><i class="fa-brands fa-css3-alt" style="color: #2f80ed;"></i> CSS Cơ Bản</div>
+            <div class="circular-progress" id="circle-css">
+                <span class="progress-value" id="val-css">0%</span>
+            </div>
+            <p class="stat-info" id="text-css">0 / 18 bài</p>
+        </div>
+
+        <div class="stat-card card-total">
+            <div class="card-title"><i class="fa-solid fa-trophy" style="color: #38ef7d;"></i> Tổng Kết</div>
+            <div class="circular-progress" id="circle-total">
+                <span class="progress-value" id="val-total">0%</span>
+            </div>
+            <p class="stat-info" id="text-total">0 / 38 bài</p>
+        </div>
+    </div>
+
+    <div class="details-section">
+        <h3 class="details-header"><i class="fa-solid fa-list-check"></i> Chi tiết bài học đã hoàn thành</h3>
+        
+        <h4 style="color: #e67e22; margin: 20px 0 10px;">HTML</h4>
+        <ul id="completed-list-html" class="completed-list"></ul>
+
+        <h4 style="color: #3498db; margin: 30px 0 10px;">CSS</h4>
+        <ul id="completed-list-css" class="completed-list"></ul>
+    </div>
+</div>
+
+@section Scripts {
+  <script>
+    const nameMapping = {
+        'cautruc': 'Cấu trúc HTML',
+        'soanthao': 'Soạn thảo văn bản',
+        'thecoBan': 'Thẻ cơ bản',
+        'lienKet': 'Liên kết',
+        'hinhAnh': 'Hình ảnh',
+        'bangBieu': 'Bảng biểu',
+        'danhSach': 'Danh sách',
+        'chuThich': 'Chú thích',
+        'cssCuphap': 'Cú pháp CSS',
+        'cssSelector': 'Bộ chọn',
+        'cssThucHien': 'Cách nhúng CSS',
+        'cssComment': 'Comment',
+        'cssMauNen': 'Màu & Nền',
+        'cssBorder': 'Viền',
+        'cssMarginPadding': 'Margin & Padding',
+        'cssMenu': 'Menu'
+    };
+
+    const configHtml = { 'cautruc': 3, 'soanthao': 2, 'thecoBan': 2, 'lienKet': 3, 'hinhAnh': 2, 'bangBieu': 3, 'danhSach': 3, 'chuThich': 2 };
+    const configCss = { 'cssCuphap': 2, 'cssSelector': 2, 'cssThucHien': 2, 'cssComment': 1, 'cssMauNen': 3, 'cssBorder': 3, 'cssMarginPadding': 2, 'cssMenu': 3 };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateDashboard();
+    });
+
+    function updateDashboard() {
+        // --- DATA ---
+        const htmlTotal = 20; // Tổng fix cứng hoặc tính động
+        const htmlData = JSON.parse(localStorage.getItem('html_progress_list')) || [];
+        const htmlCount = htmlData.length;
+
+        const cssTotal = 18;
+        const cssData = JSON.parse(localStorage.getItem('css_progress_list')) || [];
+        const cssCount = cssData.length;
+
+        // --- UPDATE CIRCLES ---
+        updateCircle('html', htmlCount, htmlTotal, '#ff5e62');
+        updateCircle('css', cssCount, cssTotal, '#2f80ed');
+        updateCircle('total', htmlCount + cssCount, htmlTotal + cssTotal, '#38ef7d');
+
+        // --- UPDATE LISTS ---
+        renderList('html', htmlData);
+        renderList('css', cssData);
+    }
+
+    function updateCircle(id, current, total, color) {
+        const percent = Math.round((current / total) * 100);
+        const circle = document.getElementById('circle-' + id);
+        const valueText = document.getElementById('val-' + id);
+        const infoText = document.getElementById('text-' + id);
+
+        // Hiệu ứng chạy số
+        let startValue = 0;
+        let speed = 20;
+        
+        if (percent > 0) {
+            let progress = setInterval(() => {
+                startValue++;
+                valueText.textContent = `${startValue}%`;
+                circle.style.background = `conic-gradient(${color} ${startValue * 3.6}deg, #f0f0f0 0deg)`;
+                if (startValue == percent) clearInterval(progress);
+            }, speed);
+        } else {
+             valueText.textContent = `0%`;
+        }
+
+        infoText.innerText = `${current} / ${total} bài`;
+    }
+
+    function renderList(type, data) {
+        const list = document.getElementById('completed-list-' + type);
+        list.innerHTML = '';
+        
+        if (data.length === 0) {
+            list.innerHTML = '<li class="empty-msg">Chưa có bài nào hoàn thành</li>';
+            return;
+        }
+
+        data.sort().forEach(item => {
+            const [section, num] = item.split('-');
+            const name = nameMapping[section] || section;
+            const li = document.createElement('li');
+            li.innerHTML = `<i class="fa-solid fa-check"></i> ${name} - Bài ${num}`;
+            list.appendChild(li);
+        });
+    }
+  </script>
+}

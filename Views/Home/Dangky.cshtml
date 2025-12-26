@@ -1,0 +1,186 @@
+@{
+    ViewBag.Title = "Đăng Ký Khóa Học";
+    Layout = null; // không dùng layout
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <!-- Link tới file CSS riêng -->
+    <link rel="stylesheet" href="~/css/Dangky.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="background-image">
+            <img src="/img/DKH.png" alt="Đăng Ký Khóa Học" />
+            <div class="register-container">
+            <form id="registerForm" asp-action="DangKy" method="post" class="register-form">
+                <label for="HoTen">Họ và tên</label>
+                <input type="text" id="HoTen" name="HoTen" placeholder="Nhập họ tên" required />
+                <label for="SDT">Số điện thoại</label>
+                <input type="tel" id="SDT" name="SDT" placeholder="Nhập số điện thoại" required />
+                <label for="Gmail">Email</label>
+                <input type="email" id="Gmail" name="Gmail" 
+                    placeholder="Nhập email" 
+                    value="@ViewBag.UserEmail" 
+                    @(string.IsNullOrEmpty(ViewBag.UserEmail) ? "" : "readonly") />
+                <label for="KhungGio">Khung giờ có thể liên hệ</label>
+                <select id="KhungGio" name="KhungGio" required>
+                    <option value="">-- Chọn khung giờ --</option>
+                    <option value="Sáng">Sáng (7:00 - 11:00)</option>
+                    <option value="Trưa">Trưa (11:00 - 13:00)</option>
+                    <option value="Chiều">Chiều (13:00 - 17:00)</option>
+                    <option value="Tối">Tối (17:00 - 21:00)</option>
+                </select>
+
+                <div class="button-group">
+                    <button type="button" class="btn-register" onclick="showQR()">
+                    ĐĂNG KÝ NGAY
+                </button>
+
+                    <a href="tel:0123456789" class="btn-contact">Liên hệ ngay</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="qrOverlay" class="qr-overlay" style="display:none;">
+    <div class="qr-modal">
+        <h3>Quét mã QR để thanh toán</h3>
+
+        <img src="/img/QR.png" alt="QR thanh toán" class="qr-img" />
+
+        <p>
+            Thời gian còn lại:
+            <span id="countdown">10:00</span>
+        </p>
+        <div id="otpBox" style="display:none; margin-top:15px;">
+            <input type="text" id="otpInput" placeholder="Nhập mã OTP"
+                style="padding:8px; width:94%; margin-bottom:10px;" />
+
+            <button onclick="verifyOTP()" style="width:100%;">
+                Xác nhận OTP
+            </button>
+        </div>
+        <div class="qr-button-row">
+            <button class="btn-close" onclick="closeQR()">Đóng</button>
+            <button class="btn-paid" onclick="sendOTP()">Tôi đã thanh toán</button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+<script>
+    let timer;
+    let totalSeconds = 600;
+    
+
+    function showQR() {
+    const Gmail = document.getElementById('Gmail').value.trim();
+    if (!Gmail) {
+        alert("Vui lòng nhập email!");
+        return;
+    }
+
+    // Gọi API kiểm tra email đã đăng ký chưa
+    fetch('/Home/CheckEmail?email=' + encodeURIComponent(Gmail))
+        .then(res => res.json())
+        .then(data => {
+            if (data.exists) {
+                alert("Email này đã đăng ký khóa học rồi!");
+                return;
+            }
+            // Email chưa đăng ký → hiện QR
+            document.getElementById("qrOverlay").style.display = "flex";
+            totalSeconds = 600;
+            clearInterval(timer);
+            updateCountdown();
+            timer = setInterval(() => {
+                totalSeconds--;
+                updateCountdown();
+                if (totalSeconds <= 0) {
+                    clearInterval(timer);
+                    document.getElementById("countdown").innerText = "Hết hạn";
+                    alert("Mã QR đã hết hạn!");
+                    closeQR();
+                }
+            }, 1000);
+        });
+}
+
+    function updateCountdown() {
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+
+        document.getElementById("countdown").innerText =
+            minutes + ":" + seconds.toString().padStart(2, "0");
+    }
+    function sendOTP() {
+        const sdt = document.getElementById('SDT').value;
+
+        if (!sdt) {
+            alert("Vui lòng nhập số điện thoại!");
+            return;
+        }
+
+        fetch('/Home/GuiOTP', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'sdt=' + encodeURIComponent(sdt)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("OTP đã được gửi!");
+                const otpBox = document.getElementById("otpBox");
+                otpBox.style.display = "block";
+                otpBox.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        });
+    }
+function verifyOTP() {
+    const otp = document.getElementById('otpInput').value;
+    const HoTen = document.getElementById('HoTen').value;
+    const SDT = document.getElementById('SDT').value;
+    const Gmail = document.getElementById('Gmail').value;
+    const KhungGio = document.getElementById('KhungGio').value;
+
+    fetch('/Home/XacNhanOTP', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'otp=' + encodeURIComponent(otp)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (!data.success) {
+            alert("OTP sai!");
+            return;
+        }
+
+        // OTP đúng → đăng ký
+        fetch('/Home/DangKyThanhCong', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ HoTen, SDT, Gmail, KhungGio })
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (!result.success) {
+                alert(result.message);
+                return;
+            }
+            alert("Đăng ký khóa học thành công 🎉");
+            window.location.href = result.redirect;
+        });
+    });
+}
+
+</script>
+
+
+</html>

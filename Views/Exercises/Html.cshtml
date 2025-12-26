@@ -1,0 +1,1317 @@
+@model IEnumerable<EasyCode.Models.Exercise>
+
+@{
+    ViewData["Title"] = "Bài tập HTML";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["NoContainer"] = true;
+}
+
+@section Styles {
+  <link rel="stylesheet" href="~/css/btcss.css" asp-append-version="true" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+}
+
+@section Scripts {
+  <script src="~/js/menuicon.js" asp-append-version="true"></script>
+  <script>
+    function showContent(id, element) {
+      const contents = document.querySelectorAll('.content');
+      contents.forEach(c => c.classList.remove('active'));
+
+      const selected = document.getElementById(id);
+      if (selected) selected.classList.add('active');
+
+      const menuItems = document.querySelectorAll('.sidebar_menu a');
+      menuItems.forEach(item => item.classList.remove('active-link'));
+      element.classList.add('active-link');
+    }
+
+    // Tab functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          const tabContent = document.getElementById(tabId);
+          const parent = this.closest('.content-box');
+          
+          parent.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+          parent.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+          
+          this.classList.add('active');
+          if (tabContent) tabContent.classList.add('active');
+        });
+      });
+    });
+  </script>
+}
+
+<div class="main_box">
+  <div class="sidebar_menu">
+   <h2 class="part-title">PHẦN 1: HTML</h2>
+
+   <div class="progress-container">
+        <div class="progress-info">
+            <span>Tiến độ học tập</span>
+            <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progress-bar-fill" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">A. Mức cơ bản</p>
+      <ul class="list">
+        <li><a href="#" onclick="showContent('cautruc', this)" class="active-link" id="link-cautruc">Cấu trúc HTML <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('soanthao', this)" id="link-soanthao">Soạn thảo nội dung <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('thecoBan', this)" id="link-thecoBan">Các thẻ cơ bản <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('lienKet', this)" id="link-lienKet">Liên kết (Link) <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('hinhAnh', this)" id="link-hinhAnh">Hình ảnh <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('bangBieu', this)" id="link-bangBieu">Bảng biểu <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('danhSach', this)" id="link-danhSach">Danh sách <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li><a href="#" onclick="showContent('chuThich', this)" id="link-chuThich">Chú thích, Trích dẫn <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fixed-scroll">
+    <div class="main-content">
+        
+    <div id="cautruc" class="content active">
+      <div class="content-box">
+        <h2>Bài 1: Tạo trang HTML đầu tiên</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau1">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai1">Bài giải</button>
+        </div>
+        <div id="yeucau1" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo một trang HTML đơn giản với cấu trúc cơ bản bao gồm:</p>
+            <ul>
+              <li>Khai báo DOCTYPE</li>
+              <li>Thẻ &lt;html&gt; với thuộc tính lang="vi"</li>
+              <li>Thẻ &lt;head&gt; chứa &lt;meta charset="UTF-8"&gt; và &lt;title&gt;</li>
+              <li>Thẻ &lt;body&gt; chứa tiêu đề h1 và đoạn văn</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai1" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Trang HTML đầu tiên của tôi&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Xin chào thế giới!&lt;/h1&gt;
+  &lt;p&gt;Đây là trang HTML đầu tiên tôi tạo bằng tay.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('cautruc', 1, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 2: Phân biệt các phần &lt;head&gt; và &lt;body&gt;</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau2">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai2">Bài giải</button>
+        </div>
+        <div id="yeucau2" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với:</p>
+            <ul>
+              <li>Phần &lt;head&gt;: chứa title và meta charset</li>
+              <li>Phần &lt;body&gt;: chứa h1 và p giải thích sự khác biệt</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai2" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Phân biệt phần head và body&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Đây là phần thân (body) của trang&lt;/h1&gt;
+  &lt;p&gt;Phần &lt;head&gt; chứa thông tin về trang, còn &lt;body&gt; là nơi hiển thị nội dung.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('cautruc', 2, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 3: Thêm ký tự đặc biệt (©, ™, &lt;, &gt;, …)</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau3">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai3">Bài giải</button>
+        </div>
+        <div id="yeucau3" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML hiển thị các ký tự đặc biệt:</p>
+            <ul>
+              <li>Bản quyền ©</li>
+              <li>Thương hiệu ™</li>
+              <li>Ký hiệu nhỏ hơn &lt; và lớn hơn &gt;</li>
+              <li>Trái tim ♥</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai3" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Ký tự đặc biệt trong HTML&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Các ký tự đặc biệt trong HTML&lt;/h1&gt;
+  &lt;p&gt;Bản quyền: &amp;copy; 2025 EasyCode&lt;/p&gt;
+  &lt;p&gt;Thương hiệu: EasyCode&amp;trade;&lt;/p&gt;
+  &lt;p&gt;Ký hiệu nhỏ hơn: &amp;lt; và lớn hơn: &amp;gt;&lt;/p&gt;
+  &lt;p&gt;Trái tim: &amp;hearts;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('cautruc', 3, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+    </div>
+
+    <div id="soanthao" class="content">
+      <div class="content-box">
+        <h2>Bài 1: Tạo đoạn văn, tiêu đề, ngắt dòng, xuống hàng</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau_soanthao1">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai_soanthao1">Bài giải</button>
+        </div>
+        <div id="yeucau_soanthao1" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với:</p>
+            <ul>
+              <li>Các tiêu đề h1, h2</li>
+              <li>Đoạn văn với thẻ &lt;p&gt;</li>
+              <li>Sử dụng &lt;br&gt; để xuống hàng</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai_soanthao1" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 1: Đoạn văn, tiêu đề, ngắt dòng&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Chào mừng đến với EasyCode!&lt;/h1&gt;
+  &lt;h2&gt;Học HTML thật dễ dàng&lt;/h2&gt;
+
+  &lt;p&gt;HTML giúp bạn tạo cấu trúc cho trang web.&lt;br&gt;
+  Bạn có thể thêm tiêu đề, đoạn văn và xuống hàng dễ dàng.&lt;/p&gt;
+
+  &lt;p&gt;Hãy luyện tập mỗi ngày để hiểu rõ hơn về các thẻ cơ bản!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('soanthao', 1, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 2: Dùng thẻ &lt;br&gt;, &lt;hr&gt; và các thẻ định dạng chữ</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau_soanthao2">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai_soanthao2">Bài giải</button>
+        </div>
+        <div id="yeucau_soanthao2" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML sử dụng:</p>
+            <ul>
+              <li>&lt;br&gt; để xuống hàng</li>
+              <li>&lt;hr&gt; để tạo đường kẻ ngang</li>
+              <li>&lt;b&gt;, &lt;i&gt;, &lt;u&gt; để định dạng chữ</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai_soanthao2" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 2: Thẻ br, hr và định dạng chữ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Thực hành thẻ &lt;br&gt;, &lt;hr&gt; và định dạng chữ&lt;/h1&gt;
+
+  &lt;p&gt;Xin chào! Đây là ví dụ về cách &lt;b&gt;định dạng văn bản&lt;/b&gt; trong HTML.&lt;br&gt;
+  Bạn có thể &lt;i&gt;làm nghiêng&lt;/i&gt; hoặc &lt;u&gt;gạch chân&lt;/u&gt; từ khóa quan trọng.&lt;/p&gt;
+
+  &lt;hr&gt;
+
+  &lt;p&gt;Thẻ &lt;br&gt; giúp xuống hàng, còn &lt;hr&gt; tạo đường kẻ ngang như trên.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('soanthao', 2, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+    </div>
+
+    <div id="thecoBan" class="content">
+      <div class="content-box">
+        <h2>Bài 1: Tạo đoạn văn có màu chữ và cỡ chữ khác nhau bằng thuộc tính</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau6">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai6">Bài giải</button>
+        </div>
+        <div id="yeucau6" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với các đoạn văn có:</p>
+            <ul>
+              <li>Màu chữ đỏ</li>
+              <li>Cỡ chữ 20px</li>
+              <li>Kết hợp màu xanh dương và cỡ 18px</li>
+              <li>Màu xanh lá và cỡ 22px</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai6" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 6: Màu chữ và cỡ chữ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Thực hành thuộc tính màu và cỡ chữ&lt;/h1&gt;
+
+  &lt;p style="color: red;"&gt;Đây là đoạn văn có màu đỏ.&lt;/p&gt;
+
+  &lt;p style="font-size: 20px;"&gt;Đây là đoạn văn có cỡ chữ 20px.&lt;/p&gt;
+
+  &lt;p style="color: blue; font-size: 18px;"&gt;
+    Đây là đoạn văn có màu xanh dương và cỡ chữ 18px.
+  &lt;/p&gt;
+
+  &lt;p style="color: green; font-size: 22px;"&gt;
+    Bạn có thể kết hợp nhiều thuộc tính trong cùng một thẻ &lt;code&gt;style&lt;/code&gt;!
+  &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('thecoBan', 1, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 2: Gắn <code>title</code>, <code>id</code>, <code>class</code> cho các thẻ</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau7">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai7">Bài giải</button>
+        </div>
+        <div id="yeucau7" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với các thẻ có thuộc tính:</p>
+            <ul>
+              <li>&lt;h1&gt; có title</li>
+              <li>&lt;h2&gt; có id</li>
+              <li>&lt;p&gt; có class và title</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai7" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 7: Gắn title, id, class cho thẻ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 title="Tiêu đề chính của trang"&gt;Thực hành thuộc tính title, id, class&lt;/h1&gt;
+  &lt;h2 id="section1"&gt;Giới thiệu&lt;/h2&gt;
+
+  &lt;p class="highlight" title="Đoạn văn số 1"&gt;
+    Đây là đoạn văn có class="highlight" giúp chữ có màu xanh đậm.
+  &lt;/p&gt;
+
+  &lt;p id="special" title="Đoạn đặc biệt"&gt;
+    Đây là đoạn có id="special", có thể định dạng riêng biệt bằng CSS.
+  &lt;/p&gt;
+
+  &lt;p title="Đoạn bình thường"&gt;
+    Khi di chuột qua đoạn này, bạn sẽ thấy nội dung của thuộc tính title hiển thị.
+  &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('thecoBan', 2, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+    </div>
+
+    <div id="lienKet" class="content">
+      <div class="content-box">
+        <h2>Bài 1: Tạo liên kết đến một trang web khác bằng &lt;a&gt;</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau8">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai8">Bài giải</button>
+        </div>
+        <div id="yeucau8" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với các liên kết đến:</p>
+            <ul>
+              <li>Google</li>
+              <li>YouTube</li>
+              <li>EasyCode.vn</li>
+            </ul>
+            <p>Sử dụng target="_blank" để mở trong tab mới.</p>
+          </div>
+        </div>
+        <div id="baigiai8" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 8: Tạo liên kết đến trang web khác&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Ví dụ về liên kết trong HTML&lt;/h1&gt;
+
+  &lt;p&gt;Dưới đây là các liên kết đến các trang phổ biến:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="https://www.google.com" target="_blank" title="Tìm kiếm với Google"&gt;Google&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="https://www.youtube.com" target="_blank" title="Xem video trên YouTube"&gt;YouTube&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="https://easycode.vn" target="_blank" title="Học lập trình tại EasyCode.vn"&gt;EasyCode.vn&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;p&gt;Thẻ &lt;code&gt;&lt;a&gt;&lt;/code&gt; được dùng để tạo liên kết, với thuộc tính &lt;code&gt;href&lt;/code&gt; xác định địa chỉ và &lt;code&gt;target&lt;/code&gt; điều khiển cách mở trang.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('lienKet', 1, this)"> 
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong 
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 2: Tạo liên kết nội bộ trong cùng trang</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau9">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai9">Bài giải</button>
+        </div>
+        <div id="yeucau9" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với:</p>
+            <ul>
+              <li>Mục lục với liên kết nội bộ</li>
+              <li>Các phần có id</li>
+              <li>Liên kết "Lên đầu trang"</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai9" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 9: Liên kết nội bộ trong trang&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 id="dautrang"&gt;Liên kết nội bộ trong cùng trang&lt;/h1&gt;
+
+  &lt;h2&gt;Mục lục&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#gioithieu"&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#noidung"&gt;Nội dung&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#ketluan"&gt;Kết luận&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;h2 id="gioithieu"&gt;Giới thiệu&lt;/h2&gt;
+  &lt;p&gt;Trong HTML, bạn có thể tạo các liên kết nội bộ giúp người dùng di chuyển trong cùng một trang một cách dễ dàng.&lt;/p&gt;
+  &lt;p&gt;&lt;a href="#dautrang"&gt;Lên đầu trang&lt;/a&gt;&lt;/p&gt;
+
+  &lt;h2 id="noidung"&gt;Nội dung&lt;/h2&gt;
+  &lt;p&gt;Để tạo liên kết nội bộ, bạn dùng thẻ &lt;code&gt;&lt;a href="#id"&gt;&lt;/code&gt; và gán thuộc tính &lt;code&gt;id&lt;/code&gt; cho phần tử đích.&lt;/p&gt;
+  &lt;p&gt;Ví dụ: &lt;code&gt;&lt;a href="#ketluan"&gt;Đến phần kết luận&lt;/a&gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;a href="#dautrang"&gt;Lên đầu trang&lt;/a&gt;&lt;/p&gt;
+
+  &lt;h2 id="ketluan"&gt;Kết luận&lt;/h2&gt;
+  &lt;p&gt;Liên kết nội bộ giúp tăng trải nghiệm người dùng và thuận tiện trong việc điều hướng nội dung dài.&lt;/p&gt;
+  &lt;p&gt;&lt;a href="#dautrang"&gt;Lên đầu trang&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('lienKet', 2, this)"> 
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong 
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 3: Tạo liên kết mở trong tab mới, gắn liên kết vào hình ảnh</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau10">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai10">Bài giải</button>
+        </div>
+        <div id="yeucau10" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với:</p>
+            <ul>
+              <li>Liên kết văn bản mở trong tab mới</li>
+              <li>Hình ảnh làm liên kết</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai10" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 10: Liên kết mở tab mới và gắn vào hình ảnh&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Tạo liên kết mở trong tab mới&lt;/h1&gt;
+
+  &lt;p&gt;Nhấn vào liên kết dưới đây để mở trang EasyCode trong tab mới:&lt;/p&gt;
+  &lt;p&gt;
+    &lt;a href="https://www.easycode.vn" target="_blank"&gt;Truy cập EasyCode.vn&lt;/a&gt;
+  &lt;/p&gt;
+
+  &lt;h2&gt;Liên kết gắn vào hình ảnh&lt;/h2&gt;
+  &lt;p&gt;Bấm vào hình ảnh bên dưới để mở trang Google trong tab mới:&lt;/p&gt;
+  &lt;a href="https://www.google.com" target="_blank"&gt;
+    &lt;img src="https://www.w3schools.com/html/img_chania.jpg" alt="Chania" width="200"&gt;
+  &lt;/a&gt;
+
+  &lt;p&gt;Cả hai liên kết đều sử dụng thuộc tính &lt;code&gt;target="_blank"&lt;/code&gt; để mở trong tab mới.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('lienKet', 3, this)"> 
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong 
+        </button>
+      </div>
+    </div>
+
+    <div id="hinhAnh" class="content">
+      <div class="content-box">
+        <h2>Bài 1: Thêm hình ảnh vào trang và điều chỉnh kích thước, viền</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau11">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai11">Bài giải</button>
+        </div>
+        <div id="yeucau11" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với hình ảnh có:</p>
+            <ul>
+              <li>Kích thước tùy chỉnh</li>
+              <li>Viền đẹp mắt</li>
+              <li>Thuộc tính alt</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai11" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 11: Thêm hình ảnh và điều chỉnh kích thước, viền&lt;/title&gt;
+  &lt;style&gt;
+    img {
+      border: 2px solid #333;
+      border-radius: 10px;
+      margin: 10px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Thêm hình ảnh vào trang&lt;/h1&gt;
+
+  &lt;p&gt;Ví dụ về hình ảnh có kích thước tùy chỉnh và viền đẹp mắt:&lt;/p&gt;
+
+  &lt;img src="https://www.w3schools.com/html/img_chania.jpg" 
+       alt="Chania" width="300" height="200"&gt;
+
+  &lt;img src="https://www.w3schools.com/html/pic_trulli.jpg" 
+       alt="Trulli" width="250" height="150"&gt;
+
+  &lt;p&gt;Bạn có thể thay đổi kích thước hình ảnh bằng thuộc tính &lt;code&gt;width&lt;/code&gt; và &lt;code&gt;height&lt;/code&gt;, 
+  đồng thời thêm viền bằng CSS hoặc thuộc tính &lt;code&gt;style&lt;/code&gt;.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('hinhAnh', 1, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 2: Ảnh làm nền trang</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau12">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai12">Bài giải</button>
+        </div>
+        <div id="yeucau12" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với:</p>
+            <ul>
+              <li>Hình ảnh làm nền cho body</li>
+              <li>Text hiển thị trên nền</li>
+              <li>CSS background properties</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai12" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 12: Ảnh làm nền trang&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      background-image: url('https://www.w3schools.com/html/img_girl.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .noidung {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 50px auto;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="noidung"&gt;
+    &lt;h1&gt;Trang web với hình nền&lt;/h1&gt;
+    &lt;p&gt;Đây là ví dụ về cách sử dụng hình ảnh làm nền cho trang web.&lt;/p&gt;
+    &lt;p&gt;Hình nền được thiết lập bằng thuộc tính CSS background-image.&lt;/p&gt;
+    &lt;p&gt;Hãy thử thay đổi URL ảnh nền hoặc các thuộc tính để quan sát sự khác biệt.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('hinhAnh', 2, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+    </div>
+
+    <div id="bangBieu" class="content">
+      <div class="content-box">
+        <h2>Bài 1: Tạo bảng đơn giản với 3 cột 3 hàng</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau13">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai13">Bài giải</button>
+        </div>
+        <div id="yeucau13" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo bảng HTML với:</p>
+            <ul>
+              <li>3 cột và 3 hàng</li>
+              <li>Tiêu đề bảng</li>
+              <li>Viền cho bảng</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai13" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 13: Bảng đơn giản 3x3&lt;/title&gt;
+  &lt;style&gt;
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Bảng thông tin sinh viên&lt;/h1&gt;
+  
+  &lt;table&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Tên&lt;/th&gt;
+      &lt;th&gt;Tuổi&lt;/th&gt;
+      &lt;th&gt;Lớp&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Nguyễn Văn A&lt;/td&gt;
+      &lt;td&gt;20&lt;/td&gt;
+      &lt;td&gt;CNTT01&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Trần Thị B&lt;/td&gt;
+      &lt;td&gt;19&lt;/td&gt;
+      &lt;td&gt;CNTT02&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('bangBieu', 1, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 2: Tạo bảng với rowspan và colspan</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau14">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai14">Bài giải</button>
+        </div>
+        <div id="yeucau14" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo bảng HTML sử dụng:</p>
+            <ul>
+              <li>rowspan để gộp hàng</li>
+              <li>colspan để gộp cột</li>
+              <li>Thiết kế bảng phức tạp</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai14" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 14: Bảng với rowspan và colspan&lt;/title&gt;
+  &lt;style&gt;
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Lịch học&lt;/h1&gt;
+  
+  &lt;table&gt;
+    &lt;tr&gt;
+      &lt;th rowspan="2"&gt;Thời gian&lt;/th&gt;
+      &lt;th colspan="3"&gt;Các ngày trong tuần&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Thứ 2&lt;/th&gt;
+      &lt;th&gt;Thứ 3&lt;/th&gt;
+      &lt;th&gt;Thứ 4&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sáng&lt;/td&gt;
+      &lt;td&gt;Toán&lt;/td&gt;
+      &lt;td&gt;Lý&lt;/td&gt;
+      &lt;td&gt;Hóa&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Chiều&lt;/td&gt;
+      &lt;td&gt;Văn&lt;/td&gt;
+      &lt;td&gt;Anh&lt;/td&gt;
+      &lt;td&gt;Sử&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('bangBieu', 2, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 3: Tạo bảng với CSS styling</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau15">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai15">Bài giải</button>
+        </div>
+        <div id="yeucau15" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo bảng HTML với styling CSS:</p>
+            <ul>
+              <li>Màu nền xen kẽ</li>
+              <li>Hover effects</li>
+              <li>Border và padding</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai15" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 15: Bảng với CSS styling&lt;/title&gt;
+  &lt;style&gt;
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #ddd;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Danh sách sản phẩm&lt;/h1&gt;
+  
+  &lt;table&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Tên sản phẩm&lt;/th&gt;
+      &lt;th&gt;Giá&lt;/th&gt;
+      &lt;th&gt;Số lượng&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Laptop&lt;/td&gt;
+      &lt;td&gt;15.000.000 VNĐ&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Điện thoại&lt;/td&gt;
+      &lt;td&gt;8.000.000 VNĐ&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Tai nghe&lt;/td&gt;
+      &lt;td&gt;500.000 VNĐ&lt;/td&gt;
+      &lt;td&gt;20&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('bangBieu', 3, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+    </div>
+
+    <div id="danhSach" class="content">
+      <div class="content-box">
+        <h2>Bài 1: Tạo danh sách có thứ tự và không thứ tự</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau16">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai16">Bài giải</button>
+        </div>
+        <div id="yeucau16" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với:</p>
+            <ul>
+              <li>Danh sách không thứ tự (&lt;ul&gt;)</li>
+              <li>Danh sách có thứ tự (&lt;ol&gt;)</li>
+              <li>Thay đổi kiểu đánh dấu</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai16" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 16: Danh sách có thứ tự và không thứ tự&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Tạo danh sách có thứ tự và không thứ tự&lt;/h1&gt;
+
+  &lt;h2&gt;1. Danh sách không thứ tự (&lt;code&gt;&lt;ul&gt;&lt;/code&gt;)&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;HTML&lt;/li&gt;
+    &lt;li&gt;CSS&lt;/li&gt;
+    &lt;li&gt;JavaScript&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;h2&gt;2. Danh sách có thứ tự (&lt;code&gt;&lt;ol&gt;&lt;/code&gt;)&lt;/h2&gt;
+  &lt;ol&gt;
+    &lt;li&gt;Bước 1: Học HTML&lt;/li&gt;
+    &lt;li&gt;Bước 2: Học CSS&lt;/li&gt;
+    &lt;li&gt;Bước 3: Học JavaScript&lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;h2&gt;3. Danh sách có thứ tự kiểu chữ cái&lt;/h2&gt;
+  &lt;ol type="A"&gt;
+    &lt;li&gt;Mục A&lt;/li&gt;
+    &lt;li&gt;Mục B&lt;/li&gt;
+    &lt;li&gt;Mục C&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('danhSach', 1, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 2: Danh sách lồng nhau</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau17">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai17">Bài giải</button>
+        </div>
+        <div id="yeucau17" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo danh sách lồng nhau:</p>
+            <ul>
+              <li>Danh sách chính với 3 mục</li>
+              <li>Mỗi mục có danh sách con</li>
+              <li>Kết hợp &lt;ul&gt; và &lt;ol&gt;</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai17" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 17: Danh sách lồng nhau&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Danh sách lồng nhau&lt;/h1&gt;
+
+  &lt;h2&gt;Kỹ năng lập trình web&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;HTML
+      &lt;ol&gt;
+        &lt;li&gt;Cấu trúc trang&lt;/li&gt;
+        &lt;li&gt;Các thẻ cơ bản&lt;/li&gt;
+        &lt;li&gt;Thuộc tính&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/li&gt;
+    &lt;li&gt;CSS
+      &lt;ol&gt;
+        &lt;li&gt;Selector&lt;/li&gt;
+        &lt;li&gt;Properties&lt;/li&gt;
+        &lt;li&gt;Layout&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/li&gt;
+    &lt;li&gt;JavaScript
+      &lt;ol&gt;
+        &lt;li&gt;Biến&lt;/li&gt;
+        &lt;li&gt;Hàm&lt;/li&gt;
+        &lt;li&gt;Sự kiện&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('danhSach', 2, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 3: Danh sách với CSS styling</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau18">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai18">Bài giải</button>
+        </div>
+        <div id="yeucau18" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo danh sách với styling CSS:</p>
+            <ul>
+              <li>Thay đổi kiểu đánh dấu</li>
+              <li>Màu sắc và font</li>
+              <li>Hover effects</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai18" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 18: Danh sách với CSS styling&lt;/title&gt;
+  &lt;style&gt;
+    ul.custom-list {
+      list-style-type: square;
+      color: #333;
+    }
+    ul.custom-list li {
+      background-color: #f9f9f9;
+      margin: 5px 0;
+      padding: 10px;
+      border-left: 4px solid #4CAF50;
+      transition: background-color 0.3s;
+    }
+    ul.custom-list li:hover {
+      background-color: #e0e0e0;
+    }
+    ol.custom-ordered {
+      list-style-type: upper-roman;
+      font-weight: bold;
+    }
+    ol.custom-ordered li {
+      color: #2196F3;
+      margin: 10px 0;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Danh sách với CSS styling&lt;/h1&gt;
+
+  &lt;h2&gt;Danh sách không thứ tự tùy chỉnh&lt;/h2&gt;
+  &lt;ul class="custom-list"&gt;
+    &lt;li&gt;HTML5&lt;/li&gt;
+    &lt;li&gt;CSS3&lt;/li&gt;
+    &lt;li&gt;JavaScript ES6&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;h2&gt;Danh sách có thứ tự tùy chỉnh&lt;/h2&gt;
+  &lt;ol class="custom-ordered"&gt;
+    &lt;li&gt;Bước đầu tiên&lt;/li&gt;
+    &lt;li&gt;Bước thứ hai&lt;/li&gt;
+    &lt;li&gt;Bước thứ ba&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('danhSach', 3, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+    </div>
+
+    <div id="chuThich" class="content">
+      <div class="content-box">
+        <h2>Bài 1: Tạo chú thích dưới ảnh bằng &lt;figcaption&gt;</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau19">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai19">Bài giải</button>
+        </div>
+        <div id="yeucau19" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với:</p>
+            <ul>
+              <li>Ảnh trong &lt;figure&gt;</li>
+              <li>Chú thích bằng &lt;figcaption&gt;</li>
+              <li>Styling cho figure</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai19" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 19: Tạo chú thích dưới ảnh bằng figcaption&lt;/title&gt;
+  &lt;style&gt;
+    figure {
+      text-align: center;
+      border: 1px solid #ddd;
+      padding: 10px;
+      background-color: #f9f9f9;
+      max-width: 300px;
+      margin: 20px auto;
+    }
+    figcaption {
+      font-style: italic;
+      color: #666;
+      margin-top: 10px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Tạo chú thích dưới ảnh với &lt;code&gt;&lt;figcaption&gt;&lt;/code&gt;&lt;/h1&gt;
+
+  &lt;figure&gt;
+    &lt;img src="https://www.w3schools.com/html/img_girl.jpg" alt="Girl" style="width:100%"&gt;
+    &lt;figcaption&gt;Fig.1 - Cô gái đang học lập trình&lt;/figcaption&gt;
+  &lt;/figure&gt;
+
+  &lt;p&gt;Thẻ &lt;code&gt;&lt;figure&gt;&lt;/code&gt; và &lt;code&gt;&lt;figcaption&gt;&lt;/code&gt; được sử dụng để nhóm và chú thích cho hình ảnh.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('chuThich', 1, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+
+      <div class="content-box">
+        <h2>Bài 2: Tạo trích dẫn với &lt;blockquote&gt; và &lt;q&gt;</h2>
+        <div class="tabs">
+          <button class="tab-button active" data-tab="yeucau20">Yêu cầu</button>
+          <button class="tab-button" data-tab="baigiai20">Bài giải</button>
+        </div>
+        <div id="yeucau20" class="tab-content active">
+          <p><strong>Yêu cầu:</strong></p>
+          <div class="khung">
+            <p>Tạo trang HTML với:</p>
+            <ul>
+              <li>Trích dẫn dài bằng &lt;blockquote&gt;</li>
+              <li>Trích dẫn ngắn bằng &lt;q&gt;</li>
+              <li>Cite attribute</li>
+            </ul>
+          </div>
+        </div>
+        <div id="baigiai20" class="tab-content">
+          <h3>Bài giải:</h3>
+          <div class="khung">
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Bài 20: Trích dẫn với blockquote và q&lt;/title&gt;
+  &lt;style&gt;
+    blockquote {
+      border-left: 5px solid #ccc;
+      padding-left: 15px;
+      margin: 20px 0;
+      font-style: italic;
+      background-color: #f9f9f9;
+      padding: 10px 15px;
+    }
+    q {
+      font-style: italic;
+      color: #666;
+    }
+    cite {
+      display: block;
+      text-align: right;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Trích dẫn trong HTML&lt;/h1&gt;
+
+  &lt;p&gt;Theo Steve Jobs: &lt;q&gt;Cuộc sống của bạn sẽ được định hình bởi những lựa chọn của bạn.&lt;/q&gt;&lt;/p&gt;
+
+  &lt;blockquote cite="https://www.brainyquote.com/quotes/albert_einstein_100473"&gt;
+    &lt;p&gt;Sự tưởng tượng quan trọng hơn kiến thức. Kiến thức là giới hạn, còn tưởng tượng thì bao la.&lt;/p&gt;
+    &lt;cite&gt;- Albert Einstein&lt;/cite&gt;
+  &lt;/blockquote&gt;
+
+  &lt;p&gt;Thẻ &lt;code&gt;&lt;blockquote&gt;&lt;/code&gt; dùng cho trích dẫn dài, &lt;code&gt;&lt;q&gt;&lt;/code&gt; dùng cho trích dẫn ngắn.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+        <button class="btn-finish" onclick="markComplete('chuThich', 2, this)">
+            <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
+        </button>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+    // Cấu hình số bài tập cho từng mục HTML
+    const sectionConfig = {
+        'cautruc': 3,
+        'soanthao': 2,
+        'thecoBan': 2,
+        'lienKet': 3,
+        'hinhAnh': 2,
+        'bangBieu': 3,
+        'danhSach': 3,
+        'chuThich': 2
+    };
+
+    // Tính tổng số bài tập
+    const totalExercises = Object.values(sectionConfig).reduce((a, b) => a + b, 0);
+
+    // Chạy khi tải trang
+    document.addEventListener('DOMContentLoaded', function() {
+        loadProgress();
+    });
+
+    // Hàm đánh dấu hoàn thành
+    function markComplete(sectionId, exerciseIndex, btnElement) {
+        // Lấy danh sách HTML progress (dùng key riêng biệt với CSS)
+        let completed = JSON.parse(localStorage.getItem('html_progress_list')) || [];
+
+        const key = `${sectionId}-${exerciseIndex}`;
+        if (!completed.includes(key)) {
+            completed.push(key);
+        }
+
+        localStorage.setItem('html_progress_list', JSON.stringify(completed));
+        
+        // Cập nhật giao diện nút bấm
+        updateButtonState(btnElement, true);
+        
+        // Cập nhật thanh tiến độ
+        calculateProgress(completed);
+    }
+
+    // Hàm cập nhật trạng thái nút
+    function updateButtonState(btn, isDone) {
+        if (isDone) {
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã hoàn thành';
+            btn.classList.add('done');
+        }
+    }
+
+    // Load dữ liệu khi vào trang
+    function loadProgress() {
+        let completed = JSON.parse(localStorage.getItem('html_progress_list')) || [];
+        calculateProgress(completed);
+
+        const allButtons = document.querySelectorAll('.btn-finish');
+        allButtons.forEach(btn => {
+            const onclickText = btn.getAttribute('onclick'); 
+            for (const section in sectionConfig) {
+                for (let i = 1; i <= sectionConfig[section]; i++) {
+                    if (onclickText.includes(`'${section}', ${i}`)) {
+                         if (completed.includes(`${section}-${i}`)) {
+                             updateButtonState(btn, true);
+                         }
+                    }
+                }
+            }
+        });
+    }
+
+    // Tính % và update menu
+    function calculateProgress(completedList) {
+        let percent = Math.round((completedList.length / totalExercises) * 100);
+        const barFill = document.getElementById('progress-bar-fill');
+        const barText = document.getElementById('progress-percent');
+        
+        if(barFill) barFill.style.width = percent + '%';
+        if(barText) barText.innerText = percent + '%';
+
+        // Update tích xanh menu sidebar
+        for (const [section, count] of Object.entries(sectionConfig)) {
+            let finishedCount = 0;
+            for (let i = 1; i <= count; i++) {
+                if (completedList.includes(`${section}-${i}`)) {
+                    finishedCount++;
+                }
+            }
+
+            if (finishedCount === count && count > 0) {
+                const link = document.getElementById(`link-${section}`);
+                if (link) {
+                    link.classList.add('menu-completed');
+                    const icon = link.querySelector('.check-icon');
+                    if (icon) icon.style.display = 'inline-block';
+                }
+            }
+        }
+    }
+</script>
