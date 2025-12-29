@@ -7,7 +7,7 @@
 ul.list {
   list-style: none;  
   padding-left: 0;    
-  margin: 0;  
+   
 }
 .main_box {
     display: flex;
@@ -58,13 +58,27 @@ ul.list {
     border-left: 1px solid #ffffff;
     box-shadow: 0 0 4px rgba(167, 167, 167, 0.5);
 }
-.sidebar_menu .list a{
-    display: block;
-    color: #4494df;
+.sidebar_menu .list a {
+    display: flex;                    /* flex ở A */
+    justify-content: space-between;   /* chữ trái – % phải */
+    align-items: center;
+    width: 100%;
+    padding: 14px 20px;
+    box-sizing: border-box;
     font-size: 22px;
     text-decoration: none;
-    padding: 8px 20px;
+    color: #4494df;
+    border-radius: 5px;
+    transition: background 0.25s;
 }
+
+/* Hover và active toàn nút xanh */
+.sidebar_menu .list a:hover,
+.sidebar_menu .list a.active-link {
+    background-color: #4494df;   /* nền xanh full */
+    color: #fff;                 /* chữ trắng */
+}
+
 .main-content{
     flex-grow: 1;
     padding: 10px 50px;
@@ -84,11 +98,13 @@ ul.list {
 }
 
 .title2 {
-    font-weight: 50px;
-    font-size: 32px;
-    margin-top: 1em;
-    margin-bottom: 1px;
-    color:#0097e6
+    background: #fff;
+    font-size: 24px;
+    margin-top: 40px;
+    color: #2563eb;
+    border-left: 5px solid #2563eb;
+    padding: 12px;
+    
 }
 .khung {
   background: #fff;
@@ -101,6 +117,18 @@ ul.list {
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
   color: #0077cc;
 }
+/* RESET ul trong khung nội dung */
+.khung ul {
+  margin: 0;
+  padding: 0;
+  list-style-position: inside;
+}
+
+.khung li {
+  margin: 0;
+  padding: 6px 0;
+}
+
 .one{
   background: #fff;
   border-radius: 15px;
@@ -161,7 +189,7 @@ ul.list {
   border-radius: 10px;
   padding: 15px 20px;
   margin: 25px auto;
-  width: 800px;
+  
   color: #1b5e20;
   font-size: 18px;
   line-height: 1.6;
@@ -192,6 +220,7 @@ img{
   display: block;
   margin: 20px auto;
 }
+/* điểm danh */
 /* Overlay */
 #attendanceOverlay {
     display: none;
@@ -287,4 +316,77 @@ img{
     border-radius: 5px;
     cursor: pointer;
     margin: 20px;
+}
+
+/* khung bài test */
+/* Khung bài tập */
+.quiz-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fcfcfc;
+    border: 1px solid #eee;
+    border-radius: 10px;
+}
+
+.question-item {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.question-item button {
+    display: inline-block;
+    width: auto;
+}
+.question-item .btn-check-section{
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
+
+.opt-label {
+    display: block;
+    margin: 5px 0;
+    padding: 8px;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.opt-label:hover {
+    background: #f9f9f9;
+}
+
+.btn-check-section {
+    background: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Tỉ lệ % to ngang chữ ở menu */
+
+
+
+
+/* Định dạng câu đúng/sai sau khi làm xong */
+.opt-label.correct-opt {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
+}
+
+.opt-label.incorrect-opt {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
+}
+
+/* Vô hiệu hóa click sau khi chọn để tránh đổi đáp án */
+.opt-label input:disabled {
+    cursor: not-allowed;
 }
