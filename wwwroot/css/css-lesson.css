@@ -75,11 +75,24 @@ html {
 
 /* Màu và hiệu ứng khi hover hoặc đang chọn */
 .menu .list a {
-    display: block;
+    display: flex;             /* Sử dụng flexbox */
+    justify-content: space-between; /* Đẩy chữ sang trái, % sang phải */
+    align-items: center;
+    width: 100%;               /* Chiếm hết chiều ngang li */
     color: #4494df;
-    font-size: 22px;
+    font-size: 18px;           /* Điều chỉnh lại kích thước chữ cho vừa vặn */
     text-decoration: none;
-    padding: 8px 20px;
+    padding: 12px 20px;        /* Tăng padding cho giống nút bấm */
+    box-sizing: border-box;
+}
+
+.menu-percent {
+    font-size: 14px !important; 
+    font-weight: normal !important;
+    background: rgba(255,255,255,0.5); /* Tạo nền mờ cho phần trăm nếu muốn */
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block !important; /* Đổi từ none sang inline-block để luôn hiện */
 }
 
 /* Khi mục được chọn */
@@ -497,26 +510,17 @@ ul.horizontal1 li a.active1 {
 }
 
 .menu-percent {
-    font-size: 16px !important; /* To bằng chữ menu */
+    font-size: 16px !important; 
     font-weight: bold !important;
-    color: #04AA6D !important;
     margin-left: 10px;
+    display: none; /* Mặc định ẩn, chỉ hiện khi hoàn thành */
 }
 
-/* Định dạng câu đúng/sai sau khi làm xong */
-.opt-label.correct-opt {
-    background-color: #d4edda !important;
-    border-color: #c3e6cb !important;
-    color: #155724 !important;
+/* Màu sắc theo trạng thái */
+.percent-perfect {
+    color: #04AA6D !important; /* Xanh khi đạt 100% */
 }
 
-.opt-label.incorrect-opt {
-    background-color: #f8d7da !important;
-    border-color: #f5c6cb !important;
-    color: #721c24 !important;
-}
-
-/* Vô hiệu hóa click sau khi chọn để tránh đổi đáp án */
-.opt-label input:disabled {
-    cursor: not-allowed;
+.percent-incomplete {
+    color: #f44336 !important; /* Đỏ khi dưới 100% */
 }

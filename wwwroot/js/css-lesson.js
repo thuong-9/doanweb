@@ -57,7 +57,7 @@ const quizData = {
         { q: "Thẻ &lt;style&gt; thường được đặt ở đâu trong tài liệu HTML?",o: ["Trong thẻ &lt;body&gt;", "Trong thẻ &lt;footer&gt;", "Trong thẻ &lt;head&gt;", "Bên ngoài thẻ &lt;html&gt;"], c: 2 }
     ],
     'Comment': [
-        { q: "Cú pháp ghi chú (comment) đúng trong CSS là gì?", o: ["// ghi chú", "", "/* ghi chú */", "# ghi chú"], c: 2 },
+        { q: "Cú pháp ghi chú (comment) đúng trong CSS là gì?", o: ["// ghi chú", "/* ghi chú", "/* ghi chú */", "# ghi chú"], c: 3 },
         { q: "Ghi chú trong CSS có hiển thị trên trình duyệt không?", o: ["Có hiển thị", "Không hiển thị", "Chỉ hiển thị khi lỗi", "Hiển thị dạng popup"], c: 1 },
         { q: "Ta có thể dùng ghi chú để làm gì?", o: ["Vô hiệu hóa tạm thời code", "Giải thích đoạn mã", "Phân chia bố cục file", "Tất cả các ý trên"], c: 3 },
         { q: "Ghi chú CSS có thể kéo dài trên nhiều dòng không?", o: ["Có", "Không", "Chỉ tối đa 2 dòng", "Chỉ dùng được trong thẻ &lt;p&gt;"], c: 0 },
@@ -169,17 +169,43 @@ function renderQuiz(id) {
 function showCompletionScreen(id, container, userAnswers) {
     let correct = 0;
     const total = quizData[id].length;
+    
+    // 1. Tính số câu đúng
     quizData[id].forEach((item, i) => {
         if (parseInt(userAnswers[i]) === item.c) correct++;
     });
 
-    container.innerHTML = `
-        <div class="khung" style="text-align:center; border: 2px solid #04AA6D; padding: 30px; border-radius: 15px;">
-            <h3 style="color:#04AA6D;">🎉 Bạn đã hoàn thành mục này!</h3>
-            <p style="font-size: 1.2em;">Kết quả của bạn: <b>${correct}/${total}</b> câu đúng</p>
-            <p>Tiến trình học tập đã được lưu lại.</p>
-            <button onclick="resetQuiz('${id}')" class="btn-check-section" style="background:#607d8b; margin-top: 10px;">Làm lại bài kiểm tra</button>
-        </div>`;
+    const scorePercent = (correct / total) * 100;
+
+    // 2. Lấy tên tiêu đề bài học từ thẻ h1 của section đó
+    const sectionTitle = document.querySelector(`#${id} .main-title`)?.innerText || "bài học";
+
+    let htmlContent = "";
+
+    if (scorePercent == 100) {
+        // TRƯỜNG HỢP BẰNG 100 - CHÚC MỪNG
+        htmlContent = `
+            <div class="khung" style="text-align:center; border: 2px solid #04AA6D; padding: 30px; border-radius: 15px; background: #f0fff4; animation: fadeIn 0.5s;">
+                <h3 style="color:#04AA6D;">🎉 Tuyệt vời!</h3>
+                <p style="font-size: 1.1em;">Bạn đã xuất sắc vượt qua bài tập phần: <b style="color:#2c3e50; font-size: 1.2em;">${sectionTitle}</b></p>
+                <div style="margin: 20px 0;">
+                    <span style="font-size: 2em; font-weight: bold; color: #04AA6D;">${correct}/${total}</span>
+                    <p>Câu trả lời chính xác (${scorePercent}%)</p>
+                </div>
+                <button onclick="resetQuiz('${id}')" class="btn-check-section" style="background:#607d8b; margin-top: 10px;">Làm lại bài tập</button>
+            </div>`;
+    } else {
+        // TRƯỜNG HỢP DƯỚI 50% - YÊU CẦU LÀM LẠI
+        htmlContent = `
+            <div class="khung" style="text-align:center; border: 2px solid #f44336; padding: 30px; border-radius: 15px; background: #fff5f5; animation: shake 0.5s;">
+                <h3 style="color:#f44336;">⚠️ Cố gắng lên!</h3>
+                <p style="font-size: 1.1em;">Bạn chưa vượt qua bài tập phần: <b>${sectionTitle}</b></p>
+                <p>Kết quả hiện tại: <b style="color:#f44336;">${correct}/${total}</b>. Bạn cần đúng 100%.</p>
+                <button onclick="resetQuiz('${id}')" class="btn-check-section" style="background:#f44336; margin-top: 10px;">Làm lại ngay</button>
+            </div>`;
+    }
+
+    container.innerHTML = htmlContent;
 }
 
 function handleAnswer(id, qIndex, value) {
@@ -221,7 +247,7 @@ function updateProgressUI(id) {
     const savedData = JSON.parse(localStorage.getItem('css_progress')) || {};
     const userAnswers = savedData[id] || {};
     
-    // Đếm số câu làm ĐÚNG
+    // 1. Tính số câu làm ĐÚNG
     let correctCount = 0;
     questions.forEach((item, index) => {
         if (userAnswers[index] !== undefined && parseInt(userAnswers[index]) === item.c) {
@@ -230,33 +256,112 @@ function updateProgressUI(id) {
     });
 
     const percent = Math.round((correctCount / questions.length) * 100);
-    
-    // Cập nhật con số % to ngang chữ ở Menu
+    const totalQuestions = questions.length;
+    const answeredCount = Object.keys(userAnswers).length;
+
+    // 2. Cập nhật số % ở Menu
     const menuProgText = document.getElementById(`menu-prog-${id}`);
     if (menuProgText) {
-        menuProgText.innerText = percent + "%";
-        menuProgText.style.fontSize = "16px"; // To ngang chữ menu
-        menuProgText.style.fontWeight = "bold";
-        menuProgText.style.color = (percent === 100) ? "#04AA6D" : "#888";
+        if (answeredCount === totalQuestions && percent >= 0) {
+            menuProgText.innerText = percent + "%";
+            menuProgText.style.display = "inline"; // Hiện số %
+
+            // Đổi màu: 100% màu xanh, dưới 100% màu đỏ
+            if (percent === 100) {
+                menuProgText.classList.remove('percent-incomplete');
+                menuProgText.classList.add('percent-perfect');
+            } else {
+                menuProgText.classList.remove('percent-perfect');
+                menuProgText.classList.add('percent-incomplete');
+            }
     }
 
-    // Cập nhật Thanh Bar trong nội dung bài học
+    // 3. Cập nhật Thanh Bar trong nội dung (nếu có)
     const fill = document.getElementById(`fill-${id}`);
-    const text = document.getElementById(`percent-${id}`);
     if (fill) fill.style.width = percent + "%";
-    if (text) text.innerText = percent;
+}
 }
 
-// Khởi tạo ban đầu
-document.addEventListener('DOMContentLoaded', () => {
-    // Cập nhật tiến độ cho tất cả bài học
-    Object.keys(quizData).forEach(id => updateProgressUI(id));
+function markAsFinished(id) {
+    // Cập nhật giao diện để hiện % màu đỏ/xanh tương ứng
+    updateProgressUI(id);
     
-    // Tìm tab đang active mặc định và hiện quiz
-    const activeContent = document.querySelector('.content.active');
-    if (activeContent) {
-        renderQuiz(activeContent.id);
+    alert("Chúc mừng bạn đã hoàn thành phần: " + id);
+
+    // Chuyển sang bài học tiếp theo (Logic tự động)
+    const menuLinks = Array.from(document.querySelectorAll('.list li a'));
+    const currentIndex = menuLinks.findIndex(link => link.getAttribute('onclick').includes(`'${id}'`));
+    
+    if (currentIndex !== -1 && currentIndex < menuLinks.length - 1) {
+        const nextLink = menuLinks[currentIndex + 1];
+        nextLink.click(); 
     }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const overlay = document.getElementById("attendanceOverlay");
+    const openBtn = document.getElementById("openAttendance");
+    const closeBtn = document.getElementById("closeAttendance");
+    const days = document.querySelectorAll(".day");
+
+    const today = new Date().toISOString().slice(0, 10); // yyyy-mm-dd
+
+    let lastCheckedDay = Number(localStorage.getItem("attendance_lastDay")) || 0;
+    let lastDate = localStorage.getItem("attendance_lastDate");
+    let checkedToday = lastDate === today;
+
+    openBtn.onclick = () => overlay.style.display = "block";
+    closeBtn.onclick = () => overlay.style.display = "none";
+
+    // 🔒 tô màu + khóa các ngày đã điểm
+    days.forEach(day => {
+        const dayNumber = Number(day.dataset.day);
+        if (dayNumber <= lastCheckedDay) {
+            day.classList.add("checked");
+            day.style.pointerEvents = "none";
+        }
+    });
+
+    days.forEach(day => {
+        const dayNumber = Number(day.dataset.day);
+
+        day.onclick = () => {
+
+            // ❌ hôm nay đã điểm
+            if (checkedToday) {
+                alert("Bạn đã điểm danh hôm nay!");
+                return;
+            }
+
+            // ❌ sai thứ tự
+            if (dayNumber !== lastCheckedDay + 1) {
+                alert("Hãy lựa chọn lại thứ tự nhé!");
+                return;
+            }
+
+            // ✅ điểm danh
+            day.classList.add("checked");
+            day.style.pointerEvents = "none";
+
+            lastCheckedDay++;
+            checkedToday = true;
+
+            localStorage.setItem("attendance_lastDay", lastCheckedDay);
+            localStorage.setItem("attendance_lastDate", today);
+
+            // 🔒 khóa toàn bộ ô còn lại trong ngày
+            days.forEach(d => d.style.pointerEvents = "none");
+
+            // 🎉 ngày 7 nổ
+            if (lastCheckedDay === 7) {
+                day.classList.add("boom");
+                setTimeout(() => {
+                    alert("🎉 Hoàn thành chuỗi 7 ngày!");
+                }, 400);
+            }
+        };
+    });
 });
 
 
