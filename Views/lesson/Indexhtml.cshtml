@@ -47,16 +47,26 @@
             <div class="sidebar_menu">
             <div class="logo">HTML cơ bản</div>
                 <ul class="list">
-                    <li><a href="javascript:void(0)" onclick="showContent('gioithieu', this)" class="active-link">Giới thiệu HTML</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContent('cautruc', this)">Cấu trúc HTML</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContent('soanthao', this)">Soạn thảo</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContent('cacthe', this)">Các thẻ cơ bản</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContent('thuoctinh', this)">Thuộc tính</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContent('lienket', this)">Liên kết</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContent('hinhanh', this)">Hình ảnh</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContent('bangbieu', this)">Bảng biểu</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContent('danhsach', this)">Danh sách</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContent('chuthich', this)">Chú thích & trích dẫn</a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('gioithieu', this)" class="active-link">Giới thiệu HTML
+                    <span id="menu-prog-gioithieu" class="menu-percent">(0%)</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('cautruc', this)">Cấu trúc HTML
+                     <span id="menu-prog-cautruc" class="menu-percent">(0%)</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('soanthao', this)">Soạn thảo
+                     <span id="menu-prog-soanthao" class="menu-percent">(0%)</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('cacthe', this)">Các thẻ cơ bản
+                     <span id="menu-prog-cacthe" class="menu-percent">(0%)</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('thuoctinh', this)">Thuộc tính
+                     <span id="menu-prog-thuoctinh" class="menu-percent">(0%)</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('lienket', this)">Liên kết
+                     <span id="menu-prog-lienket" class="menu-percent">(0%)</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('hinhanh', this)">Hình ảnh
+                     <span id="menu-prog-hinhanh" class="menu-percent">(0%)</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('bangbieu', this)">Bảng biểu
+                     <span id="menu-prog-bangbieu" class="menu-percent">(0%)</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('danhsach', this)">Danh sách
+                     <span id="menu-prog-danhsach" class="menu-percent">(0%)</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="showContent('chuthich', this)">Chú thích
+                     <span id="menu-prog-chuthich" class="menu-percent">(0%)</span></a></li>
                 </ul>
             </div>
 
@@ -65,7 +75,11 @@
             <div id="gioithieu" class="content active">                
                 <h1 class="main-title">Giới thiệu về HTML</h1>
                 <h2 class="title2">HTML là gì?</h2>
-                <p>HTML là ngôn ngữ đánh dấu được sử dụng để xây dựng cấu trúc của trang web.</p>              
+                <ul>
+                    <li>HTML là ngôn ngữ đánh dấu được sử dụng để xây dựng cấu trúc của trang web.</li>
+                    <li>HTML hoạt động như thế nào: Giải thích cách trình duyệt đọc file HTML và hiển thị nội dung, với mỗi trang HTML là một file riêng.</li>
+                    <li>Vai trò của HTML trong lập trình Web: HTML là nền tảng cốt lõi định hình cấu trúc nội dung và hỗ trợ đa phương tiện trên website.</li>
+                    </ul> 
                 <div class="khung">
                     <ul>
                     <li><b>HTML</b> viết tắt của <b>HyperText Markup Language</b>.</li>
@@ -88,35 +102,35 @@
 &lt;/html&gt;
 </code></pre>
                 </div>
+                <p>Minh hoạ:</p> 
+                        <img src="/img/a4.png" alt="ảnh minh hoạ", width="auto", height="300">
+                <h3 class="title2">Củng cố lại kiến thức</h3>
+                <div id="quiz-area-gioithieu" class="quiz-container"></div>
             </div>
 
             <!-- CẤU TRÚC -->
             <div id="cautruc" class="content">
                 <h1 class="main-title">Cấu trúc của một tài liệu HTML</h1>
                 <p>Cấu trúc của HTML:</p>
-                <div class="code">
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="vi"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;Tiêu đề trang&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Nội dung trang&lt;/h1&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></div>
+                    <img src="/img/p1.png" alt="ảnh minh hoạ", width="auto", height="380">
                <p>Các thành phần chính:</p> 
                <div class="khung">
                 <ul>
                 <li><b>&lt;!DOCTYPE html&gt;</b>: Khai báo loại tài liệu HTML5.</li>
-                <li><b>&lt;head&gt;</b>: Chứa thông tin về trang (tiêu đề, charset, link CSS...)</li>
+                <li><b>&lt;html&gt;</b>: Là phần tử gốc của một trang HTML.</li>
+                <li><b>&lt;head&gt;</b>: Chứa thông tin về trang (tiêu đề, charset, link CSS...)</li> 
+                <li><b>&lt;title&gt;</b>: Chỉ định tiêu đề cho trang HTML (tiêu đề này sẽ được hiển thị trên thanh tiêu đề của trình duyệt hoặc trong tab của trang).</li>
                 <li><b>&lt;body&gt;</b>: Chứa nội dung hiển thị trên trình duyệt.</li>
+                <li><b>&lt;h1&gt;</b>: Định nghĩa một tiêu đề lớn.</li>
+                <li><b>&lt;p&gt;</b>: Định nghĩa một đoạn văn.</li>
                 </ul>
                 </div>
                 <div class="note">
                     <p><b>Chú ý</b>: Chỉ những phần nằm giữa <i>&lt;body&gt;</i><i>&lt;/body&gt;</i> mới được hiển thị trên trang web.</p>
                 </div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                    <div id="quiz-area-cautruc" class="quiz-container"></div>
+
             </div>
 
             <!-- SOẠN THẢO -->
@@ -137,11 +151,17 @@
                     <li>JSFiddle</li>
                     </ul>
                 </div>
-                <h3 class="vd">Ví dụ hướng dẫn tạo một trang web cơ bản dùng Notepad. Bạn đọc có thể sử dụng các công cụ được giới thiệu phía trên để viết mã của mình.</h3>
-                <h4>Bước 1: Mở Notepad</h4>
-                <h4>Bước 2: Viết một tài liệu HTML đơn giản</h4>
-                <h4>Bước 3: Lưu một tài liệu HTML</h4>
-                <h4>Bước 4: Xem tài liệu HTML trong trình duyệt</h4>
+                <h3 class="vd">Học HTML bằng Notepad hoặc TextEdit</h3>
+                <h4>Notepad</h4>
+                    <h5>Bước 1: Mở Notepad</h5>
+                    <h5>Bước 2: Viết một tài liệu HTML đơn giản</h5>
+                    <h5>Bước 3: Lưu một tài liệu HTML</h5>
+                    <h5>Bước 4: Xem tài liệu HTML trong trình duyệt</h5>
+                <h4>TextEdit</h4>
+                    <h5>Mở Finder > Ứng dụng > TextEdit</h5>
+                <h3 class="title2">Củng cố lại kiến thức</h3>
+                <div id="quiz-area-soanthao" class="quiz-container"></div>
+
             </div>
 
             <!-- CÁC THẺ -->
@@ -194,13 +214,15 @@
 &lt; /html&gt;
 </code></pre>
                 </div>
-                <p>Thẻ <b>&lt;body&gt;</b> là một thành phần của HTML ở trên và nó chứa 2 thành phần khác:
+                <p>Thẻ <b>&lt;body&gt;</b> là một thành phần của HTML ở trên và nó chứa 2 thành phần khác:</p>
                     <ul class="th">
                         <li>Một đề mục cấp 1 được định nghĩa bằng thẻ &lt;h1&gt;&lt;/h1&gt;.</li>
-                        <li>Một đoạn văn được định nghĩa bằng thẻ &lt;p&gt;&lt;/p&gt;.</li>                
+                        <li>Một đoạn văn được định nghĩa bằng thẻ &lt;p&gt;&lt;/p&gt;.</li>
+                    </ul>               
                 <div class="note">
-                <p ><b>Chú ý:</b> Thẻ mở nào được ghi trước thì thẻ đóng tương ứng của nó phải viết sau các phần tử khác (tạo thành bao đóng).</p>
-                </div>
+                <p ><b>Chú ý:</b> Thẻ mở nào được ghi trước thì thẻ đóng tương ứng của nó phải viết sau các phần tử khác (tạo thành bao đóng).</p></div>
+                <h2 class="title2">Củng cố lại kiến thức</h2>
+                    <div id="quiz-area-cacthe" class="quiz-container"></div>
             </div>
 
             <!-- THUỘC TÍNH -->
@@ -269,10 +291,12 @@
                         <td>Khai báo sử dụng CSS ngay trong thẻ HTML</td>
                     </tr>
                      <tr>
-                        <td>value</t
+                        <td>value</td>
                         <td>Khai báo giá trị cho thẻ &lt;input&gt;</td>
                     </tr>
-                    </table>  
+                    </table> 
+                       <h3 class="title2">Củng cố lại kiến thức</h3>
+                        <div id="quiz-area-thuoctinh" class="quiz-container"></div>
             </div>
 
             <!-- LIÊN KẾT -->
@@ -314,6 +338,8 @@
                         <td>Mở liên kết trên toàn cửa sổ.</td>
                     </tr>
                 </table>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                   <div id="quiz-area-lienket" class="quiz-container"></div>
             </div>
 
             <!-- HÌNH ẢNH -->
@@ -344,8 +370,10 @@
                        <img src="/img/a8.png" alt="ảnh minh hoạ">
                 <h2 class="title2">Hình ảnh ở một website khác</h2>
                 <p>Đôi khi bạn muốn lấy ảnh từ một website khác để chèn vào trong bài viết của mình. Cách đơn giản nhất là bạn hãy lấy địa chỉ của bức ảnh và dán vào phần url.</p>
-                    <div class="one">&lt;img src="http://www.tbit.vn/styles/default/xenforo/tbit.png" alt="Logo từ trang TBit"&gt;
-                </div>
+                    <div class="one">&lt;img src="http://www.tbit.vn/styles/default/xenforo/tbit.png" alt="Logo từ trang TBit"&gt;</div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                   <div id="quiz-area-hinhanh" class="quiz-container"></div>
+
             </div>
 
             <!-- BẢNG BIỂU -->
@@ -458,6 +486,9 @@
                             <td>Hoa mai</td>
                         </tr>
                     </table>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                    <div id="quiz-area-bangbieu" class="quiz-container"></div>
+
                 </div>
             <!-- DANH SÁCH -->
             <div id="danhsach" class="content">
@@ -549,21 +580,36 @@
                                 </li>
                                 <li>JavaScript</li>
                             </ul></div>
-                </div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
+                   <div id="quiz-area-danhsach" class="quiz-container"></div>
 
-            <!-- CHÚ THÍCH -->
+                </div>
+                
+         
+            <!-- CHÚ THÍCH  -->
+           
+
             <div id="chuthich" class="content">
                 <h1 class="main-title">Chú thích và trích dẫn</h1>
                 <h2 class="title2">Chú thích trong HTML</h2>
+                <p>Các chú thích HTML không được hiển thị trong trình duyệt, nhưng chúng có thể giúp ghi chú mã nguồn HTML của bạn.</p>
                 <p> Dùng cặp thẻ <b>&lt;!-- Đây là nội dung chú thích --&gt;</b>để thêm chú thích trong HTML</p>
-                <p>Các thẻ trích dẫn:</p>
-                <div class="khung">
-                <ul>
-                <li><b>&lt;blockquote&gt;</b>: Dùng cho đoạn trích dẫn dài.</li>
-                <li><b>&lt;q&gt;</b>: Dùng cho trích dẫn ngắn.</li>
-                <li><b>&lt;!-- ... --&gt;</b>: Thêm chú thích trong mã nguồn.</li>
-                </ul></div>
-            </div>
+                    <p>Minh hoạ:</p>
+                        <img src="/img/p2.png" alt="ảnh minh hoạ", width="220">
+                
+                <h2 class="title2">Ẩn nội dung</h2>
+                <p>Chú thích HTML có thể được sử dụng để ẩn nội dung. Điều này có thể hữu ích nếu bạn tạm thời ẩn nội dung.</p>
+                <h2 class="title2">Các thẻ trích dẫn</h2>              
+                    <div class="khung">
+                        <ul>
+                        <li><b>&lt;blockquote&gt;</b>: Dùng cho đoạn trích dẫn dài.</li>
+                        <li><b>&lt;q&gt;</b>: Dùng cho trích dẫn ngắn.</li>
+                        <li><b>&lt;!-- ... --&gt;</b>: Thêm chú thích trong mã nguồn.</li>
+                        </ul>
+                    </div>
+                         <h2 class="title2">Củng cố lại kiến thức</h2>
+                        <div id="quiz-area-chuthich" class="quiz-container"></div>
+
+                </div>
             </div>
         </div>
-</div>
