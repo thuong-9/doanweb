@@ -31,7 +31,7 @@ body {
   border-right: 1px solid #ddd;
   box-shadow: 2px 0 6px rgba(0,0,0,0.1);
   min-width: 300px;
-  height: 96vh;
+  height: 89vh;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none; /* Ẩn trên Firefox */
@@ -75,22 +75,32 @@ html {
 
 /* Màu và hiệu ứng khi hover hoặc đang chọn */
 .menu .list a {
-    display: block;
-    color: #4494df;
+    display: flex;                    /* flex ở A */
+    justify-content: space-between;   /* chữ trái – % phải */
+    align-items: center;
+    width: 100%;
+    padding: 14px 20px;
+    box-sizing: border-box;
     font-size: 22px;
     text-decoration: none;
-    padding: 8px 20px;
+    color: #4494df;
+    border-radius: 5px;
+    transition: background 0.25s;
 }
 
-/* Khi mục được chọn */
-.menu .list a.active-link {
+/* Hover và active toàn nút xanh */
+.sidebar_menu .list a:hover,
+.sidebar_menu .list a.active-link {
+    background-color: #4494df;   /* nền xanh full */
+    color: #fff;                 /* chữ trắng */
+}
+
+
+.menu a.active-link {
   color: #fff;
   background: #4494df;
   border-radius: 5px;
-  transition: all 0.2s ease;
 }
-
-
 /* KHU VỰC NỘI DUNG */
 .NoiDung {
     flex-grow: 1;
@@ -112,11 +122,12 @@ html {
 }
 
 .title2 {
-    font-weight: 50px;
-    font-size: 32px;
-    margin-top: 1em;
-    margin-bottom: 1px;
-    color:#0097e6
+    background: #fff;
+    font-size: 24px;
+    margin-top: 40px;
+    color: #2563eb;
+    border-left: 5px solid #2563eb;
+    padding: 12px;   
 }
 
 
@@ -446,8 +457,105 @@ ul.horizontal1 li a:hover {
 ul.horizontal1 li a.active1 {
   background-color: #111111;
 }
+/* điểm danh */
+/* Overlay */
+#attendanceOverlay {
+    display: none;
+    position: fixed; top:0; left:0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 9999; overflow: auto;
+}
 
+/* Container */
+.attendance-container {
+    position: relative;
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    text-align: center;
+}
 
+/* Nút đóng */
+#closeAttendance {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* Title */
+.attendance-title {
+    font-size: 24px;
+    color: #ff9900;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Grid 3+3+1 layout */
+.attendance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    justify-items: center;
+}
+
+/* Ô ngày */
+.day {
+    width: 85px;
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    color: white;
+    background-color: #c2c1c1f8; /* màu trắng mặc định */
+}
+
+/* Ô 7 căn giữa hàng 3 */
+.day[data-day="7"] {
+    grid-column: 2 / 3; /* nằm giữa */
+    margin-top: 15px;
+}
+
+/* Hover */
+.day:hover { transform: scale(1.1); }
+
+/* Checked colors theo thứ tự 1->7 */
+.day.checked[data-day="1"] { background-color: #a51414; }
+.day.checked[data-day="2"] { background-color: #bb4d04; }
+.day.checked[data-day="3"] { background-color: #ffd24d; }
+.day.checked[data-day="4"] { background-color: #07a707; }
+.day.checked[data-day="5"] { background-color: #1f3ab4; }
+.day.checked[data-day="6"] { background-color: #945de7; }
+.day.checked[data-day="7"] { background-color: #e904b0; }
+
+/* Nút mở overlay */
+#openAttendance {
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px;
+}
+
+/* khung bài test */
 /* Khung bài tập */
 .quiz-container {
     margin-top: 30px;
@@ -464,6 +572,15 @@ ul.horizontal1 li a.active1 {
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
+.question-item button {
+    display: inline-block;
+    width: auto;
+}
+.question-item .btn-check-section{
+  font-size: 16px;
+  padding: 8px 16px;
+}
+
 
 .opt-label {
     display: block;
@@ -488,20 +605,6 @@ ul.horizontal1 li a.active1 {
     margin-top: 10px;
 }
 
-/* Tỉ lệ % to ngang chữ ở menu */
-.list li {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 8px 15px !important;
-}
-
-.menu-percent {
-    font-size: 16px !important; /* To bằng chữ menu */
-    font-weight: bold !important;
-    color: #04AA6D !important;
-    margin-left: 10px;
-}
 
 /* Định dạng câu đúng/sai sau khi làm xong */
 .opt-label.correct-opt {
