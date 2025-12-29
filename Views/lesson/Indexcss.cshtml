@@ -11,22 +11,52 @@
 @section Scripts {
   <script src="~/js/css-lesson.js" asp-append-version="true"></script>
 }
+@if (ViewBag.ShowAttendance == true)
+{
+    <partial name="_Attendance" />
+}
+
+<button id="openAttendance" title="Điểm danh"
+     style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px;
+            background-color: #5095fc; border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; cursor: pointer;
+            z-index: 9999; box-shadow: 0 2px 6px rgba(0,0,0,0.3); font-size: 30px;">🏠</button>
+
+<div id="attendanceOverlay">
+    <div class="attendance-container">
+        <button id="closeAttendance">✖</button>
+        <h2 class="attendance-title">Tích điểm hôm nay</h2>
+        <div class="attendance-grid">
+            <div class="day" data-day="1">🌟</div>
+            <div class="day" data-day="2">🌟</div>
+            <div class="day" data-day="3">🌟</div>
+            <div class="day" data-day="4">🌟</div>
+            <div class="day" data-day="5">🌟</div>
+            <div class="day" data-day="6">🌟</div>
+            <div class="day" data-day="7">🌟🌟</div>
+        </div>
+    </div>
+</div>
+<script>
+    window.lastCheckedDay = @((int)(ViewBag.LastCheckedDay ?? 0));
+    window.checkedToday = @(ViewBag.CheckedToday == true ? "true" : "false");
+</script>
 
 <div class="css-lesson">
   <div class="menu">
     <div class="logo">CSS</div>
         <ul class="list">
-        <li><a href="javascript:void(0)" onclick="showContent('Home', this)" class="active-link">Giới thiệu CSS</a> <span id="menu-prog-Home" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Syntax', this)">Cú pháp</a> <span id="menu-prog-Syntax" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Selectors', this)">Bộ chọn</a> <span id="menu-prog-Selectors" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Cachthuchien', this)">Cách thực hiện</a> <span id="menu-prog-Cachthuchien" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Comment', this)">Comment</a> <span id="menu-prog-Comment" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Color', this)">Màu sắc</a> <span id="menu-prog-Color" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Nen', this)">Nền</a> <span id="menu-prog-Nen" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Border', this)">Đường viền</a> <span id="menu-prog-Border" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Margins', this)">Lề CSS</a> <span id="menu-prog-Margins" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Dem', this)">Đệm</a> <span id="menu-prog-Dem" class="menu-percent">(0%)</span></li>
-        <li><a href="javascript:void(0)" onclick="showContent('Thanhdieuhuong', this)">Thanh điều hướng</a> <span id="menu-prog-Thanhdieuhuong" class="menu-percent">(0%)</span></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Home', this)" class="active-link">Giới thiệu CSS <span id="menu-prog-Home" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Syntax', this)">Cú pháp <span id="menu-prog-Syntax" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Selectors', this)">Bộ chọn <span id="menu-prog-Selectors" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Cachthuchien', this)">Cách thực hiện <span id="menu-prog-Cachthuchien" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Comment', this)">Comment <span id="menu-prog-Comment" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Color', this)">Màu sắc <span id="menu-prog-Color" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Nen', this)">Nền <span id="menu-prog-Nen" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Border', this)">Đường viền <span id="menu-prog-Border" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Margins', this)">Lề CSS <span id="menu-prog-Margins" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Dem', this)">Đệm <span id="menu-prog-Dem" class="menu-percent">(0%)</span></a></li>
+        <li><a href="javascript:void(0)" onclick="showContent('Thanhdieuhuong', this)">Thanh điều hướng <span id="menu-prog-Thanhdieuhuong" class="menu-percent">(0%)</span></a></li>
     </ul>
   </div>
 
@@ -60,6 +90,7 @@
                             <li><b>Trải nghiệm người dùng tốt hơn:</b> Tạo ra các trang web có giao diện thu hút và chuyên nghiệp.</li>
                         </ul>
                     </div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
                     <div id="quiz-area-Home" class="quiz-container"></div>
                 </div>
 
@@ -102,6 +133,7 @@
                             <li><b>text-align</b> là một thuộc tính và centerlà giá trị thuộc tính</li>
                         </ul>
                         </div>
+                        <h3 class="title2">Củng cố lại kiến thức</h3>
                         <div id="quiz-area-Syntax" class="quiz-container"></div>
                 </div>
 
@@ -481,6 +513,7 @@
             <td>Selects all elements with a href attribute value containing the substring "w3schools"</td>
         </tr>
     </table>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
                     <div id="quiz-area-Selectors" class="quiz-container"></div>
                 </div>
 
@@ -554,6 +587,7 @@
                             <li>Internal CSS</li>
                             <li>External CSS (ưu tiên thấp nhất)</li>
                         </ol></div>
+                        <h3 class="title2">Củng cố lại kiến thức</h3>
                         <div id="quiz-area-Cachthuchien" class="quiz-container"></div>
                 </div>
 
@@ -591,6 +625,7 @@ p {
   color: red;
 }</code></pre>
                     </div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
                     <div id="quiz-area-Comment" class="quiz-container"></div>
                 </div>
 
@@ -684,6 +719,7 @@ p {
                             <div class="color-box1" style="background-color: hsla(300, 100%, 100%, 0.7);">hsla(300, 100%, 100%, 0.7)</div>
                     <br>
                     <p>Có thể tham khảo: <a href="https://ingiacong.co/bang-code-mau/"target="_blank" style="text-decoration:none; color:blue;">Truy cập tại đây</a></p>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
                     <div id="quiz-area-Color" class="quiz-container"></div>
                 </div>
                 
@@ -749,6 +785,7 @@ background-attachment: fixed;}</code></pre></div>
                     <div class="note">
                         <p><b>Lưu ý:</b> Chỉ cần viết theo đúng thứ tự, không nhất thiết phải đầy đủ các đặc tính.</p>
                     </div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
                     <div id="quiz-area-Nen" class="quiz-container"></div>
                 </div>
 
@@ -1003,6 +1040,7 @@ Vi du xac dinh tat ca cac gia tri lien quan toi Border chi trong mot Style Rule.
     <p style="border:4px solid red;">
     Vi du xac dinh tat ca cac gia tri lien quan toi Border chi trong mot Style Rule.
     </p></div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
                     <div id="quiz-area-Border" class="quiz-container"></div>
                 </div>
 
@@ -1119,6 +1157,7 @@ p.b {
                         <div class="code"><pre><code>p {
     margin: 35px 70px 50px 90px;
 }</code></pre></div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
                     <div id="quiz-area-Margins" class="quiz-container"></div>
                 </div>
 
@@ -1210,6 +1249,7 @@ p.b {
                         <div class="code"><pre><code>p {
   padding: 35px 70px 50px 90px;
 }</code></pre></div>
+                    <h3 class="title2">Củng cố lại kiến thức</h3>
                     <div id="quiz-area-Dem" class="quiz-container"></div>
                 </div>
                 
@@ -1434,6 +1474,7 @@ ul li a:hover {
   display: flex;
   justify-content: center;
 }</code></pre></div>
+                                <h3 class="title2">Củng cố lại kiến thức</h3>
                                 <div id="quiz-area-Thanhdieuhuong" class="quiz-container"></div>
                                 
                                 </div>
