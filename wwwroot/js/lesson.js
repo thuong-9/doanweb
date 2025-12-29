@@ -1,13 +1,4 @@
-
-// RESET BÀI TEST KHI MỞ WEB (GIỮ ĐIỂM DANH)
-window.addEventListener("load", () => {
-    localStorage.removeItem("html_progress");
-    localStorage.removeItem("quiz_step");
-
-    // QUAN TRỌNG: reset luôn biến trong RAM
-    currentQuestionIndex = {};
-});
-
+//html-lesson
 function showContent(id, element) {
     // 1. Ẩn tất cả nội dung
     const contents = document.querySelectorAll('.content');
@@ -36,7 +27,7 @@ function showContent(id, element) {
         updateProgressUI(id);
     }
 }
-
+//bai test
 const quizData = {
     'gioithieu': [
         { q: "HTML dùng để làm gì trong trang web?", o: ["Xử lý logic chương trình", "Tạo cấu trúc cho trang web", "Thiết kế cơ sở dữ liệu", "Quản lý máy chủ"], c: 1 },
@@ -146,10 +137,7 @@ html += `<div class="question-item ${isAnswered ? 'answered' : ''}" style="paddi
             else if (parseInt(savedValue) === i) labelClass += " incorrect-opt";
         }
         html += `<label class="${labelClass}" style="display:block; cursor:pointer; margin:8px 0; padding:10px; border:1px solid #eee; border-radius:5px; ${isAnswered ? 'pointer-events:none; opacity:0.8;' : ''}">
-                    <input type="radio" name="q-${id}-${index}" value="${i}" ${savedValue == i ? 'checked' : ''} onchange="handleAnswer('${id}', ${index}, this.value)"> ${escapeHTML(opt)}             
-
-
-</label>`;
+                    <input type="radio" name="q-${id}-${index}" value="${i}" ${savedValue == i ? 'checked' : ''} onchange="handleAnswer('${id}', ${index}, this.value)"> ${escapeHTML(opt)} </label>`;
     });
 
     html += `</div>`;
