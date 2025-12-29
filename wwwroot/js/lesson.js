@@ -1,4 +1,4 @@
-//html-lesson
+//html-lesson.js
 function showContent(id, element) {
     // 1. Ẩn tất cả nội dung
     const contents = document.querySelectorAll('.content');
