@@ -8,6 +8,7 @@
 
 @section Styles {
   <link rel="stylesheet" href="~/css/btcss.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/css/notifications.css" asp-append-version="true" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 }
 
@@ -44,33 +45,327 @@
       });
     });
   </script>
+  <script>
+    // Cấu hình số bài cho từng mục CSS
+    const cssSectionConfig = {
+      'cssCuphap': 2,
+      'cssSelector': 2,
+      'cssThucHien': 2,
+      'cssComment': 1,
+      'cssMauNen': 3,
+      'cssBorder': 3,
+      'cssMarginPadding': 2,
+      'cssMenu': 3
+    };
+
+    const cssTotalExercises = Object.values(cssSectionConfig).reduce((a, b) => a + b, 0);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCssProgress();
+      restoreCompletedCssCodes();
+    });
+
+    function saveCompletedCssCode(sectionId, exerciseIndex, html, css) {
+      try {
+        const key = `completed_code_${sectionId}-${exerciseIndex}`;
+        localStorage.setItem(key, JSON.stringify({ html: html || '', css: css || '' }));
+      } catch (e) {}
+    }
+
+    function loadCompletedCssCode(sectionId, exerciseIndex) {
+      try {
+        const key = `completed_code_${sectionId}-${exerciseIndex}`;
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+      } catch (e) { return null; }
+    }
+
+    function restoreCompletedCssCodes() {
+      const completed = JSON.parse(localStorage.getItem('css_progress_list')) || [];
+      completed.forEach(key => {
+        const [sectionId, exerciseIndex] = key.split('-');
+        const htmlTextareaId = `grade-html-${sectionId}-${exerciseIndex}`;
+        const cssTextareaId = `grade-css-${sectionId}-${exerciseIndex}`;
+        const htmlTextarea = document.getElementById(htmlTextareaId);
+        const cssTextarea = document.getElementById(cssTextareaId);
+        
+        if (htmlTextarea && cssTextarea) {
+          const code = loadCompletedCssCode(sectionId, exerciseIndex);
+          if (code) {
+            htmlTextarea.value = code.html || '';
+            cssTextarea.value = code.css || '';
+          }
+        }
+      });
+    }
+
+    function markComplete(sectionId, exerciseIndex, btnElement) {
+      let completed = JSON.parse(localStorage.getItem('css_progress_list')) || [];
+      const key = `${sectionId}-${exerciseIndex}`;
+      if (!completed.includes(key)) {
+        completed.push(key);
+        localStorage.setItem('css_progress_list', JSON.stringify(completed));
+      }
+      updateCssButtonState(btnElement, true);
+      calculateCssProgress(completed);
+    }
+
+    function updateCssButtonState(btn, isDone) {
+      if (isDone && btn) {
+        btn.classList.add('done');
+      }
+    }
+
+    function loadCssProgress() {
+      let completed = JSON.parse(localStorage.getItem('css_progress_list')) || [];
+      calculateCssProgress(completed);
+
+      const allButtons = document.querySelectorAll('.btn-finish');
+      allButtons.forEach(btn => {
+        const onclickText = btn.getAttribute('onclick');
+        for (const section in cssSectionConfig) {
+          for (let i = 1; i <= cssSectionConfig[section]; i++) {
+            if (onclickText && onclickText.includes(`'${section}', ${i}`)) {
+              if (completed.includes(`${section}-${i}`)) {
+                updateCssButtonState(btn, true);
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function calculateCssProgress(completedList) {
+      const percent = Math.round((completedList.length / cssTotalExercises) * 100);
+      const barFill = document.getElementById('progress-bar-fill');
+      const barText = document.getElementById('progress-percent');
+      if (barFill) barFill.style.width = percent + '%';
+      if (barText) barText.innerText = percent + '%';
+
+      for (const [section, count] of Object.entries(cssSectionConfig)) {
+        let finishedCount = 0;
+        for (let i = 1; i <= count; i++) {
+          if (completedList.includes(`${section}-${i}`)) finishedCount++;
+        }
+        const sectionPercent = Math.round((finishedCount / count) * 100);
+        const menuText = document.getElementById(`menu-prog-${section}`);
+        if (menuText) {
+          menuText.innerText = `(${sectionPercent}%)`;
+          menuText.style.color = sectionPercent === 100 ? '#04AA6D' : '#d32f2f';
+        }
+
+        if (finishedCount === count && count > 0) {
+          const link = document.getElementById(`link-${section}`);
+          if (link) {
+            link.classList.add('menu-completed');
+            const icon = link.querySelector('.check-icon');
+            if (icon) icon.style.display = 'inline-block';
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+    // Gọi API chấm bài CSS
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification notification-${type}`;
+      notification.innerHTML = `
+        <div class="notification-content">
+          <span class="notification-message">${message}</span>
+          <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Tự động xóa sau 5 giây
+      setTimeout(() => {
+        notification.classList.add('fade-out');
+        setTimeout(() => notification.remove(), 300);
+      }, 5000);
+    }
+
+    function previewCss(sectionId, exerciseIndex) {
+      const htmlEl = document.getElementById(`grade-html-${sectionId}-${exerciseIndex}`);
+      const cssEl = document.getElementById(`grade-css-${sectionId}-${exerciseIndex}`);
+      const outEl = document.getElementById(`grade-result-${sectionId}-${exerciseIndex}`);
+      if (!htmlEl || !cssEl || !outEl) return;
+
+      if (!htmlEl.value.trim() && !cssEl.value.trim()) {
+        showNotification("⚠️ Vui lòng nhập mã HTML/CSS trước khi chạy thử.", "warning");
+        return;
+      }
+
+      showNotification("🔍 Đang xem trước mã...", "info");
+      
+      outEl.innerHTML = `
+        <div style="margin-top:20px;">
+          <div style="background:#fff; border:1px solid #e0e0e0; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.08); padding:16px;">
+            <div style="font-weight:700; color:#0d6efd; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+              <span>Xem trước kết quả</span>
+              <span style="font-size:14px; color:#666; font-weight:400;">💡 Bấm "Chấm bài" để kiểm tra điểm</span>
+            </div>
+            <iframe id="preview-${sectionId}-${exerciseIndex}" style="width:100%; height:400px; border:1px solid #ddd; border-radius:10px; background:white;"></iframe>
+          </div>
+        </div>`;
+      
+      const iframe = document.getElementById(`preview-${sectionId}-${exerciseIndex}`);
+      if (iframe) {
+        iframe.srcdoc = `<style>${cssEl.value}</style>${htmlEl.value}`;
+      }
+    }
+
+    async function gradeCss(sectionId, exerciseIndex) {
+      const htmlEl = document.getElementById(`grade-html-${sectionId}-${exerciseIndex}`);
+      const cssEl = document.getElementById(`grade-css-${sectionId}-${exerciseIndex}`);
+      const outEl = document.getElementById(`grade-result-${sectionId}-${exerciseIndex}`);
+      if (!htmlEl || !cssEl || !outEl) return;
+
+      const payload = {
+        sectionId: sectionId,
+        exerciseIndex: exerciseIndex || 1,
+        html: htmlEl.value || "",
+        css: cssEl.value || ""
+      };
+      outEl.innerHTML = "Đang chấm bài...";
+      showNotification("⏳ Đang chấm bài, vui lòng chờ...", "info");
+      try {
+        const res = await fetch('/Exercises/GradeCss', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        const numericScore = Number.isFinite(Number(data.score)) ? Number(data.score) : 0;
+        const totalChecks = (data.passedChecks || []).length + (data.failedChecks || []).length;
+        const passedCount = (data.passedChecks || []).length;
+        const isPerfect = numericScore === 100;
+        
+        // Nếu đạt 100%, tự động đánh dấu hoàn thành
+        if (isPerfect) {
+          let completed = JSON.parse(localStorage.getItem('css_progress_list')) || [];
+          const key = `${sectionId}-${exerciseIndex}`;
+          if (!completed.includes(key)) {
+            completed.push(key);
+            localStorage.setItem('css_progress_list', JSON.stringify(completed));
+            calculateCssProgress(completed);
+          }
+          // Lưu code đã hoàn thành
+          saveCompletedCssCode(sectionId, exerciseIndex, htmlEl.value, cssEl.value);
+          
+          // Hiển thị kết quả thành công (thẻ đẹp, không chữ "Kết quả")
+          outEl.innerHTML = `
+            <div class="result-card success">
+              <div class="rc-header">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Chấm bài: Đạt 100%</span>
+              </div>
+              <div class="rc-body">
+                <div class="rc-title">${getSectionName(sectionId)} - Bài ${exerciseIndex}</div>
+                
+                <div class="rc-actions">
+                  <button class="btn-finish" style="background:#28a745; color:white; padding:12px 24px; border:none; border-radius:10px; cursor:pointer;" onclick="nextCssExercise('${sectionId}', ${exerciseIndex})">Bài tiếp theo →</button>
+                </div>
+              </div>
+            </div>`;
+        } else {
+          // Hiển thị kết quả chưa đạt (thẻ đẹp, không chữ "Kết quả")
+          outEl.innerHTML = `
+            <div class="result-card error">
+              <div class="rc-header">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Chấm bài: Chưa đạt</span>
+              </div>
+              <div class="rc-body">
+                <div class="rc-title">${getSectionName(sectionId)} - Bài ${exerciseIndex}</div>
+                
+                <div class="rc-actions">
+                  <button class="btn-finish" style="background:#d32f2f; color:white; padding:12px 24px; border:none; border-radius:10px; cursor:pointer;" onclick="retryCssExercise('${sectionId}', ${exerciseIndex})">Làm lại ngay</button>
+                </div>
+              </div>
+            </div>`;
+        }
+      } catch (e) {
+        outEl.innerHTML = "Lỗi khi chấm bài. Vui lòng thử lại.";
+        showNotification("❌ Lỗi khi chấm bài. Vui lòng thử lại.", "error");
+      }
+    }
+
+    function retryCssExercise(sectionId, exerciseIndex) {
+      const htmlEl = document.getElementById(`grade-html-${sectionId}-${exerciseIndex}`);
+      const cssEl = document.getElementById(`grade-css-${sectionId}-${exerciseIndex}`);
+      const outEl = document.getElementById(`grade-result-${sectionId}-${exerciseIndex}`);
+      if (htmlEl) htmlEl.value = '';
+      if (cssEl) cssEl.value = '';
+      if (outEl) outEl.innerHTML = '';
+      htmlEl?.focus();
+    }
+
+    function nextCssExercise(sectionId, exerciseIndex) {
+      const currentSection = document.getElementById(sectionId);
+      const boxes = currentSection.querySelectorAll('.content-box');
+      const nextBox = boxes[exerciseIndex];
+      if (nextBox) {
+        nextBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    
+    function getSectionName(sectionId) {
+      const names = {
+        'cssCuphap': 'Cú pháp CSS',
+        'cssSelector': 'Bộ chọn (Selector)',
+        'cssThucHien': 'Cách thực hiện CSS',
+        'cssComment': 'Chú thích CSS',
+        'cssMauNen': 'Màu nền & Hình nền',
+        'cssBorder': 'Viền (Border)',
+        'cssMarginPadding': 'Margin & Padding',
+        'cssMenu': 'Tạo Menu'
+      };
+      return names[sectionId] || sectionId;
+    }
+  </script>
 }
 
 <div class="main_box">
   <div class="sidebar_menu">
    <h2 class="part-title">PHẦN 2: CSS</h2>
 
-   <div class="progress-container">
-        <div class="progress-info">
-            <span>Tiến độ học tập</span>
-            <span id="progress-percent">0%</span>
-        </div>
-        <div class="progress-bar-bg">
-            <div id="progress-bar-fill" style="width: 0%"></div>
-        </div>
-    </div>
-
     <div class="section">
-      <p class="section-title">A. Mức cơ bản</p>
+      
       <ul class="list">
-        <li><a href="#" onclick="showContent('cssCuphap', this)" class="active-link" id="link-cssCuphap">Cú pháp <i class="fa-solid fa-check-circle check-icon"></i></a></li>
-        <li><a href="#" onclick="showContent('cssSelector', this)" id="link-cssSelector">Bộ chọn (Selector) <i class="fa-solid fa-check-circle check-icon"></i></a></li>
-        <li><a href="#" onclick="showContent('cssThucHien', this)" id="link-cssThucHien">Cách thực hiện <i class="fa-solid fa-check-circle check-icon"></i></a></li>
-        <li><a href="#" onclick="showContent('cssComment', this)" id="link-cssComment">Comment <i class="fa-solid fa-check-circle check-icon"></i></a></li>
-        <li><a href="#" onclick="showContent('cssMauNen', this)" id="link-cssMauNen">Màu & Nền <i class="fa-solid fa-check-circle check-icon"></i></a></li>
-        <li><a href="#" onclick="showContent('cssBorder', this)" id="link-cssBorder">Viền (Border) <i class="fa-solid fa-check-circle check-icon"></i></a></li>
-        <li><a href="#" onclick="showContent('cssMarginPadding', this)" id="link-cssMarginPadding">Lề & Đệm <i class="fa-solid fa-check-circle check-icon"></i></a></li>
-        <li><a href="#" onclick="showContent('cssMenu', this)" id="link-cssMenu">Thanh điều hướng <i class="fa-solid fa-check-circle check-icon"></i></a></li>
+        <li>
+          <a href="#" onclick="showContent('cssCuphap', this)" class="active-link" id="link-cssCuphap">Cú pháp</a>
+          <span id="menu-prog-cssCuphap" class="menu-percent">(0%)</span>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('cssSelector', this)" id="link-cssSelector">Bộ chọn (Selector)</a>
+          <span id="menu-prog-cssSelector" class="menu-percent">(0%)</span>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('cssThucHien', this)" id="link-cssThucHien">Cách thực hiện</a>
+          <span id="menu-prog-cssThucHien" class="menu-percent">(0%)</span>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('cssComment', this)" id="link-cssComment">Comment</a>
+          <span id="menu-prog-cssComment" class="menu-percent">(0%)</span>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('cssMauNen', this)" id="link-cssMauNen">Màu & Nền</a>
+          <span id="menu-prog-cssMauNen" class="menu-percent">(0%)</span>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('cssBorder', this)" id="link-cssBorder">Viền (Border)</a>
+          <span id="menu-prog-cssBorder" class="menu-percent">(0%)</span>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('cssMarginPadding', this)" id="link-cssMarginPadding">Lề & Đệm</a>
+          <span id="menu-prog-cssMarginPadding" class="menu-percent">(0%)</span>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('cssMenu', this)" id="link-cssMenu">Thanh điều hướng</a>
+          <span id="menu-prog-cssMenu" class="menu-percent">(0%)</span>
+        </li>
       </ul>
     </div>
   </div>
@@ -83,7 +378,7 @@
             <h2>Bài 1: Viết quy tắc CSS đổi màu chữ và nền cho đoạn văn</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_cp1">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_cp1">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_cp1">Gợi ý</button>
             </div>
             <div id="yc_cp1" class="tab-content active">
                 <p><strong>Yêu cầu:</strong></p>
@@ -102,48 +397,44 @@
                     </ul>
                 </div>
             </div>
-            <div id="bg_cp1" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_cp1" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="vi"&gt;
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;title&gt;Đổi màu chữ và nền bằng CSS&lt;/title&gt;
-  &lt;style&gt;
-    p {
-      color: #1a73e8; /* Màu chữ xanh */
-      background-color: #e3f2fd; /* Màu nền xanh nhạt */
-      padding: 15px; /* Tạo khoảng cách trong đoạn */
-      border: 2px solid #90caf9; /* Viền màu xanh nhạt */
-      border-radius: 8px; /* Bo góc viền */
-      width: 60%;
-      margin: 20px auto; /* Căn giữa trang */
-      font-family: Arial, sans-serif;
-      font-size: 18px;
-    }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1&gt;Ví dụ: Đổi màu chữ và nền cho đoạn văn&lt;/h1&gt;
-  &lt;p&gt;
-    CSS giúp bạn dễ dàng thay đổi màu sắc và giao diện cho các phần tử HTML.
-    Hãy thử thay đổi mã màu để thấy kết quả khác nhau!
-  &lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+                    <p>Trong ô <b>CSS</b>, bạn có thể viết:</p>
+<pre>
+p {
+  color: blue; /* Màu chữ */
+  background-color: #f0f0f0; /* Màu nền xám nhạt */
+}
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssCuphap', 1, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS vào ô dưới.</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssCuphap-1"><b>HTML</b></label>
+                  <textarea id="grade-html-cssCuphap-1" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssCuphap-1"><b>CSS</b></label>
+                  <textarea id="grade-css-cssCuphap-1" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish btn-run" style="flex:1; min-width:140px;" onclick="previewCss('cssCuphap', 1)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssCuphap', 1)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssCuphap-1" style="margin-top:10px;"></div>
+            </div>
         </div>
 
         <div class="content-box">
             <h2>Bài 2: Phân biệt <code>property</code> và <code>value</code></h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_cp2">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_cp2">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_cp2">Gợi ý</button>
             </div>
             <div id="yc_cp2" class="tab-content active">
                 <p><strong>Yêu cầu:</strong></p>
@@ -160,20 +451,37 @@
                     </ul>
                 </div>
             </div>
-            <div id="bg_cp2" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_cp2" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>p {
-  color: red;           /* property: color → value: red */
-  font-size: 20px;      /* property: font-size → value: 20px */
-  font-family: Arial;   /* property: font-family → value: Arial */
-  background-color: #fce4ec; /* property: background-color → value: mã màu hồng nhạt */
-}</code></pre>
+                    <p>Thử thay đổi tiêu đề H1:</p>
+<pre>
+h1 {
+  color: red;        /* property: color, value: red */
+  font-size: 24px;   /* property: font-size, value: 24px */
+}
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssCuphap', 2, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssCuphap-2"><b>HTML</b></label>
+                  <textarea id="grade-html-cssCuphap-2" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssCuphap-2"><b>CSS</b></label>
+                  <textarea id="grade-css-cssCuphap-2" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssCuphap', 2)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssCuphap', 2)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssCuphap-2" style="margin-top:10px;"></div>
+            </div>
         </div>
     </div>
 
@@ -182,7 +490,7 @@
             <h2>Bài 1: Dùng selector theo tên thẻ, class, id</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_sl1">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_sl1">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_sl1">Gợi ý</button>
             </div>
             <div id="yc_sl1" class="tab-content active">
                 <p><strong>Yêu cầu:</strong></p>
@@ -205,41 +513,49 @@
                     </ul>
                 </div>
             </div>
-            <div id="bg_sl1" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_sl1" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>/* Selector theo tên thẻ */
-h1 {
-  color: darkblue;
-  text-align: center;
-}
-
-/* Selector theo class */
-.doan1 {
-  background-color: #e3f2fd;
-  color: #0d47a1;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-/* Selector theo id */
-#dacbiet {
-  font-size: 20px;
-  color: #d32f2f;
-  font-weight: bold;
-}</code></pre>
+                    <p>Trong <b>HTML</b>:</p>
+<pre>
+&lt;h1&gt;Tiêu đề&lt;/h1&gt;
+&lt;p class="doan-van"&gt;Nội dung class&lt;/p&gt;
+&lt;p id="doan-dac-biet"&gt;Nội dung id&lt;/p&gt;
+</pre>
+                    <p>Trong <b>CSS</b>:</p>
+<pre>
+h1 { color: blue; }     /* Tên thẻ */
+.doan-van { background-color: yellow; } /* Class dùng dấu chấm (.) */
+#doan-dac-biet { font-size: 20px; }     /* ID dùng dấu thăng (#) */
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssSelector', 1, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssSelector-1"><b>HTML</b></label>
+                  <textarea id="grade-html-cssSelector-1" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssSelector-1"><b>CSS</b></label>
+                  <textarea id="grade-css-cssSelector-1" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssSelector', 1)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssSelector', 1)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssSelector-1" style="margin-top:10px;"></div>
+            </div>
         </div>
 
         <div class="content-box">
             <h2>Bài 2: Kết hợp nhiều bộ chọn và pseudo-class</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_sl2">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_sl2">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_sl2">Gợi ý</button>
             </div>
             <div id="yc_sl2" class="tab-content active">
                 <p><strong>Yêu cầu:</strong></p>
@@ -256,39 +572,40 @@ h1 {
                     </ul>
                 </div>
             </div>
-            <div id="bg_sl2" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_sl2" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>/* Kết hợp nhiều selector */
-h1, h2 {
-  color: #1565c0;
-  text-align: center;
-}
+<pre>
+/* Chọn tất cả thẻ p nằm trong div */
+div p { color: gray; }
 
-/* Pseudo-class :hover */
-p:hover {
-  background-color: #bbdefb;
-  color: #0d47a1;
-  cursor: pointer;
-  transition: 0.3s;
-}
+/* Đổi màu link khi di chuột */
+a:hover { color: red; }
 
-/* Pseudo-class :first-child */
-ul li:first-child {
-  font-weight: bold;
-  color: #d32f2f;
-}
-
-/* Kết hợp selector theo cấu trúc */
-div p {
-  border-left: 4px solid #1976d2;
-  padding-left: 8px;
-}</code></pre>
+/* Chọn thẻ li đầu tiên */
+li:first-child { font-weight: bold; }
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssSelector', 2, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssSelector-2"><b>HTML</b></label>
+                  <textarea id="grade-html-cssSelector-2" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssSelector-2"><b>CSS</b></label>
+                  <textarea id="grade-css-cssSelector-2" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssSelector', 2)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssSelector', 2)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssSelector-2" style="margin-top:10px;"></div>
+            </div>
         </div>
     </div>
 
@@ -297,7 +614,7 @@ div p {
             <h2>Bài 1: Viết CSS nội tuyến, nội bộ và ngoài file</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_th1">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_th1">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_th1">Gợi ý</button>
             </div>
             <div id="yc_th1" class="tab-content active">
                 <p><strong>Yêu cầu:</strong></p>
@@ -315,31 +632,49 @@ div p {
                     </ul>
                 </div>
             </div>
-            <div id="bg_th1" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_th1" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>&lt;!-- Inline --&gt;
-&lt;p style="color: red; font-weight: bold;"&gt;CSS nội tuyến&lt;/p&gt;
+<pre>
+&lt;!-- Inline CSS --&gt;
+&lt;p style="color: blue;"&gt;Đoạn văn màu xanh&lt;/p&gt;
 
-&lt;!-- Internal --&gt;
-&lt;style&gt; 
-  p { color: #333; background-color: #e3f2fd; } 
+&lt;!-- Internal CSS (trong thẻ head) --&gt;
+&lt;style&gt;
+  h1 { color: red; }
 &lt;/style&gt;
 
-&lt;!-- External --&gt;
-&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
+&lt;!-- External CSS (liên kết file) --&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssThucHien', 1, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssThucHien-1"><b>HTML</b></label>
+                  <textarea id="grade-html-cssThucHien-1" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssThucHien-1"><b>CSS</b></label>
+                  <textarea id="grade-css-cssThucHien-1" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssThucHien', 1)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssThucHien', 1)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssThucHien-1" style="margin-top:10px;"></div>
+            </div>
         </div>
 
         <div class="content-box">
             <h2>Bài 2: So sánh mức độ ưu tiên giữa 3 cách viết CSS</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_th2">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_th2">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_th2">Gợi ý</button>
             </div>
             <div id="yc_th2" class="tab-content active">
                 <div class="khung">
@@ -356,19 +691,39 @@ div p {
                     </ul>
                 </div>
             </div>
-            <div id="bg_th2" class="tab-content">
-                <h3>Bài giải:</h3>
-                <div class="khung">
-<pre><code>&lt;!-- CSS nội tuyến (inline) --&gt;
-&lt;p style="color: red;"&gt;
-  Đây là đoạn văn có cùng lúc 3 quy tắc CSS.
-  Màu chữ sẽ là ĐỎ vì Inline có ưu tiên cao nhất.
-&lt;/p&gt;</code></pre>
-                </div>
+            <div id="goiy_th2" class="tab-content">
+                 <p><strong>Gợi ý:</strong></p>
+                 <div class="khung">
+                     <p>Nếu bạn viết:</p>
+<pre>
+&lt;p style="color: red;" class="text"&gt;Nội dung&lt;/p&gt;
+</pre>
+                     <p>Và trong CSS:</p>
+<pre>
+.text { color: blue; }
+</pre>
+                     <p>=> Chữ sẽ có màu <b>đỏ</b> vì Inline style mạnh hơn Class style.</p>
+                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssThucHien', 2, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssThucHien-2"><b>HTML</b></label>
+                  <textarea id="grade-html-cssThucHien-2" style="width:100%; height:160px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssThucHien-2"><b>CSS</b></label>
+                  <textarea id="grade-css-cssThucHien-2" style="width:100%; height:160px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssThucHien', 2)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssThucHien', 2)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssThucHien-2" style="margin-top:10px;"></div>
+            </div>
         </div>
     </div>
 
@@ -377,7 +732,7 @@ div p {
             <h2>Bài 1: Thêm chú thích trong mã CSS, giải thích tác dụng từng đoạn</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_cm1">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_cm1">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_cm1">Gợi ý</button>
             </div>
             <div id="yc_cm1" class="tab-content active">
                 <div class="khung">
@@ -389,151 +744,207 @@ div p {
                     </ul>
                 </div>
             </div>
-            <div id="bg_cm1" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_cm1" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>/* ----- Định dạng cho toàn bộ trang ----- */
-body {
-  background-color: #f9fbe7; /* Màu nền nhạt */
-  text-align: center;
-}
-
-/* ----- Tiêu đề chính ----- */
+<pre>
+/* Đây là định dạng cho tiêu đề */
 h1 {
-  color: #2e7d32; /* Màu xanh lá đậm */
+  color: blue; /* Đổi màu chữ */
 }
 
-/* ----- Nút bấm ----- */
-button {
-  background-color: #66bb6a; /* Màu nền nút */
-  color: white; /* Màu chữ */
-}</code></pre>
+/* Phần này dành cho nội dung */
+p {
+  font-size: 16px;
+}
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssComment', 1, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssComment-1"><b>HTML</b></label>
+                  <textarea id="grade-html-cssComment-1" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssComment-1"><b>CSS</b></label>
+                  <textarea id="grade-css-cssComment-1" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssComment', 1)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssComment', 1)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssComment-1" style="margin-top:10px;"></div>
+            </div>
         </div>
     </div>
 
-    <div id="cssMauNen" class="content">
-        <div class="content-box">
-            <h2>Bài 1: Đổi màu nền bằng <code>background-color</code></h2>
-            <div class="tabs">
-                <button class="tab-button active" data-tab="yc_mn1">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_mn1">Bài giải</button>
-            </div>
-            <div id="yc_mn1" class="tab-content active">
-                <div class="khung">
-                    <ul>
-                        <li>Tạo một trang HTML có ít nhất 3 phần tử: tiêu đề, đoạn văn và hộp nội dung.</li>
-                        <li>Dùng thuộc tính <code>background-color</code> trong CSS để:
-                          <ul>
+<div id="cssMauNen" class="content">
+    <div class="content-box">
+        <h2>Bài 1: Đổi màu nền bằng <code>background-color</code></h2>
+        <div class="tabs">
+            <button class="tab-button active" data-tab="yc_mn1">Yêu cầu</button>
+            <button class="tab-button" data-tab="goiy_mn1">Gợi ý</button>
+        </div>
+        
+        <div id="yc_mn1" class="tab-content active">
+            <div class="khung">
+                <ul>
+                    <li>Tạo một trang HTML có ít nhất 3 phần tử: tiêu đề, đoạn văn và hộp nội dung.</li>
+                    <li>Dùng thuộc tính <code>background-color</code> trong CSS để:
+                        <ul>
                             <li>Đổi màu nền cho toàn bộ trang.</li>
                             <li>Đổi màu nền riêng cho từng phần tử (tiêu đề, đoạn văn, div).</li>
-                          </ul>
-                        </li>
-                        <li>Quan sát sự khác biệt giữa từng màu nền.</li>
-                    </ul>
-                </div>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <div id="bg_mn1" class="tab-content">
-                <h3>Bài giải:</h3>
-                <div class="khung">
-<pre><code>body { background-color: #f1f8e9; }
-h1 { background-color: #aed581; }
-.hop { background-color: #c8e6c9; }</code></pre>
-                </div>
+        </div>
+        <div id="goiy_mn1" class="tab-content">
+            <p><strong>Gợi ý:</strong></p>
+            <div class="khung">
+<pre>
+body { background-color: #eee; } /* Nền trang xám nhạt */
+h1 { background-color: skyblue; } /* Nền tiêu đề xanh */
+div { background-color: white; } /* Nền hộp trắng */
+</pre>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssMauNen', 1, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
         </div>
 
-        <div class="content-box">
-            <h2>Bài 2: Thêm ảnh nền, căn chỉnh và lặp lại ảnh</h2>
-            <div class="tabs">
-                <button class="tab-button active" data-tab="yc_mn2">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_mn2">Bài giải</button>
+        <div class="khung" style="margin-top:12px;">
+            <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                    <label for="grade-html-cssMauNen-1"><b>HTML</b></label>
+                    <textarea id="grade-html-cssMauNen-1" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                    <label for="grade-css-cssMauNen-1"><b>CSS</b></label>
+                    <textarea id="grade-css-cssMauNen-1" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
             </div>
-            <div id="yc_mn2" class="tab-content active">
-                <div class="khung">
-                    <ul>
-                        <li>Sử dụng thuộc tính <code>background-image</code> để thêm ảnh nền cho trang web.</li>
-                        <li>Dùng các thuộc tính:
-                          <ul>
+            <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssMauNen', 1)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssMauNen', 1)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+            </div>
+            <div id="grade-result-cssMauNen-1" style="margin-top:10px;"></div>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h2>Bài 2: Thêm ảnh nền, căn chỉnh và lặp lại ảnh</h2>
+        <div class="tabs">
+            <button class="tab-button active" data-tab="yc_mn2">Yêu cầu</button>
+            <button class="tab-button" data-tab="goiy_mn2">Gợi ý</button>
+        </div>
+        <div id="yc_mn2" class="tab-content active">
+            <div class="khung">
+                <ul>
+                    <li>Sử dụng thuộc tính <code>background-image</code> để thêm ảnh nền cho trang web.</li>
+                    <li>Dùng các thuộc tính:
+                        <ul>
                             <li><code>background-repeat</code> – để điều khiển việc lặp lại ảnh nền.</li>
                             <li><code>background-position</code> – để căn chỉnh vị trí ảnh.</li>
                             <li><code>background-size</code> – để thay đổi kích thước ảnh (cover, contain, auto,...).</li>
-                          </ul>
-                        </li>
-                        <li>Tạo ví dụ minh họa cho 3 kiểu: lặp lại, không lặp lại, và ảnh phủ toàn trang.</li>
-                    </ul>
-                </div>
+                        </ul>
+                    </li>
+                    <li>Tạo ví dụ minh họa cho 3 kiểu: lặp lại, không lặp lại, và ảnh phủ toàn trang.</li>
+                </ul>
             </div>
-            <div id="bg_mn2" class="tab-content">
-                <h3>Bài giải:</h3>
-                <div class="khung">
-<pre><code>body {
-  background-image: url('https://picsum.photos/1200/800');
-  background-size: cover;       /* Ảnh phủ toàn bộ trang */
-  background-repeat: no-repeat; /* Không lặp lại ảnh */
-  background-position: center;  /* Căn giữa ảnh */
-}
-
-.repeat-bg {
-  background-image: url('https://picsum.photos/200');
-  background-repeat: repeat;    /* Ảnh được lặp lại */
-}</code></pre>
-                </div>
-            </div>
-            <button class="btn-finish" onclick="markComplete('cssMauNen', 2, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
         </div>
-
-        <div class="content-box">
-            <h2>Bài 3: Dùng <code>linear-gradient</code> tạo nền chuyển màu</h2>
-            <div class="tabs">
-                <button class="tab-button active" data-tab="yc_mn3">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_mn3">Bài giải</button>
-            </div>
-            <div id="yc_mn3" class="tab-content active">
-                <div class="khung">
-                    <ul>
-                        <li>Tạo một trang HTML với tiêu đề và một vài khối nội dung (div).</li>
-                        <li>Dùng thuộc tính <code>background-image</code> kết hợp với hàm <code>linear-gradient()</code> để tạo nền chuyển màu.</li>
-                        <li>Thử thay đổi hướng chuyển màu và số lượng màu.</li>
-                        <li>Tạo ít nhất 3 ví dụ khác nhau.</li>
-                    </ul>
-                </div>
-            </div>
-            <div id="bg_mn3" class="tab-content">
-                <h3>Bài giải:</h3>
-                <div class="khung">
-<pre><code>/* Gradient ngang (trái → phải) */
-.gradient1 {
-  background-image: linear-gradient(to right, #42a5f5, #478ed1);
+        <div id="goiy_mn2" class="tab-content">
+            <p><strong>Gợi ý:</strong></p>
+            <div class="khung">
+<pre>
+body {
+  background-image: url('link-anh.jpg');
+  background-repeat: no-repeat; /* Không lặp */
+  background-size: cover;       /* Phủ kín */
+  background-position: center;  /* Căn giữa */
 }
-
-/* Gradient dọc (trên → dưới) */
-.gradient2 {
-  background-image: linear-gradient(to bottom, #66bb6a, #43a047);
-}</code></pre>
+</pre>
+            </div>
+        </div>
+        
+        <div class="khung" style="margin-top:12px;">
+            <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                    <label for="grade-html-cssMauNen-2"><b>HTML</b></label>
+                    <textarea id="grade-html-cssMauNen-2" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                    <label for="grade-css-cssMauNen-2"><b>CSS</b></label>
+                    <textarea id="grade-css-cssMauNen-2" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssMauNen', 3, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssMauNen', 2)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssMauNen', 2)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+            </div>
+            <div id="grade-result-cssMauNen-2" style="margin-top:10px;"></div>
         </div>
     </div>
+
+    <div class="content-box">
+        <h2>Bài 3: Dùng <code>linear-gradient</code> tạo nền chuyển màu</h2>
+        <div class="tabs">
+            <button class="tab-button active" data-tab="yc_mn3">Yêu cầu</button>
+            <button class="tab-button" data-tab="goiy_mn3">Gợi ý</button>
+        </div>
+        <div id="yc_mn3" class="tab-content active">
+            <div class="khung">
+                <ul>
+                    <li>Tạo một trang HTML với tiêu đề và một vài khối nội dung (div).</li>
+                    <li>Dùng thuộc tính <code>background-image</code> kết hợp với hàm <code>linear-gradient()</code> để tạo nền chuyển màu.</li>
+                    <li>Thử thay đổi hướng chuyển màu và số lượng màu.</li>
+                    <li>Tạo ít nhất 3 ví dụ khác nhau.</li>
+                </ul>
+            </div>
+        </div>
+        <div id="goiy_mn3" class="tab-content">
+            <p><strong>Gợi ý:</strong></p>
+            <div class="khung">
+<pre>
+/* Chuyển từ đỏ sang vàng */
+.box1 { background-image: linear-gradient(red, yellow); }
+
+/* Chuyển sang phải, từ xanh đến tím */
+.box2 { background-image: linear-gradient(to right, blue, purple); }
+</pre>
+            </div>
+        </div>
+        
+        <div class="khung" style="margin-top:12px;">
+            <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                    <label for="grade-html-cssMauNen-3"><b>HTML</b></label>
+                    <textarea id="grade-html-cssMauNen-3" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                    <label for="grade-css-cssMauNen-3"><b>CSS</b></label>
+                    <textarea id="grade-css-cssMauNen-3" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssMauNen', 3)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssMauNen', 3)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+            </div>
+            <div id="grade-result-cssMauNen-3" style="margin-top:10px;"></div>
+        </div>
+    </div>
+</div>
 
     <div id="cssBorder" class="content">
         <div class="content-box">
             <h2>Bài 1: Tạo khung viền cho đoạn văn</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_bd1">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_bd1">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_bd1">Gợi ý</button>
             </div>
             <div id="yc_bd1" class="tab-content active">
                 <div class="khung">
@@ -549,31 +960,45 @@ h1 { background-color: #aed581; }
                     </ul>
                 </div>
             </div>
-            <div id="bg_bd1" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_bd1" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>/* Viền liền nét (solid) */
-.solid {
-  border: 3px solid #43a047; /* Viền xanh lá đậm */
-  border-radius: 6px;
-}
+<pre>
+/* Viền liền nét, dày 2px, màu đen */
+p { border: 2px solid black; }
 
-/* Viền đứt nét (dashed) */
-.dashed {
-  border: 3px dashed #1e88e5; /* Viền xanh dương */
-}</code></pre>
+/* Viền nét đứt, màu đỏ */
+div { border: 1px dashed red; }
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssBorder', 1, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssBorder-1"><b>HTML</b></label>
+                  <textarea id="grade-html-cssBorder-1" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssBorder-1"><b>CSS</b></label>
+                  <textarea id="grade-css-cssBorder-1" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssBorder', 1)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssBorder', 1)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssBorder-1" style="margin-top:10px;"></div>
+            </div>
+
         </div>
 
         <div class="content-box">
             <h2>Bài 2: Làm tròn góc với <code>border-radius</code></h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_bd2">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_bd2">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_bd2">Gợi ý</button>
             </div>
             <div id="yc_bd2" class="tab-content active">
                 <div class="khung">
@@ -589,29 +1014,45 @@ h1 { background-color: #aed581; }
                     </ul>
                 </div>
             </div>
-            <div id="bg_bd2" class="tab-content">
-                <h3>Bài giải:</h3>
-                <div class="khung">
-<pre><code>/* Bo nhẹ góc 10px */
-.radius1 { border-radius: 10px; }
-
-/* Bo góc nhiều 30px */
-.radius2 { border-radius: 30px; }
-
-/* Bo tròn hoàn toàn (hình tròn) */
-.radius3 { border-radius: 50%; }</code></pre>
-                </div>
+            <div id="goiy_bd2" class="tab-content">
+                 <p><strong>Gợi ý:</strong></p>
+                 <div class="khung">
+<pre>
+.rounded { border-radius: 10px; } /* Bo nhẹ */
+.circle { 
+  width: 100px; height: 100px;
+  border-radius: 50%; /* Hình tròn */
+}
+</pre>
+                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssBorder', 2, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssBorder-2"><b>HTML</b></label>
+                  <textarea id="grade-html-cssBorder-2" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssBorder-2"><b>CSS</b></label>
+                  <textarea id="grade-css-cssBorder-2" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssBorder', 2)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssBorder', 2)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssBorder-2" style="margin-top:10px;"></div>
+            </div>
+
         </div>
 
         <div class="content-box">
             <h2>Bài 3: Thêm hiệu ứng đổ bóng</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_bd3">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_bd3">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_bd3">Gợi ý</button>
             </div>
             <div id="yc_bd3" class="tab-content active">
                 <div class="khung">
@@ -623,23 +1064,35 @@ h1 { background-color: #aed581; }
                     </ul>
                 </div>
             </div>
-            <div id="bg_bd3" class="tab-content">
-                <h3>Bài giải:</h3>
-                <div class="khung">
-<pre><code>/* Bóng nhẹ, mờ gần */
-.shadow1 {
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-/* Bóng mạnh */
-.shadow3 {
-  box-shadow: 8px 8px 25px rgba(76, 175, 80, 0.6);
-}</code></pre>
-                </div>
+            <div id="goiy_bd3" class="tab-content">
+                 <p><strong>Gợi ý:</strong></p>
+                 <div class="khung">
+                     <p>Cú pháp: <code>offset-x offset-y blur color</code></p>
+<pre>
+/* Bóng đen, nhòe 10px, lệch 5px */
+div { box-shadow: 5px 5px 10px rgba(0,0,0,0.5); }
+</pre>
+                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssBorder', 3, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssBorder-3"><b>HTML</b></label>
+                  <textarea id="grade-html-cssBorder-3" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssBorder-3"><b>CSS</b></label>
+                  <textarea id="grade-css-cssBorder-3" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssBorder', 3)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssBorder', 3)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssBorder-3" style="margin-top:10px;"></div>
+            </div>
         </div>
     </div>
 
@@ -648,7 +1101,7 @@ h1 { background-color: #aed581; }
             <h2>Bài 1: Thử thay đổi <code>margin</code>, <code>padding</code> cho các phần tử</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_mp1">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_mp1">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_mp1">Gợi ý</button>
             </div>
             <div id="yc_mp1" class="tab-content active">
                 <div class="khung">
@@ -663,26 +1116,46 @@ h1 { background-color: #aed581; }
                     </ul>
                 </div>
             </div>
-            <div id="bg_mp1" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_mp1" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>/* Padding nhỏ */
-.pad1 { padding: 5px; }
-
-/* Margin lớn */
-.margin2 { margin: 50px auto; }</code></pre>
+                    <p>Hãy thử thêm màu nền hoặc viền để thấy rõ sự khác biệt:</p>
+<pre>
+div {
+  border: 1px solid black;
+  margin: 20px;  /* Đẩy các phần tử khác ra xa 20px */
+  padding: 20px; /* Nội dung bên trong cách viền 20px */
+}
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssMarginPadding', 1, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssMarginPadding-1"><b>HTML</b></label>
+                  <textarea id="grade-html-cssMarginPadding-1" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssMarginPadding-1"><b>CSS</b></label>
+                  <textarea id="grade-css-cssMarginPadding-1" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssMarginPadding', 1)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssMarginPadding', 1)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssMarginPadding-1" style="margin-top:10px;"></div>
+            </div>
+
         </div>
 
         <div class="content-box">
             <h2>Bài 2: Thực hành mô hình hộp (Box Model)</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_mp2">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_mp2">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_mp2">Gợi ý</button>
             </div>
             <div id="yc_mp2" class="tab-content active">
                 <div class="khung">
@@ -693,21 +1166,39 @@ h1 { background-color: #aed581; }
                     </ul>
                 </div>
             </div>
-            <div id="bg_mp2" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_mp2" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>.box {
+                    <p>Tổng chiều rộng thực tế = width + padding + border (nếu không dùng box-sizing: border-box).</p>
+<pre>
+.box {
   width: 200px;
-  height: 100px;
-  border: 5px solid #2e7d32; /* Viền */
-  padding: 20px;             /* Khoảng cách bên trong */
-  margin: 30px auto;         /* Khoảng cách bên ngoài */
-}</code></pre>
+  padding: 10px;
+  border: 5px solid red;
+  margin: 15px;
+}
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssMarginPadding', 2, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssMarginPadding-2"><b>HTML</b></label>
+                  <textarea id="grade-html-cssMarginPadding-2" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssMarginPadding-2"><b>CSS</b></label>
+                  <textarea id="grade-css-cssMarginPadding-2" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssMarginPadding', 2)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssMarginPadding', 2)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssMarginPadding-2" style="margin-top:10px;"></div>
+            </div>
         </div>
     </div>
 
@@ -716,7 +1207,7 @@ h1 { background-color: #aed581; }
             <h2>Bài 1: Tạo thanh menu ngang</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_menu1">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_menu1">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_menu1">Gợi ý</button>
             </div>
             <div id="yc_menu1" class="tab-content active">
                 <p><strong>Yêu cầu:</strong></p>
@@ -731,79 +1222,42 @@ h1 { background-color: #aed581; }
                     </ul>
                 </div>
             </div>
-            <div id="bg_menu1" class="tab-content">
-                <h3>Bài giải:</h3>
-                <div class="khung">
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="vi"&gt;
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;title&gt;Tạo thanh menu ngang&lt;/title&gt;
-  &lt;style&gt;
-    /* Thanh menu */
-    .menu {
-      background-color: #388e3c;
-      padding: 0;
-      margin: 0;
-    }
-
-    /* Danh sách menu */
-    .menu ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex; /* Xếp ngang */
-      justify-content: center;
-    }
-
-    .menu li {
-      display: inline-block;
-    }
-
-    /* Liên kết trong menu */
-    .menu a {
-      display: block;
-      padding: 15px 30px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      text-transform: uppercase;
-      transition: 0.3s;
-    }
-
-    /* Hiệu ứng hover */
-    .menu a:hover {
-      background-color: #66bb6a;
-      color: #1b5e20;
-      border-radius: 5px;
-    }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-  &lt;nav class="menu"&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href="#"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="#"&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="#"&gt;Sản phẩm&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="#"&gt;Liên hệ&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/nav&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-                </div>
+            <div id="goiy_menu1" class="tab-content">
+                 <p><strong>Gợi ý:</strong></p>
+                 <div class="khung">
+<pre>
+ul { list-style: none; padding: 0; }
+li { display: inline-block; margin-right: 15px; }
+li:hover { color: orange; cursor: pointer; }
+</pre>
+                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssMenu', 1, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssMenu-1"><b>HTML</b></label>
+                  <textarea id="grade-html-cssMenu-1" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssMenu-1"><b>CSS</b></label>
+                  <textarea id="grade-css-cssMenu-1" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssMenu', 1)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssMenu', 1)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssMenu-1" style="margin-top:10px;"></div>
+            </div>
         </div>
 
         <div class="content-box">
             <h2>Bài 2: Dùng pseudo-class để đổi màu khi di chuột</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_menu2">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_menu2">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_menu2">Gợi ý</button>
             </div>
             <div id="yc_menu2" class="tab-content active">
                 <p><strong>Yêu cầu:</strong></p>
@@ -816,79 +1270,47 @@ h1 { background-color: #aed581; }
                     </ul>
                 </div>
             </div>
-            <div id="bg_menu2" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_menu2" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="vi"&gt;
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;title&gt;Pseudo-class :hover&lt;/title&gt;
-  &lt;style&gt;
-    /* Định dạng chung cho các hộp */
-    .box {
-      display: inline-block;
-      width: 150px;
-      height: 100px;
-      line-height: 100px;
-      margin: 15px;
-      background-color: #a5d6a7;
-      color: #1b5e20;
-      font-weight: bold;
-      text-align: center;
-      border-radius: 10px;
-      transition: 0.3s; /* Hiệu ứng mượt mà */
-    }
-
-    /* Khi di chuột qua hộp */
-    .box:hover {
-      background-color: #66bb6a;
-      color: white;
-      transform: scale(1.05);
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Liên kết có hiệu ứng hover */
-    a {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 10px 20px;
-      text-decoration: none;
-      background-color: #43a047;
-      color: white;
-      border-radius: 5px;
-      transition: 0.3s;
-    }
-
-    a:hover {
-      background-color: #81c784;
-      color: #1b5e20;
-    }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-  &lt;div class="box"&gt;Hộp 1&lt;/div&gt;
-  &lt;div class="box"&gt;Hộp 2&lt;/div&gt;
-  &lt;div class="box"&gt;Hộp 3&lt;/div&gt;
-
-  &lt;br&gt;
-  &lt;a href="#"&gt;Di chuột qua đây&lt;/a&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+<pre>
+button {
+  background-color: blue;
+  color: white;
+  transition: 0.3s; /* Hiệu ứng mượt trong 0.3 giây */
+}
+button:hover {
+  background-color: darkblue;
+}
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssMenu', 2, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssMenu-2"><b>HTML</b></label>
+                  <textarea id="grade-html-cssMenu-2" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssMenu-2"><b>CSS</b></label>
+                  <textarea id="grade-css-cssMenu-2" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssMenu', 2)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssMenu', 2)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssMenu-2" style="margin-top:10px;"></div>
+            </div>
         </div>
 
         <div class="content-box">
             <h2>Bài 3: Làm menu cố định trên đầu trang</h2>
             <div class="tabs">
                 <button class="tab-button active" data-tab="yc_menu3">Yêu cầu</button>
-                <button class="tab-button" data-tab="bg_menu3">Bài giải</button>
+                <button class="tab-button" data-tab="goiy_menu3">Gợi ý</button>
             </div>
             <div id="yc_menu3" class="tab-content active">
                 <p><strong>Yêu cầu:</strong></p>
@@ -902,184 +1324,38 @@ h1 { background-color: #aed581; }
                     </ul>
                 </div>
             </div>
-            <div id="bg_menu3" class="tab-content">
-                <h3>Bài giải:</h3>
+            <div id="goiy_menu3" class="tab-content">
+                <p><strong>Gợi ý:</strong></p>
                 <div class="khung">
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="vi"&gt;
-&lt;head&gt;
-  &lt;meta charset="UTF-8"&gt;
-  &lt;title&gt;Menu cố định&lt;/title&gt;
-  &lt;style&gt;
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    /* Thanh menu cố định */
-    .menu {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #388e3c;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 1000;
-    }
-
-    .menu ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    .menu a {
-      display: block;
-      padding: 15px 25px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .menu a:hover {
-      background-color: #66bb6a;
-    }
-
-    /* Nội dung trang */
-    .content {
-      padding-top: 80px; /* tạo khoảng trống để tránh menu che nội dung */
-      width: 80%;
-      margin: auto;
-      line-height: 1.6;
-    }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-  &lt;nav class="menu"&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href="#"&gt;Trang chủ&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="#"&gt;Giới thiệu&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="#"&gt;Dịch vụ&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="#"&gt;Liên hệ&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/nav&gt;
-
-  &lt;div class="content"&gt;
-    &lt;h1&gt;Ví dụ: Menu cố định trên đầu trang&lt;/h1&gt;
-    &lt;p&gt;Khi bạn cuộn trang xuống, thanh menu vẫn luôn hiển thị ở phía trên cùng.&lt;/p&gt;
-    &lt;p&gt;Cuộn xuống để kiểm tra thử nhé!&lt;/p&gt;
-    &lt;p&gt;(Nội dung dài để test cuộn trang...)&lt;/p&gt;
-    &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
-    &lt;p&gt;Vẫn thấy menu đúng không?&lt;/p&gt;
-  &lt;/div&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+<pre>
+.navbar {
+  position: fixed; /* Cố định */
+  top: 0;
+  width: 100%;
+  background-color: #333;
+}
+body { padding-top: 50px; } /* Tránh bị che nội dung */
+</pre>
                 </div>
             </div>
-            <button class="btn-finish" onclick="markComplete('cssMenu', 3, this)">
-                <i class="fa-regular fa-square-check"></i> Đánh dấu đã học xong
-            </button>
+            
+            <div class="khung" style="margin-top:12px;">
+              <p><b>Chấm bài tự động:</b> Dán mã HTML/CSS rồi bấm "Chấm bài".</p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-html-cssMenu-3"><b>HTML</b></label>
+                  <textarea id="grade-html-cssMenu-3" style="width:100%; height:140px;" placeholder="Dán mã HTML của bạn vào đây"></textarea>
+                </div>
+                <div style="flex:1; min-width:280px;">
+                  <label for="grade-css-cssMenu-3"><b>CSS</b></label>
+                  <textarea id="grade-css-cssMenu-3" style="width:100%; height:140px;" placeholder="Dán mã CSS của bạn vào đây"></textarea>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+                <button class="btn-finish" style="background:#0d6efd; flex:1; min-width:140px;" onclick="previewCss('cssMenu', 3)"><i class="fa-solid fa-eye"></i> Chạy thử</button>
+                <button class="btn-finish" style="flex:1; min-width:140px;" onclick="gradeCss('cssMenu', 3)"><i class="fa-solid fa-wand-magic-sparkles"></i> Chấm bài</button>
+              </div>
+              <div id="grade-result-cssMenu-3" style="margin-top:10px;"></div>
+            </div>
         </div>
     </div>
-   
-
-<script>
-    // Cấu hình số bài tập cho từng mục CSS
-    const sectionConfig = {
-        'cssCuphap': 2,
-        'cssSelector': 2,
-        'cssThucHien': 2,
-        'cssComment': 1,
-        'cssMauNen': 3,
-        'cssBorder': 3,
-        'cssMarginPadding': 2,
-        'cssMenu': 3
-    };
-
-    // Tính tổng số bài tập
-    const totalExercises = Object.values(sectionConfig).reduce((a, b) => a + b, 0);
-
-    // Chạy khi tải trang
-    document.addEventListener('DOMContentLoaded', function() {
-        loadProgress();
-    });
-
-    // Hàm đánh dấu hoàn thành
-    function markComplete(sectionId, exerciseIndex, btnElement) {
-        // Lấy danh sách CSS progress (khác với HTML)
-        let completed = JSON.parse(localStorage.getItem('css_progress_list')) || [];
-
-        const key = `${sectionId}-${exerciseIndex}`;
-        if (!completed.includes(key)) {
-            completed.push(key);
-        }
-
-        localStorage.setItem('css_progress_list', JSON.stringify(completed));
-        
-        // Cập nhật giao diện
-        updateButtonState(btnElement, true);
-        calculateProgress(completed);
-    }
-
-    // Hàm cập nhật nút
-    function updateButtonState(btn, isDone) {
-        if (isDone) {
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã hoàn thành';
-            btn.classList.add('done');
-        }
-    }
-
-    // Load dữ liệu khi vào trang
-    function loadProgress() {
-        let completed = JSON.parse(localStorage.getItem('css_progress_list')) || [];
-        calculateProgress(completed);
-
-        const allButtons = document.querySelectorAll('.btn-finish');
-        allButtons.forEach(btn => {
-            const onclickText = btn.getAttribute('onclick'); 
-            for (const section in sectionConfig) {
-                for (let i = 1; i <= sectionConfig[section]; i++) {
-                    if (onclickText.includes(`'${section}', ${i}`)) {
-                         if (completed.includes(`${section}-${i}`)) {
-                             updateButtonState(btn, true);
-                         }
-                    }
-                }
-            }
-        });
-    }
-
-    // Tính % và update menu
-    function calculateProgress(completedList) {
-        let percent = Math.round((completedList.length / totalExercises) * 100);
-        const barFill = document.getElementById('progress-bar-fill');
-        const barText = document.getElementById('progress-percent');
-        
-        if(barFill) barFill.style.width = percent + '%';
-        if(barText) barText.innerText = percent + '%';
-
-        // Update tích xanh menu sidebar
-        for (const [section, count] of Object.entries(sectionConfig)) {
-            let finishedCount = 0;
-            for (let i = 1; i <= count; i++) {
-                if (completedList.includes(`${section}-${i}`)) {
-                    finishedCount++;
-                }
-            }
-
-            if (finishedCount === count && count > 0) {
-                const link = document.getElementById(`link-${section}`);
-                if (link) {
-                    link.classList.add('menu-completed');
-                    const icon = link.querySelector('.check-icon');
-                    if (icon) icon.style.display = 'inline-block';
-                }
-            }
-        }
-    }
-</script>

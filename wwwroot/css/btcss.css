@@ -12,7 +12,7 @@ ul.list {
 .main_box {
   display: flex;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh; /* tránh cố định cao gây lỗi sticky */
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -23,36 +23,29 @@ ul.list {
 
 /* --- MENU BÊN TRÁI --- */
 .main_box .sidebar_menu {
-  width: 280px;
-  flex-shrink: 0;
-  padding: 20px 15px;
-  background: linear-gradient(180deg, #ffffffcc, #e6f0ffcc);
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  backdrop-filter: blur(5px);
-  /* thêm */
-    height: 99vh;
-    overflow-y: auto;          /* Thêm thanh cuộn dọc khi nội dung quá dài */
-  overflow-x: hidden;        /* Ẩn tràn ngang */
   position: sticky;
+  top: 71px;
+  background: rgba(255, 255, 255, 0.9);
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+  min-width: 300px;
+  height: 89vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  padding: 20px 15px;
 }
 
 /* Logo */
 .sidebar_menu .logo {
   background-color: #fff;
   text-align: center;
-  padding: 18px 12px;
-  font-size: 28px; 
-  font-weight: 700; 
-  color: #007bff; 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  border-radius: 10px;
-  margin-bottom: 20px;
-  transition: transform 0.3s;
-}
-
-.sidebar_menu .logo:hover {
-  transform: scale(1.05);
+  padding: 15px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #007bff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
 }
 
 /* --- PHẦN TIÊU ĐỀ LỚN (PHẦN 1, PHẦN 2) --- */
@@ -75,30 +68,66 @@ ul.list {
 }
 
 /* --- DANH SÁCH CÁC BÀI TRONG A/B --- */
+.sidebar_menu .list {
+  list-style: none;
+  padding: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar_menu .list li {
+  margin-top: 3px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar_menu .list li:hover {
+  border-left: 1px solid #ffffff;
+  box-shadow: 0 0 4px rgba(167, 167, 167, 0.5);
+}
+
 .section .list li a {
-  display: block;
-  color: #0d6efd;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 14px 20px;
+  box-sizing: border-box;
+  font-size: 22px;
   text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  margin-bottom: 4px;
+  color: #4494df;
+  border-radius: 5px;
+  transition: background 0.25s;
 }
 
-.section .list li a:hover {
-  background: #cce0ff;
-  color: #004aad;
+/* Hover và active toàn nút xanh */
+.section .list li a:hover,
+.sidebar_menu .list a.active-link {
+  background-color: #4494df;
+  color: #fff;
 }
 
-.sidebar_menu a.active-link {
-  background: #cce0ff;       /* màu nền nổi bật */
-  color: #fff;               /* chữ trắng */
-  font-weight: 600;
-  border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  transform: translateY(-2px);
-  transition: all 0.3s ease;
+/* Hover toàn hàng (link + % tiến độ) */
+.sidebar_menu .list li:hover {
+  background-color: #4494df;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+}
+.sidebar_menu .list li:hover a {
+  color: #fff;
+}
+.sidebar_menu .list li:hover .menu-percent {
+  color: #fff;
+}
+
+/* Nền active tràn toàn bộ hàng, kể cả phần trăm */
+.sidebar_menu .list li:has(> a.active-link) {
+  background-color: #4494df;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+}
+.sidebar_menu .list li:has(> a.active-link) .menu-percent {
+  color: #fff;
 }
 
 /* --- NỘI DUNG CHÍNH --- */
@@ -277,14 +306,10 @@ pre {
 }
 
 .fixed-scroll {
-    height: calc(100vh - 20px); /* Chiều cao cố định */
-    padding: 20px;
-    
-    /* QUAN TRỌNG: Đổi từ 'auto' sang 'scroll' */
-    overflow-y: scroll; /* Luôn hiện thanh cuộn dọc để khung không bị giật chiều ngang */
-    
-    /* Hoặc dùng cách hiện đại hơn (nhưng chỉ hỗ trợ trình duyệt mới) */
-    /* scrollbar-gutter: stable; */ 
+  height: calc(100vh - 71px); /* đồng bộ với top sticky để cuộn mượt */
+  padding: 20px;
+  overflow-y: scroll;         /* Cuộn nội dung độc lập */
+  /* scrollbar-gutter: stable; */
 }
 
 .sidebar_menu::-webkit-scrollbar,
@@ -356,7 +381,20 @@ pre {
 
 .menu-completed {
   color: #27ae60 !important; /* Màu xanh cho text menu đã xong */
-  background-color: #f0fff4;
+  /* nền chuyển sang li: giữ màu chữ xanh ở link */
+}
+
+/* NỀN TRÀN HẾT CHO MỤC ĐÃ HOÀN THÀNH */
+.sidebar_menu .list li:has(> a.menu-completed) {
+  background-color: #f0fff4; /* nền xanh nhạt cho cả hàng */
+}
+
+/* Hiển thị phần trăm tiến độ cạnh từng mục trong sidebar */
+.menu-percent {
+  font-size: 16px; /* To bằng chữ menu */
+  font-weight: bold;
+  color: #04AA6D;
+  margin-left: 10px;
 }
 
 /* --- NÚT HOÀN THÀNH BÀI TẬP (Đã gộp và sửa lỗi trùng) --- */
@@ -378,6 +416,71 @@ pre {
 .btn-finish i {
   margin-right: 5px;
 }
+
+/* Biến thể cho nút "Chạy thử" với màu xanh gradient dạng pill */
+.btn-finish.btn-run {
+  background: linear-gradient(135deg, #6ec1ff 0%, #0d6efd 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(13, 110, 253, 0.25);
+}
+
+.btn-finish.btn-run:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.btn-finish.btn-run:active {
+  filter: brightness(0.98);
+  transform: translateY(0);
+}
+
+.btn-finish.btn-run i {
+  color: #ffffff;
+}
+
+/* --- THẺ KẾT QUẢ CHẤM BÀI --- */
+.result-card {
+  margin: 20px auto;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  max-width: 720px;
+}
+
+.result-card .rc-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: 1px solid #f1f1f1;
+  justify-content: center;
+}
+
+.result-card.success .rc-header { color: #28a745; }
+.result-card.error .rc-header { color: #d32f2f; }
+
+.result-card .rc-body { padding: 12px 16px 16px 16px; text-align: center; }
+.result-card .rc-title { margin: 6px 0; color: #333; }
+.result-card .rc-meta { margin-top: 4px; color: #555; display: flex; align-items: center; gap: 8px; }
+
+.badge-score {
+  display: inline-block;
+  padding: 4px 10px;
+  font-weight: 700;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.result-card.success .badge-score { background: #e8f5e9; color: #1b5e20; }
+.result-card.error .badge-score { background: #fdecea; color: #b71c1c; }
+
+.result-card .rc-actions { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; justify-content: center; align-items: center; }
 
 /* --- KHUNG CHỨA TIẾN ĐỘ (Dashboard Card Style) --- */
 .progress-section {
@@ -480,11 +583,6 @@ pre {
   align-items: center;
 }
 
-/* Hiệu ứng khi di chuột vào từng bài */
-#completed-list-html li:hover, #completed-list-css li:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
 
 /* --- PHÂN MÀU CHO HTML VÀ CSS --- */
 
@@ -518,3 +616,4 @@ pre {
     box-shadow: none !important;
     border: none !important;
 }
+

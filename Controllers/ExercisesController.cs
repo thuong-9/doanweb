@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using EasyCode.Models;
+using EasyCode.Models.Grading;
 
 namespace EasyCode.Controllers
 {
@@ -64,6 +65,34 @@ namespace EasyCode.Controllers
         public IActionResult Progress()
         {
             return View();
+        }
+
+        // --- CHẤM BÀI CSS (Rule-based, có thể thay thế bằng AI sau này) ---
+        [HttpPost]
+        [Route("Exercises/GradeCss")]
+        public IActionResult GradeCss([FromBody] CssSubmission submission)
+        {
+            if (submission == null)
+            {
+                return BadRequest(new { error = "Thiếu dữ liệu nộp bài." });
+            }
+
+            var result = CssGrader.Grade(submission);
+            return Json(result);
+        }
+
+        // --- CHẤM BÀI HTML ---
+        [HttpPost]
+        [Route("Exercises/GradeHtml")]
+        public IActionResult GradeHtml([FromBody] HtmlSubmission submission)
+        {
+            if (submission == null)
+            {
+                return BadRequest(new { error = "Thiếu dữ liệu nộp bài." });
+            }
+
+            var result = HtmlGrader.Grade(submission);
+            return Json(result);
         }
     }
 }
