@@ -7,7 +7,7 @@
 ul.list {
   list-style: none;  
   padding-left: 0;    
-  margin: 0;  
+   
 }
 .main_box {
     display: flex;
@@ -58,13 +58,27 @@ ul.list {
     border-left: 1px solid #ffffff;
     box-shadow: 0 0 4px rgba(167, 167, 167, 0.5);
 }
-.sidebar_menu .list a{
-    display: block;
-    color: #4494df;
+.sidebar_menu .list a {
+    display: flex;                    /* flex ở A */
+    justify-content: space-between;   /* chữ trái – % phải */
+    align-items: center;
+    width: 100%;
+    padding: 14px 20px;
+    box-sizing: border-box;
     font-size: 22px;
     text-decoration: none;
-    padding: 8px 20px;
+    color: #4494df;
+    border-radius: 5px;
+    transition: background 0.25s;
 }
+
+/* Hover và active toàn nút xanh */
+.sidebar_menu .list a:hover,
+.sidebar_menu .list a.active-link {
+    background-color: #4494df;   /* nền xanh full */
+    color: #fff;                 /* chữ trắng */
+}
+
 .main-content{
     flex-grow: 1;
     padding: 10px 50px;
@@ -90,6 +104,7 @@ ul.list {
     color: #2563eb;
     border-left: 5px solid #2563eb;
     padding: 12px;
+    
 }
 .khung {
   background: #fff;
@@ -102,6 +117,18 @@ ul.list {
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
   color: #0077cc;
 }
+/* RESET ul trong khung nội dung */
+.khung ul {
+  margin: 0;
+  padding: 0;
+  list-style-position: inside;
+}
+
+.khung li {
+  margin: 0;
+  padding: 6px 0;
+}
+
 .one{
   background: #fff;
   border-radius: 15px;
@@ -162,7 +189,7 @@ ul.list {
   border-radius: 10px;
   padding: 15px 20px;
   margin: 25px auto;
-  width: 800px;
+  
   color: #1b5e20;
   font-size: 18px;
   line-height: 1.6;
@@ -193,6 +220,7 @@ img{
   display: block;
   margin: 20px auto;
 }
+/* điểm danh */
 /* Overlay */
 #attendanceOverlay {
     display: none;
@@ -290,101 +318,75 @@ img{
     margin: 20px;
 }
 
-/* ===== TEST BOX ===== */
-.test-box {
-    margin-top: 48px;
-    padding: 28px;
-    background: #ffffff;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-}
-
-/* ===== TITLE ===== */
-.test-box h2 {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 24px;
-    color: #111827;
-}
-
-/* ===== QUESTION ===== */
-.question {
-    padding: 18px 20px;
-    margin-bottom: 18px;
-    background: #f9fafb;
+/* khung bài test */
+/* Khung bài tập */
+.quiz-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fcfcfc;
+    border: 1px solid #eee;
     border-radius: 10px;
-    border: 1px solid #e5e7eb;
 }
 
-/* ===== QUESTION TEXT ===== */
-.question p {
-    font-size: 15px;
-    font-weight: 500;
-    color: #1f2937;
-    margin-bottom: 12px;
-}
-
-/* ===== OPTIONS ===== */
-.question label {
-    display: block;
-    padding: 8px 12px;
-    margin-bottom: 8px;
+.question-item {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
     border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #374151;
-    transition: background 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-
-.question label:hover {
-    background: #eef2ff;
-}
-
-/* ===== RADIO ===== */
-.question input[type="radio"] {
-    margin-right: 8px;
-    accent-color: #4f46e5;
-}
-
-/* ===== RESULT TEXT ===== */
-.result {
+.question-item button {
     display: inline-block;
-    margin-left: 6px;
-    font-size: 14px;
-    font-weight: 500;
+    width: auto;
+}
+.question-item .btn-check-section{
+  font-size: 16px;
+  padding: 8px 16px;
 }
 
-/* ===== CORRECT / WRONG ===== */
-.correct {
-    color: #16a34a;
-}
 
-.wrong {
-    color: #dc2626;
-}
-
-/* ===== SUBMIT BUTTON ===== */
-.test-box button {
-    margin-top: 24px;
-    padding: 12px 28px;
-    background: #4f46e5;
-    color: #ffffff;
-    border: none;
-    border-radius: 999px;
-    font-size: 14px;
-    font-weight: 500;
+.opt-label {
+    display: block;
+    margin: 5px 0;
+    padding: 8px;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
 }
 
-.test-box button:hover {
-    background: #4338ca;
-    transform: translateY(-1px);
+.opt-label:hover {
+    background: #f9f9f9;
 }
 
-/* ===== FINAL MESSAGE ===== */
-.final-msg {
-    margin-top: 16px;
-    font-size: 15px;
-    font-weight: 500;
+.btn-check-section {
+    background: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Tỉ lệ % to ngang chữ ở menu */
+
+
+
+
+/* Định dạng câu đúng/sai sau khi làm xong */
+.opt-label.correct-opt {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
+}
+
+.opt-label.incorrect-opt {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
+}
+
+/* Vô hiệu hóa click sau khi chọn để tránh đổi đáp án */
+.opt-label input:disabled {
+    cursor: not-allowed;
 }
