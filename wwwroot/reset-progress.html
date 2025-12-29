@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset tiến độ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        h1 { margin: 0 0 20px 0; }
+        .status { font-size: 18px; margin: 20px 0; }
+        .success { color: #4ade80; }
+        a { 
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        a:hover { background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Reset Tiến Độ HTML & CSS</h1>
+        <div id="status" class="status">Đang xóa dữ liệu...</div>
+        <a href="/Exercises/Css" id="backLink" style="display:none;">← Quay lại trang bài tập</a>
+    </div>
+
+    <script>
+        // Xóa dữ liệu tiến độ CSS và HTML
+        localStorage.removeItem('css_progress_list');
+        localStorage.removeItem('html_progress_list');
+        
+        // Hiển thị thông báo thành công
+        setTimeout(() => {
+            document.getElementById('status').innerHTML = 
+                '<span class="success">✓ Đã xóa thành công!</span><br>Tiến độ CSS và HTML đã được reset về 0%.';
+            document.getElementById('backLink').style.display = 'inline-block';
+        }, 500);
+    </script>
+</body>
+</html>
