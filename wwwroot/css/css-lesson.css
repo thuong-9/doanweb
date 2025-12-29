@@ -75,26 +75,6 @@ html {
 
 /* Màu và hiệu ứng khi hover hoặc đang chọn */
 .menu .list a {
-<<<<<<< HEAD
-    display: flex;             /* Sử dụng flexbox */
-    justify-content: space-between; /* Đẩy chữ sang trái, % sang phải */
-    align-items: center;
-    width: 100%;               /* Chiếm hết chiều ngang li */
-    color: #4494df;
-    font-size: 18px;           /* Điều chỉnh lại kích thước chữ cho vừa vặn */
-    text-decoration: none;
-    padding: 12px 20px;        /* Tăng padding cho giống nút bấm */
-    box-sizing: border-box;
-}
-
-.menu-percent {
-    font-size: 14px !important; 
-    font-weight: normal !important;
-    background: rgba(255,255,255,0.5); /* Tạo nền mờ cho phần trăm nếu muốn */
-    padding: 2px 6px;
-    border-radius: 4px;
-    display: inline-block !important; /* Đổi từ none sang inline-block để luôn hiện */
-=======
     display: flex;                    /* flex ở A */
     justify-content: space-between;   /* chữ trái – % phải */
     align-items: center;
@@ -106,15 +86,15 @@ html {
     color: #4494df;
     border-radius: 5px;
     transition: background 0.25s;
->>>>>>> 7705cc3bc64ca8111e23686d4cb4e5ae50a29d64
 }
 
-
-.menu .list a:hover,
-.menu .list a.active-link {
+/* Hover và active toàn nút xanh */
+.sidebar_menu .list a:hover,
+.sidebar_menu .list a.active-link {
     background-color: #4494df;   /* nền xanh full */
     color: #fff;                 /* chữ trắng */
 }
+
 
 .menu a.active-link {
   color: #fff;
@@ -477,8 +457,6 @@ ul.horizontal1 li a:hover {
 ul.horizontal1 li a.active1 {
   background-color: #111111;
 }
-
-
 /* điểm danh */
 /* Overlay */
 #attendanceOverlay {
@@ -627,29 +605,21 @@ ul.horizontal1 li a.active1 {
     margin-top: 10px;
 }
 
-<<<<<<< HEAD
-/* Tỉ lệ % to ngang chữ ở menu */
-.list li {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 8px 15px !important;
+
+/* Định dạng câu đúng/sai sau khi làm xong */
+.opt-label.correct-opt {
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    color: #155724 !important;
 }
 
-.menu-percent {
-    font-size: 16px !important; 
-    font-weight: bold !important;
-    margin-left: 10px;
-    display: none; /* Mặc định ẩn, chỉ hiện khi hoàn thành */
-}
-=======
->>>>>>> 7705cc3bc64ca8111e23686d4cb4e5ae50a29d64
-
-/* Màu sắc theo trạng thái */
-.percent-perfect {
-    color: #04AA6D !important; /* Xanh khi đạt 100% */
+.opt-label.incorrect-opt {
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+    color: #721c24 !important;
 }
 
-.percent-incomplete {
-    color: #f44336 !important; /* Đỏ khi dưới 100% */
+/* Vô hiệu hóa click sau khi chọn để tránh đổi đáp án */
+.opt-label input:disabled {
+    cursor: not-allowed;
 }
