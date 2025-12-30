@@ -13,6 +13,17 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
+@{
+        var currentController = (ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty);
+        var currentAction = (ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty);
+
+        bool isHome = string.Equals(currentController, "Home", StringComparison.OrdinalIgnoreCase);
+        bool isLesson = string.Equals(currentController, "Lesson", StringComparison.OrdinalIgnoreCase);
+        bool isExercises = string.Equals(currentController, "Exercises", StringComparison.OrdinalIgnoreCase);
+        bool isTutorial = string.Equals(currentController, "Tutorial", StringComparison.OrdinalIgnoreCase);
+        bool isContact = string.Equals(currentController, "Contact", StringComparison.OrdinalIgnoreCase);
+        bool isLogin = string.Equals(currentController, "Login", StringComparison.OrdinalIgnoreCase);
+}
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="@Url.Action("Index","Home")">
@@ -21,18 +32,22 @@
     </a>
     <nav class="main-nav">
       <ul>
-        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                <li><a class="@(isHome ? "active" : null)" href="@Url.Action("Index","Home")">Home</a></li>
+
+@if (User?.Identity?.IsAuthenticated == true)
+{
         <li class="dropdown">
-                    <a href="javascript:void(0)" role="button" aria-haspopup="true">Lesson</a>
+                                        <a class="@(isLesson ? "active" : null)" href="javascript:void(0)" role="button" aria-haspopup="true">Lesson</a>
           <ul class="dropdown-menu">
-            <li><a href="@Url.Action(action: "Indexhtml", "lesson")">HTML</a></li>
-            <li><a href="@Url.Action(action: "Indexcss", "lesson")">CSS</a></li>
+                        <li><a class="@(isLesson && string.Equals(currentAction, "Indexhtml", StringComparison.OrdinalIgnoreCase) ? "active" : null)" href="@Url.Action(action: "Indexhtml", "lesson")">HTML</a></li>
+                        <li><a class="@(isLesson && string.Equals(currentAction, "Indexcss", StringComparison.OrdinalIgnoreCase) ? "active" : null)" href="@Url.Action(action: "Indexcss", "lesson")">CSS</a></li>
           </ul>
         </li>
 
-        <li><a href="@Url.Action("Index", "Exercises")">Exercises</a></li>
-        <li><a href="@Url.Action("Index", "Tutorial")">Tutorial</a></li>
-        <li><a href="@Url.Action("Index", "Contact")">Contact Us</a></li>
+                <li><a class="@(isExercises ? "active" : null)" href="@Url.Action("Index", "Exercises")">Exercises</a></li>
+}
+                <li><a class="@(isTutorial ? "active" : null)" href="@Url.Action("Index", "Tutorial")">Tutorial</a></li>
+                <li><a class="@(isContact ? "active" : null)" href="@Url.Action("Index", "Contact")">Contact Us</a></li>
       </ul>
     </nav>
     <div class="auth-links">
@@ -63,7 +78,7 @@
                     <span class="me-1">@displayName</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" asp-controller="Login" asp-action="Profile">Hồ sơ của bạn</a></li>
+                    <li><a class="dropdown-item" asp-controller="Login" asp-action="Profile">Profile</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li><form asp-controller="Login" asp-action="Logout" method="post" class="px-2">
                             @Html.AntiForgeryToken()
@@ -75,8 +90,8 @@
 }
 else
 {
-      <a href="@Url.Action("Index", "Login")">Login</a>
-      <a class="btn btn-primary" href="@Url.Action("Index", "Login", new { mode = "signup" })">Sign Up</a>
+    <a class="@(isLogin ? "active" : null)" href="@Url.Action("Index", "Login")">Login</a>
+    <a class="btn btn-primary" href="@Url.Action("Index", "Login", new { mode = "signup" })">Sign Up</a>
 }
     </div>
     

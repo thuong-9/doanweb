@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using EasyCode.Models;
@@ -11,6 +12,7 @@ using EasyCode.Models.Grading;
 namespace EasyCode.Controllers
 {
     
+    [Authorize]
     public class ExercisesController : Controller
     {
         private readonly ILogger<ExercisesController> _logger;

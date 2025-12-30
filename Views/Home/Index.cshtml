@@ -2,6 +2,10 @@
         ViewData["Title"] = "EasyCode";
         Layout = "~/Views/Shared/_Layout.cshtml";
         ViewData["NoContainer"] = true;
+
+    var courseRegisterUrl = (User?.Identity?.IsAuthenticated == true)
+        ? Url.Action("DangKy", "Home")
+        : Url.Action("Index", "Login", new { returnUrl = Url.Action("DangKy", "Home") });
 }
 
 @section Styles {
@@ -23,7 +27,7 @@
             </video>
 
             <div class="cta-group">
-                <a class="btn btn-primary" href="@Url.Action("Dangky", "Home")">ĐĂNG KÝ KHÓA HỌC</a>
+                <a class="btn btn-primary" href="@courseRegisterUrl">ĐĂNG KÝ KHÓA HỌC</a>
                 <a class="btn btn-outline" href="@Url.Action("Index", "Tutorial")">XEM BÀI HỌC MẪU</a>
             </div>
         </section>
@@ -35,7 +39,7 @@
                 <!-- Phần luyện tập & khóa học mới -->
                 <div class="lt-new">
                 <!-- Hình luyện tập -->
-                <a href="@Url.Action("DangKy", "Home")">
+                <a href="@courseRegisterUrl">
                 <div class="Luyen_tap">
                     <img src="/img/luyen_tap.png" alt="Phần luyện tập chuyên sâu">
                 </div>
@@ -226,6 +230,6 @@
             <div class="container">
                 <h3>Đã sẵn sàng bắt đầu hành trình lập trình Frontend của bạn?</h3>
                 <p>Tham gia ngay khóa học <strong>HTML & CSS</strong> để tạo nền tảng vững chắc cho sự nghiệp Web Developer!</p>
-                                <a href="@Url.Action("Dangky", "Home")" class="btn btn-primary">🚀 Bắt đầu học ngay</a>
+                                <a href="@courseRegisterUrl" class="btn btn-primary">🚀 Bắt đầu học ngay</a>
             </div>
         </section>

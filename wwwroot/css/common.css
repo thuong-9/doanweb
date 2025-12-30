@@ -120,6 +120,7 @@ ul.dropdown-menu {
   display: block;
   padding: 10px 16px;
   color: var(--text);
+  margin: 0;
 }
 .dropdown-menu li a:hover {
   background: var(--primary);
@@ -133,6 +134,12 @@ ul.dropdown-menu {
   font-weight: 500;
   margin-left: 14px;
   color: var(--text);
+}
+.auth-links a.active {
+  background: #0077ffb5;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: var(--radius);
 }
 .auth-links a.btn-primary {
   color: #fff;

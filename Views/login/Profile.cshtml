@@ -113,10 +113,6 @@
         </div>
 
         <div id="section-password">
-          <div class="h5">Đổi mật khẩu</div>
-          <div class="text-muted">Nhập mật khẩu hiện tại và mật khẩu mới</div>
-          <hr />
-
           <form asp-controller="Login" asp-action="ChangePassword" method="post">
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

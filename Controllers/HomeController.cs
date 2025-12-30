@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using EasyCode.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EasyCode.Controllers
 {
@@ -18,6 +19,7 @@ namespace EasyCode.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult DangKy()
         {
             string? email = null;
@@ -57,6 +59,7 @@ public IActionResult CheckEmail(string email)
 
         // POST: lưu đăng ký vào DB
         [HttpPost]
+        [Authorize]
         public IActionResult DangKyThanhCong()
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
