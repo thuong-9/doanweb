@@ -1,9 +1,11 @@
 using EasyCode.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
 namespace EasyCode.Controllers
 {
+    [Authorize]
     public class LessonController : Controller
     {
         private readonly DataContext _context;

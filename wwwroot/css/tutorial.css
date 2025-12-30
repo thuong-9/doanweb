@@ -162,7 +162,7 @@ html, body {
 
 /* Đảm bảo thẻ không bị lỗi hiển thị */
 .tutorial-card {
-  margin: 10px;
+  margin: 16px;
   height: 100%;
   display: flex;
   flex-direction: column;
