@@ -1,0 +1,9 @@
+@{
+    var checkedToday = ViewBag.CheckedToday == true;
+    var lastCheckedDay = (int)(ViewBag.LastCheckedDay ?? 0);
+}
+
+<div id="attendanceState" style="display:none"
+     data-checked-today="@(checkedToday ? "true" : "false")"
+     data-last-checked-day="@lastCheckedDay">
+</div>

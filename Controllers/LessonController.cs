@@ -1,4 +1,5 @@
 using EasyCode.Models;
+using EasyCode.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 namespace EasyCode.Controllers
 {
     [Authorize]
+    [RequireCourseEnrollment]
     public class LessonController : Controller
     {
         private readonly DataContext _context;

@@ -497,6 +497,7 @@ textarea:focus {
 .view-btn:hover {
   background: #0058cc;
   transform: scale(1.05);
+  color: white;
 }
 
 /* ======= Xếp hạng ======= */

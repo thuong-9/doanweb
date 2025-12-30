@@ -62,6 +62,44 @@ BEGIN
     IF COL_LENGTH(N'dbo.Users', N'AvatarPath') IS NULL
         EXEC(N'ALTER TABLE dbo.Users ADD [AvatarPath] NVARCHAR(260) NULL');
 END
+
+-- Ensure Attendances table exists (EnsureCreated won't add tables to an existing DB)
+IF OBJECT_ID(N'dbo.Attendances', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.Attendances
+    (
+        [AttendanceId] INT IDENTITY(1,1) NOT NULL CONSTRAINT [PK_Attendances] PRIMARY KEY,
+        [EnrollmentId] INT NOT NULL,
+        [AttendanceDate] DATE NOT NULL,
+        [IsPresent] BIT NOT NULL CONSTRAINT [DF_Attendances_IsPresent] DEFAULT(1)
+    );
+
+    ALTER TABLE dbo.Attendances WITH CHECK
+    ADD CONSTRAINT [FK_Attendances_Enrollments_EnrollmentId]
+        FOREIGN KEY([EnrollmentId]) REFERENCES dbo.Enrollments([EnrollmentId])
+        ON DELETE CASCADE;
+END
+ELSE
+BEGIN
+    -- Backfill schema if the table exists but is missing newer columns
+    IF COL_LENGTH(N'dbo.Attendances', N'IsPresent') IS NULL
+    BEGIN
+        EXEC(N'ALTER TABLE dbo.Attendances ADD [IsPresent] BIT NOT NULL CONSTRAINT [DF_Attendances_IsPresent] DEFAULT(1)');
+    END
+END
+
+-- Unique attendance per enrollment per day
+IF OBJECT_ID(N'dbo.Attendances', N'U') IS NOT NULL
+    AND NOT EXISTS (
+        SELECT 1
+        FROM sys.indexes
+        WHERE [name] = N'IX_Attendances_EnrollmentId_AttendanceDate'
+          AND [object_id] = OBJECT_ID(N'dbo.Attendances')
+    )
+BEGIN
+    CREATE UNIQUE INDEX [IX_Attendances_EnrollmentId_AttendanceDate]
+        ON dbo.Attendances([EnrollmentId], [AttendanceDate]);
+END
 ");
     }
     catch (Exception ex)

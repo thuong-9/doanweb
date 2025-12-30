@@ -23,7 +23,7 @@ namespace EasyCode.Controllers
         public IActionResult DangKy()
         {
             string? email = null;
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity?.IsAuthenticated == true)
             {
                 email = User.FindFirstValue(ClaimTypes.Email);
             }
@@ -91,6 +91,9 @@ public IActionResult CheckEmail(string email)
 
             _context.Enrollments.Add(enrollment);
             _context.SaveChanges();
+
+            HttpContext.Session.SetInt32("HasCourse", 1);
+            HttpContext.Session.SetInt32("EnrollmentId", enrollment.EnrollmentId);
 
             return Json(new { success = true, redirect = Url.Action("Index") });
         }

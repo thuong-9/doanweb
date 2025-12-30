@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="~/css/Dangky.css" asp-append-version="true" />
 </head>
 <body>
+    @if (TempData["CourseRequired"] != null)
+    {
+        <script>
+            alert('@TempData["CourseRequired"]');
+        </script>
+    }
     <div class="background-image">
             <img src="/img/DKH.png" alt="Đăng Ký Khóa Học" />
             <div class="register-container">

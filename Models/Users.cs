@@ -24,7 +24,6 @@ namespace EasyCode.Models
         public string Password { get; set; } = string.Empty;
         // ====== LIÊN KẾT ======
         public ICollection<Enrollment>? Enrollments { get; set; }
-        public ICollection<Attendance>? Attendances { get; set; }
         [MaxLength(256)]
         public string? PasswordResetTokenHash { get; set; }
         public DateTime? PasswordResetTokenExpiresUtc { get; set; }

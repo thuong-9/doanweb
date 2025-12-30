@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using EasyCode.Models;
 using EasyCode.Models.Grading;
+using EasyCode.Filters;
 
 namespace EasyCode.Controllers
 {
     
     [Authorize]
+    [RequireCourseEnrollment]
     public class ExercisesController : Controller
     {
         private readonly ILogger<ExercisesController> _logger;
